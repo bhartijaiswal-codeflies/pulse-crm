@@ -21,7 +21,7 @@ export const AppProvider = ({ children }) => {
   const [plans, setPlans] = useState(PLANS_DATA);
 
   // Layout states (default to expanded sidebar as requested)
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedDateRange, setSelectedDateRange] = useState('Today: Nov 12, 2026');
 
