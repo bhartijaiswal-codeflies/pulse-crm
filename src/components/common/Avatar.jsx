@@ -42,3 +42,4 @@ export const CompanyAvatar = ({ src, name, className = "w-9 h-9" }) => {
     />
   );
 };
+

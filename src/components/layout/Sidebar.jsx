@@ -1,38 +1,38 @@
 import React from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
-  LayoutDashboard,
+  LayoutGrid,
   Building2,
   Repeat,
   CreditCard,
   Users,
   Layers,
-  Activity,
+  Monitor,
   BarChart3,
   LifeBuoy,
-  History,
+  Clock,
   Settings,
-  PlusCircle,
-  AlertTriangle,
-  Zap,
+  User,
+  LogOut,
   ChevronLeft,
   ChevronRight,
-  LogOut,
-  UserCheck
+  PlusCircle,
+  AlertTriangle,
+  Zap
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
 export const NAV_ITEMS = [
-  { name: 'Dashboard', path: '/', icon: LayoutDashboard, short: 'Dashboard' },
+  { name: 'Dashboard', path: '/', icon: LayoutGrid, short: 'Dashboard' },
   { name: 'Companies', path: '/companies', icon: Building2, short: 'Companies' },
   { name: 'Subscriptions', path: '/subscriptions', icon: Repeat, short: 'Subscripts' },
-  { name: 'Billing & Payments', path: '/billing', icon: CreditCard, short: 'Billing', badge: '12' },
+  { name: 'Billing & Payments', path: '/billing', icon: CreditCard, short: 'Finances', badge: '12' },
   { name: 'Users', path: '/users', icon: Users, short: 'Users' },
   { name: 'Plans & Pricing', path: '/plans', icon: Layers, short: 'Plans' },
-  { name: 'Usage & Limits', path: '/usage', icon: Activity, short: 'Limits' },
+  { name: 'Usage & Limits', path: '/usage', icon: Monitor, short: 'Assets' },
   { name: 'Analytics', path: '/analytics', icon: BarChart3, short: 'Analytics' },
-  { name: 'Support Tickets', path: '/support', icon: LifeBuoy, short: 'Support', badge: '3' },
-  { name: 'Activity Log', path: '/activity', icon: History, short: 'Logs' },
+  { name: 'Support Tickets', path: '/support', icon: LifeBuoy, short: 'Support' },
+  { name: 'Activity Log', path: '/activity', icon: Clock, short: 'Calendar' },
   { name: 'Settings', path: '/settings', icon: Settings, short: 'Settings' },
 ];
 
@@ -57,13 +57,14 @@ export const Sidebar = () => {
       } hidden md:flex`}
     >
       {/* Brand Header */}
-      <div className="h-16 flex items-center justify-between px-4 border-b border-[#131B38]">
+      <div className={`flex items-center ${sidebarCollapsed ? 'justify-center py-4' : 'justify-between px-4 h-16'} border-b border-white/[0.06]`}>
         <div className="flex items-center gap-3 overflow-hidden">
-          <div className="w-10 h-10 rounded-xl bg-[#0F172A] border border-[#1E293B] flex items-center justify-center p-1.5 flex-shrink-0 shadow-inner">
+          {/* Circular Blue Logo Badge matching user screenshot */}
+          <div className="w-12 h-12 rounded-full bg-[#1D4ED8] border-2 border-[#3B82F6] flex items-center justify-center p-2.5 shadow-lg shadow-blue-500/20 flex-shrink-0">
             <img
               src="/pulse-logo.png"
               alt="Pulse CRM"
-              className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(6,182,212,0.6)]"
+              className="w-full h-full object-contain filter brightness-0 invert"
             />
           </div>
           {!sidebarCollapsed && (
@@ -78,22 +79,19 @@ export const Sidebar = () => {
           )}
         </div>
 
-        {/* Collapse toggle button */}
-        <button
-          onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-          className="p-1.5 rounded-lg text-[#8292AD] hover:text-white hover:bg-[#131B38] transition-colors"
-          title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-        >
-          {sidebarCollapsed ? (
-            <ChevronRight className="w-4 h-4" />
-          ) : (
+        {!sidebarCollapsed && (
+          <button
+            onClick={() => setSidebarCollapsed(true)}
+            className="p-1.5 rounded-lg text-[#8292AD] hover:text-white hover:bg-[#131B38] transition-colors"
+            title="Collapse to Rail View"
+          >
             <ChevronLeft className="w-4 h-4" />
-          )}
-        </button>
+          </button>
+        )}
       </div>
 
-      {/* Navigation Links Scrollable Area */}
-      <div className="flex-1 overflow-y-auto sidebar-scroll py-3 px-2 space-y-6">
+      {/* Navigation List */}
+      <div className={`flex-1 overflow-y-auto sidebar-scroll ${sidebarCollapsed ? 'py-2 px-1.5' : 'py-3 px-2 space-y-6'}`}>
         {/* Main Section */}
         <div>
           {!sidebarCollapsed && (
@@ -101,36 +99,49 @@ export const Sidebar = () => {
               Main
             </div>
           )}
-          <nav className="space-y-1">
+
+          <nav className={sidebarCollapsed ? 'space-y-1' : 'space-y-1'}>
             {NAV_ITEMS.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.path;
 
               if (sidebarCollapsed) {
-                // Rail style matching uploaded screenshot: icon on top, small label below
+                // Exact Rail Mode Layout matching the uploaded reference image
                 return (
                   <NavLink
                     key={item.path}
                     to={item.path}
                     title={item.name}
-                    className={`flex flex-col items-center justify-center py-2.5 px-1 rounded-xl transition-all duration-200 group relative ${
-                      isActive
-                        ? 'bg-[#2563EB] text-white shadow-md shadow-blue-600/30 font-semibold'
-                        : 'text-[#8292AD] hover:text-white hover:bg-[#131B38]'
-                    }`}
+                    className="group block relative w-full"
                   >
-                    <Icon className={`w-5 h-5 mb-1 transition-transform group-hover:scale-110 ${isActive ? 'text-white' : ''}`} />
-                    <span className="text-[10px] text-center leading-tight truncate w-full px-0.5">
-                      {item.short}
-                    </span>
-                    {item.badge && !isActive && (
-                      <span className="absolute top-1 right-2 w-2 h-2 rounded-full bg-red-500 ring-2 ring-[#080D20]"></span>
-                    )}
+                    <div
+                      className={`w-full py-2.5 px-1 rounded-2xl flex flex-col items-center justify-center transition-all duration-150 ${
+                        isActive
+                          ? 'border-2 border-[#2563EB] bg-[#0c1638] text-white shadow-lg shadow-blue-600/10'
+                          : 'border border-transparent text-[#94A3B8] hover:text-white hover:bg-[#131B38]/60'
+                      }`}
+                    >
+                      <Icon
+                        className={`w-5 h-5 mb-1.5 transition-transform group-hover:scale-105 ${
+                          isActive ? 'text-[#3B82F6]' : 'text-slate-200 group-hover:text-white'
+                        }`}
+                      />
+                      <span
+                        className={`text-[10px] font-medium leading-none text-center tracking-tight ${
+                          isActive ? 'text-white font-semibold' : 'text-slate-300 group-hover:text-white'
+                        }`}
+                      >
+                        {item.short}
+                      </span>
+                    </div>
+
+                    {/* Faint subtle separator line matching screenshot */}
+                    <div className="w-8 mx-auto h-[1px] bg-white/[0.04] mt-1" />
                   </NavLink>
                 );
               }
 
-              // Expanded sidebar item style
+              // Expanded Sidebar Item
               return (
                 <NavLink
                   key={item.path}
@@ -155,11 +166,35 @@ export const Sidebar = () => {
                 </NavLink>
               );
             })}
+
+            {/* Profile Item with Red Dot in Rail Mode */}
+            {sidebarCollapsed && (
+              <NavLink
+                to="/settings"
+                title="Profile & Settings"
+                className="group block relative w-full pt-1"
+              >
+                <div className={`w-full py-2.5 px-1 rounded-2xl flex flex-col items-center justify-center transition-all duration-150 ${
+                  location.pathname === '/settings'
+                    ? 'border-2 border-[#2563EB] bg-[#0c1638] text-white'
+                    : 'border border-transparent text-[#94A3B8] hover:text-white hover:bg-[#131B38]/60'
+                }`}>
+                  <div className="relative">
+                    <User className="w-5 h-5 mb-1.5 text-slate-200 group-hover:text-white" />
+                    {/* Coral Red Notification Dot matching user screenshot */}
+                    <span className="absolute -top-0.5 -right-1 w-2.5 h-2.5 rounded-full bg-[#EF4444] ring-2 ring-[#080D20]"></span>
+                  </div>
+                  <span className="text-[11px] font-medium leading-tight text-center text-slate-300 group-hover:text-white">
+                    Profile
+                  </span>
+                </div>
+              </NavLink>
+            )}
           </nav>
         </div>
 
-        {/* Quick Actions Section */}
-        {!sidebarCollapsed ? (
+        {/* Quick Actions (when expanded) */}
+        {!sidebarCollapsed && (
           <div>
             <div className="px-3 mb-2 text-[11px] font-semibold tracking-wider text-[#8292AD] uppercase">
               Quick Actions
@@ -191,44 +226,22 @@ export const Sidebar = () => {
               </button>
             </div>
           </div>
-        ) : (
-          <div className="pt-2 border-t border-[#131B38] flex flex-col items-center space-y-2">
-            <button
-              onClick={() => setIsAddCompanyOpen(true)}
-              title="Add Company"
-              className="p-2.5 rounded-xl text-emerald-400 hover:bg-[#131B38] transition-colors"
-            >
-              <PlusCircle className="w-5 h-5" />
-            </button>
-          </div>
         )}
       </div>
 
-      {/* User Profile / Logout Section at Bottom */}
-      <div className="p-3 border-t border-[#131B38] bg-[#070b1b]">
+      {/* Pinned Logout at the Bottom matching uploaded screenshot */}
+      <div className={`border-t border-white/[0.06] bg-[#060A18] ${sidebarCollapsed ? 'py-4 px-2' : 'p-3'}`}>
         {sidebarCollapsed ? (
-          <div className="flex flex-col items-center space-y-2">
-            <NavLink
-              to="/settings"
-              title="Profile & Settings"
-              className="flex flex-col items-center justify-center p-2 rounded-xl text-[#8292AD] hover:text-white hover:bg-[#131B38] transition-colors"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces"
-                alt="Saurabh H."
-                className="w-7 h-7 rounded-full object-cover ring-2 ring-blue-500/40"
-              />
-              <span className="text-[9px] mt-1 text-[#8292AD]">Profile</span>
-            </NavLink>
-            <button
-              onClick={handleLogout}
-              title="Logout"
-              className="flex flex-col items-center justify-center p-2 rounded-xl text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors"
-            >
-              <LogOut className="w-4 h-4" />
-              <span className="text-[9px] mt-1 text-red-400">Logout</span>
-            </button>
-          </div>
+          <button
+            onClick={handleLogout}
+            title="Sign Out"
+            className="w-full flex flex-col items-center justify-center text-slate-300 hover:text-red-400 transition-colors group"
+          >
+            <LogOut className="w-5 h-5 mb-1 text-slate-300 group-hover:text-red-400 transition-colors" />
+            <span className="text-[11px] font-medium text-slate-300 group-hover:text-red-400">
+              Logout
+            </span>
+          </button>
         ) : (
           <div className="flex items-center justify-between">
             <NavLink
@@ -264,4 +277,3 @@ export const Sidebar = () => {
     </aside>
   );
 };
-
