@@ -23,6 +23,7 @@ export function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Dashboard />} />
+            {/* Core CRM Routes */}
             <Route path="companies" element={<Companies />} />
             <Route path="subscriptions" element={<Subscriptions />} />
             <Route path="billing" element={<Billing />} />
@@ -33,6 +34,15 @@ export function App() {
             <Route path="support" element={<SupportTickets />} />
             <Route path="activity" element={<ActivityLog />} />
             <Route path="settings" element={<Settings />} />
+
+            {/* HR / Workforce Navigation Aliases from Snippet */}
+            <Route path="attendance" element={<ActivityLog />} />
+            <Route path="candidates" element={<Companies />} />
+            <Route path="finances" element={<Billing />} />
+            <Route path="assets" element={<Usage />} />
+            <Route path="calendar" element={<ActivityLog />} />
+            <Route path="profile" element={<Settings />} />
+
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>
@@ -42,4 +52,3 @@ export function App() {
 }
 
 export default App;
-

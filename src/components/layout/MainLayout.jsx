@@ -6,30 +6,23 @@ import { MobileDrawer } from './MobileDrawer';
 import { CommandPalette } from '../common/CommandPalette';
 import { AddCompanyModal } from '../common/AddCompanyModal';
 import { ToastContainer } from '../common/ToastContainer';
-import { useApp } from '../../context/AppContext';
 
 export const MainLayout = () => {
-  const { sidebarCollapsed } = useApp();
-
   return (
-    <div className="min-h-screen bg-[#F7F9FC] text-[#172033] flex flex-col font-sans">
-      {/* Mobile Drawer */}
+    <div className="flex h-screen w-full bg-[#F7F9FC] overflow-hidden text-[#172033] font-sans">
+      {/* Mobile Drawer (visible only on small screens) */}
       <MobileDrawer />
 
-      {/* Desktop / Tablet Sidebar */}
+      {/* Desktop / Tablet Sidebar (w-[76px] or w-64) */}
       <Sidebar />
 
-      {/* Main Content Area */}
-      <div
-        className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${
-          sidebarCollapsed ? 'md:pl-[84px]' : 'md:pl-64'
-        }`}
-      >
+      {/* Main Content Area (Scrolls independently) */}
+      <div className="flex-1 flex flex-col h-screen overflow-y-auto min-w-0">
         {/* Header */}
         <Header />
 
-        {/* Page Inner Container */}
-        <main className="flex-1 p-4 md:p-8 max-w-7xl w-full mx-auto animate-in fade-in duration-200">
+        {/* Page Inner Container (max-w-[1720px] matches user snippet) */}
+        <main className="flex-1 p-4 md:p-6 lg:p-8 w-full max-w-[1720px] mx-auto animate-in fade-in duration-200">
           <Outlet />
         </main>
       </div>
@@ -41,4 +34,3 @@ export const MainLayout = () => {
     </div>
   );
 };
-
