@@ -403,12 +403,12 @@ export const INVOICES_DATA = [
 export const USERS_DATA = [
   {
     id: 'USR-201',
-    name: 'Saurabh H.',
-    email: 'saurabh.h@pulsecrm.io',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces',
-    role: 'Super Administrator',
+    name: 'Bobby Singh',
+    email: 'bobby.singh@pulsecrm.io',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=faces',
+    role: 'Super Admin',
     company: 'Pulse CRM HQ',
-    department: 'Operations & Exec',
+    department: 'Executive Operations',
     status: 'Active',
     lastActive: 'Just now',
     phone: '+91 99887 66554'

@@ -244,15 +244,15 @@ export const Header = () => {
           >
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces"
-                alt="Saurabh H."
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces"
+                alt="Bobby Singh"
                 className="w-8 h-8 rounded-full object-cover ring-2 ring-blue-500/20 group-hover:ring-blue-500/50 transition-all"
               />
               <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white"></span>
             </div>
             <div className="text-left hidden sm:block">
-              <p className="text-xs font-bold text-[#172033] leading-tight">Saurabh H.</p>
-              <p className="text-[10px] text-[#8292AD] leading-tight font-medium">HR Administrator</p>
+              <p className="text-xs font-bold text-[#172033] leading-tight">Bobby Singh</p>
+              <p className="text-[10px] text-[#8292AD] leading-tight font-medium">Super Admin</p>
             </div>
             <ChevronDown className="w-3.5 h-3.5 text-[#8292AD] group-hover:text-[#172033] transition-colors hidden sm:block" />
           </button>
@@ -261,7 +261,7 @@ export const Header = () => {
             <div className="absolute right-0 mt-2 w-64 bg-white border border-[#E5EAF2] rounded-2xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
               <div className="px-4 py-3 border-b border-[#E5EAF2]">
                 <p className="text-xs text-[#8292AD]">Signed in as</p>
-                <p className="text-sm font-bold text-[#172033]">saurabh.h@pulsecrm.io</p>
+                <p className="text-sm font-bold text-[#172033]">bobby.singh@pulsecrm.io</p>
                 <div className="mt-1.5 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">
                   <Shield className="w-2.5 h-2.5 mr-1" /> Super Admin Role
                 </div>

@@ -140,12 +140,12 @@ export const MobileDrawer = () => {
         <div className="p-4 border-t border-[#131B38] bg-[#070b1b] flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces"
-              alt="Saurabh H."
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces"
+              alt="Bobby Singh"
               className="w-9 h-9 rounded-full object-cover ring-2 ring-blue-500/50"
             />
             <div>
-              <p className="text-sm font-semibold text-white">Saurabh H.</p>
+              <p className="text-sm font-semibold text-white">Bobby Singh</p>
               <p className="text-[11px] text-[#8292AD]">Super Admin</p>
             </div>
           </div>

@@ -20,8 +20,8 @@ export const AppProvider = ({ children }) => {
   const [notifications, setNotifications] = useState(NOTIFICATIONS_DATA);
   const [plans, setPlans] = useState(PLANS_DATA);
 
-  // Layout states (default to rail mode like the shared screenshot reference)
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
+  // Layout states (default to expanded sidebar as requested)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedDateRange, setSelectedDateRange] = useState('Today: Nov 12, 2026');
 
@@ -58,7 +58,7 @@ export const AppProvider = ({ children }) => {
     // Add activity log
     const newLog = {
       id: `log-${Date.now()}`,
-      actor: 'Saurabh H. (Super Admin)',
+      actor: 'Bobby Singh (Super Admin)',
       action: 'Created new company account',
       target: `${company.name} (${company.plan} Plan)`,
       ip: '103.21.244.18',
