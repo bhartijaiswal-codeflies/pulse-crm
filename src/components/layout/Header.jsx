@@ -93,15 +93,6 @@ export const Header = () => {
           <Menu className="w-5 h-5" />
         </button>
 
-        {/* Desktop Sidebar Rail/Full Toggle */}
-        <button
-          onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-          className="hidden md:flex p-2 rounded-xl text-[#8292AD] hover:text-[#172033] hover:bg-[#F7F9FC] border border-[#E5EAF2] transition-colors"
-          title={sidebarCollapsed ? "Expand Sidebar" : "Collapse to Rail View"}
-        >
-          <PanelLeft className="w-4 h-4" />
-        </button>
-
         {/* Global Search Input (matches screenshot) */}
         <div
           onClick={() => setIsCommandPaletteOpen(true)}
