@@ -63,7 +63,7 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 z-30 h-16 bg-white border-b border-[#E5EAF2] shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-      <div className="w-full max-w-[1720px] mx-auto h-full px-4 md:px-6 lg:px-8 flex items-center justify-between">
+      <div className="w-full max-w-[1720px] mx-auto h-full px-4 md:px-6 lg:px-8 flex py-3 items-center justify-between">
         {/* Left: Mobile hamburger & Search bar */}
         <div className="flex items-center gap-3 flex-1 max-w-xl">
           <button
