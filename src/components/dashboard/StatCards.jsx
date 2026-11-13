@@ -1,108 +1,155 @@
 import React from 'react';
-import { Building2, Users, Wallet, CreditCard, ArrowUpRight, AlertCircle } from 'lucide-react';
-import { KPI_DATA } from '../../data/mockData';
-import { useApp } from '../../context/AppContext';
+import { Building2, Users, CreditCard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export const StatCards = () => {
-  const { companies, invoices } = useApp();
   const navigate = useNavigate();
-
-  // Dynamic calculations from base numbers in specification
-  const additionalCompanies = Math.max(0, companies.length - 10);
-  const totalCompaniesCount = 248 + additionalCompanies;
-  const activeSubsCount = 225 + Math.max(0, companies.filter(c => c.status === 'Active').length - 7);
-  const pendingCount = 12;
 
   const cards = [
     {
       title: 'Total Companies',
-      value: totalCompaniesCount,
+      value: '248',
       growth: '+12%',
       comparison: 'vs previous 30 days',
-      trend: 'up',
-      icon: Building2,
-      iconColor: 'text-[#3B82F6]',
-      iconBg: 'bg-blue-50 border-blue-100',
-      badgeBg: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+      trendColor: 'text-[#10B981]',
+      icon: (
+        <div className="w-10 h-10 rounded-xl bg-[#EBF3FF] flex items-center justify-center text-[#2563EB] flex-shrink-0">
+          <Building2 className="w-5 h-5" />
+        </div>
+      ),
+      sparkline: (
+        <svg viewBox="0 0 100 35" fill="none" className="w-24 h-9">
+          <path
+            d="M 2 24 C 15 24, 25 18, 38 21 C 50 25, 62 10, 75 14 C 85 16, 92 8, 98 6"
+            stroke="#3B82F6"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+        </svg>
+      ),
+      bgClass: 'bg-gradient-to-br from-[#F5F8FF]/80 via-white to-white border-[#E0EDFD]',
       onClick: () => navigate('/companies')
     },
     {
       title: 'Active Subscriptions',
-      value: activeSubsCount,
+      value: '225',
       growth: '+8%',
       comparison: 'vs previous 30 days',
-      trend: 'up',
-      icon: Users,
-      iconColor: 'text-[#10B981]',
-      iconBg: 'bg-emerald-50 border-emerald-100',
-      badgeBg: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+      trendColor: 'text-[#10B981]',
+      icon: (
+        <div className="w-10 h-10 rounded-xl bg-[#ECFDF5] flex items-center justify-center text-[#10B981] flex-shrink-0">
+          <Users className="w-5 h-5" />
+        </div>
+      ),
+      sparkline: (
+        <svg viewBox="0 0 100 35" fill="none" className="w-24 h-9">
+          <path
+            d="M 2 22 C 16 22, 28 26, 42 18 C 55 12, 68 22, 80 14 C 90 8, 94 12, 98 4"
+            stroke="#10B981"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+        </svg>
+      ),
+      bgClass: 'bg-gradient-to-br from-[#F2FDF6]/80 via-white to-white border-[#DCFCE7]',
       onClick: () => navigate('/subscriptions')
     },
     {
       title: 'Monthly Recurring Revenue',
       value: '₹17.6L',
-      growth: '+14%',
+      growth: '+15%',
       comparison: 'vs previous 30 days',
-      trend: 'up',
-      icon: Wallet,
-      iconColor: 'text-[#8B5CF6]',
-      iconBg: 'bg-purple-50 border-purple-100',
-      badgeBg: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+      trendColor: 'text-[#10B981]',
+      icon: (
+        <div className="w-10 h-10 rounded-xl bg-[#F5F3FF] flex items-center justify-center text-[#7C3AED] flex-shrink-0 font-bold text-lg">
+          ₹
+        </div>
+      ),
+      sparkline: (
+        <svg viewBox="0 0 100 35" fill="none" className="w-24 h-9">
+          <path
+            d="M 2 22 C 14 22, 24 25, 36 21 C 48 16, 60 26, 74 18 C 86 10, 92 16, 98 8"
+            stroke="#8B5CF6"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+        </svg>
+      ),
+      bgClass: 'bg-gradient-to-br from-[#FAF5FF]/80 via-white to-white border-[#F3E8FF]',
       onClick: () => navigate('/billing')
     },
     {
       title: 'Pending Payments',
-      value: pendingCount,
-      growth: '₹2.4L outstanding',
-      comparison: '₹2.4L outstanding',
-      trend: 'warning',
-      icon: CreditCard,
-      iconColor: 'text-[#F59E0B]',
-      iconBg: 'bg-amber-50 border-amber-100',
-      badgeBg: 'bg-amber-50 text-amber-700 border-amber-100',
+      value: '12',
+      customComparison: '₹2.4L outstanding',
+      trendColor: 'text-[#F59E0B]',
+      icon: (
+        <div className="w-10 h-10 rounded-xl bg-[#FFFBEB] flex items-center justify-center text-[#F59E0B] flex-shrink-0">
+          <CreditCard className="w-5 h-5" />
+        </div>
+      ),
+      sparkline: (
+        <svg viewBox="0 0 100 35" fill="none" className="w-24 h-9">
+          <path
+            d="M 2 20 C 15 16, 26 22, 38 18 C 50 14, 62 20, 74 12 C 86 6, 92 14, 98 10"
+            stroke="#F59E0B"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+        </svg>
+      ),
+      bgClass: 'bg-gradient-to-br from-[#FFFDF5]/80 via-white to-white border-[#FEF3C7]',
       onClick: () => navigate('/billing')
     }
   ];
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-      {cards.map((card, idx) => {
-        const Icon = card.icon;
-        return (
-          <div
-            key={idx}
-            onClick={card.onClick}
-            className="bg-white rounded-2xl p-5 border border-[#E5EAF2] hover:border-blue-200 transition-all duration-200 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_12px_rgba(37,99,235,0.08)] cursor-pointer group flex flex-col justify-between"
-          >
-            {/* Top row: Icon and Growth Badge */}
-            <div className="flex items-center justify-between">
-              <div className={`w-11 h-11 rounded-xl flex items-center justify-center border ${card.iconBg} ${card.iconColor} transition-transform group-hover:scale-105`}>
-                <Icon className="w-5 h-5" />
+      {cards.map((card, idx) => (
+        <div
+          key={idx}
+          onClick={card.onClick}
+          className={`rounded-2xl p-5 border ${card.bgClass} shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between`}
+        >
+          {/* Top Row: Icon + Title & Value on Left, Sparkline on Right */}
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex items-center gap-3">
+              {card.icon}
+              <div>
+                <p className="text-xs font-medium text-[#475569] leading-tight">
+                  {card.title}
+                </p>
+                <h3 className="text-2xl font-bold text-[#172033] mt-1 tracking-tight">
+                  {card.value}
+                </h3>
               </div>
-              <span className={`inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full border ${card.badgeBg}`}>
-                {card.trend === 'up' && <ArrowUpRight className="w-3 h-3" />}
-                {card.trend === 'warning' && <AlertCircle className="w-3 h-3" />}
-                {card.growth}
-              </span>
             </div>
 
-            {/* Bottom info */}
-            <div className="mt-4">
-              <p className="text-xs font-semibold text-[#8292AD] uppercase tracking-wide">
-                {card.title}
-              </p>
-              <h3 className="text-2xl font-extrabold text-[#172033] mt-1 tracking-tight">
-                {card.value}
-              </h3>
-              <p className="text-[11px] text-[#8292AD] mt-1 font-medium">
-                {card.comparison}
-              </p>
+            {/* Sparkline curve */}
+            <div className="flex-shrink-0 pt-1">
+              {card.sparkline}
             </div>
           </div>
-        );
-      })}
+
+          {/* Bottom Row: Percentage & Subtitle */}
+          <div className="mt-4 pt-1 flex items-center text-xs">
+            {card.growth ? (
+              <>
+                <span className={`${card.trendColor} font-semibold flex items-center gap-0.5`}>
+                  ↑ {card.growth}
+                </span>
+                <span className="text-[#64748B] ml-1.5 font-normal">
+                  {card.comparison}
+                </span>
+              </>
+            ) : (
+              <span className="text-[#D97706] font-semibold">
+                {card.customComparison}
+              </span>
+            )}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
-

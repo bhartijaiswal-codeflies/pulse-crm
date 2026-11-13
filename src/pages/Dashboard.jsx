@@ -1,141 +1,102 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StatCards } from '../components/dashboard/StatCards';
 import { RevenueChart } from '../components/dashboard/RevenueChart';
 import { SubscriptionChart } from '../components/dashboard/SubscriptionChart';
 import { RecentCompanies } from '../components/dashboard/RecentCompanies';
 import { RecentActivity } from '../components/dashboard/RecentActivity';
-import { WorkforceDashboard } from '../components/dashboard/WorkforceDashboard';
-import { Plus, Download, Sparkles, AlertTriangle, Users2, BarChart2 } from 'lucide-react';
-import { useApp } from '../context/AppContext';
-import { useNavigate } from 'react-router-dom';
+import { Calendar, ChevronDown, Check } from 'lucide-react';
+
+const DATE_OPTIONS = [
+  'Today',
+  'Last 7 Days',
+  'Last 30 Days',
+  'Last 90 Days',
+  'This Year (2026)'
+];
 
 export const Dashboard = () => {
-  const { setIsAddCompanyOpen, showToast, invoices } = useApp();
-  const navigate = useNavigate();
-  // Default to workforce view to match the user's primary screenshot
-  const [viewMode, setViewMode] = useState('workforce');
+  const [selectedRange, setSelectedRange] = useState('Last 30 Days');
+  const [isDateOpen, setIsDateOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-  const handleExport = () => {
-    showToast('Exporting executive dashboard summary report (CSV)...', 'info');
-  };
-
-  const pendingCount = invoices.filter(i => i.status === 'Pending' || i.status === 'Overdue').length;
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsDateOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
-    <div className="space-y-6">
-      {/* Top Header & View Switcher */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-1 border-b border-[#E5EAF2]">
+    <div className="space-y-5 animate-in fade-in duration-150">
+      {/* Top Header: Title + Subtitle on Left, Date Filter on Right */}
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl md:text-2xl font-extrabold text-[#172033] tracking-tight">
+          <h1 className="text-2xl font-bold text-[#172033] tracking-tight">
             Dashboard
           </h1>
-          <p className="text-xs text-[#8292AD] mt-0.5 font-medium">
-            {viewMode === 'workforce'
-              ? 'Admin Overview & Workforce Operations'
-              : 'Admin Overview & SaaS CRM Analytics'}
+          <p className="text-xs text-[#8292AD] mt-1 font-normal">
+            Overview of your SaaS business
           </p>
         </div>
 
-        {/* View Mode Toggle & Action Buttons */}
-        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-          {/* View Mode Switcher Pill */}
-          <div className="flex items-center bg-[#F1F5F9] p-1 rounded-xl border border-[#E5EAF2]">
-            <button
-              onClick={() => setViewMode('workforce')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                viewMode === 'workforce'
-                  ? 'bg-white text-[#2563EB] shadow-xs'
-                  : 'text-[#8292AD] hover:text-[#172033]'
-              }`}
-            >
-              <Users2 className="w-3.5 h-3.5" />
-              <span>Workforce Ops</span>
-            </button>
-            <button
-              onClick={() => setViewMode('crm')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                viewMode === 'crm'
-                  ? 'bg-white text-[#2563EB] shadow-xs'
-                  : 'text-[#8292AD] hover:text-[#172033]'
-              }`}
-            >
-              <BarChart2 className="w-3.5 h-3.5" />
-              <span>SaaS CRM</span>
-            </button>
-          </div>
-
+        {/* Date Dropdown button matching screenshot */}
+        <div className="relative" ref={dropdownRef}>
           <button
-            onClick={handleExport}
-            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#172033] bg-white border border-[#E5EAF2] hover:bg-slate-50 rounded-xl transition-colors shadow-xs"
+            onClick={() => setIsDateOpen(!isDateOpen)}
+            className="flex items-center gap-2 bg-white border border-[#E5EAF2] hover:bg-slate-50 text-xs font-medium text-[#172033] px-3.5 py-2 rounded-xl shadow-xs transition-colors"
           >
-            <Download className="w-3.5 h-3.5 text-[#8292AD]" />
-            <span>Export</span>
+            <Calendar className="w-4 h-4 text-[#64748B]" />
+            <span>{selectedRange}</span>
+            <ChevronDown className="w-3.5 h-3.5 text-[#64748B] ml-0.5" />
           </button>
 
-          <button
-            onClick={() => setIsAddCompanyOpen(true)}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-xs transition-all hover:scale-[1.02]"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            <span>Add Company</span>
-          </button>
+          {isDateOpen && (
+            <div className="absolute right-0 mt-2 w-44 bg-white border border-[#E5EAF2] rounded-xl shadow-lg py-1.5 z-30 animate-in fade-in duration-100">
+              {DATE_OPTIONS.map((opt) => (
+                <button
+                  key={opt}
+                  onClick={() => {
+                    setSelectedRange(opt);
+                    setIsDateOpen(false);
+                  }}
+                  className={`w-full text-left px-3.5 py-1.5 text-xs flex items-center justify-between hover:bg-[#F8FAFC] transition-colors ${
+                    selectedRange === opt ? 'text-[#2563EB] font-bold' : 'text-[#334155]'
+                  }`}
+                >
+                  <span>{opt}</span>
+                  {selectedRange === opt && <Check className="w-3.5 h-3.5" />}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Conditionally Render View */}
-      {viewMode === 'workforce' ? (
-        <WorkforceDashboard />
-      ) : (
-        <div className="space-y-6">
-          {/* Pending Payments Alert Callout if any */}
-          {pendingCount > 0 && (
-            <div className="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700 flex-shrink-0">
-                  <AlertTriangle className="w-4 h-4" />
-                </div>
-                <div>
-                  <span className="font-bold text-amber-900">
-                    {pendingCount} Pending & Overdue Invoices
-                  </span>
-                  <p className="text-amber-700 text-[11px] mt-0.5">
-                    ₹2.4L outstanding across tenant accounts. Automated retry scheduled.
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => navigate('/billing')}
-                className="px-3.5 py-1.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl self-start sm:self-auto transition-colors whitespace-nowrap shadow-xs"
-              >
-                Review Invoices →
-              </button>
-            </div>
-          )}
+      {/* 1. 4 KPI Summary Cards */}
+      <StatCards />
 
-          {/* 1. KPI Summary Cards (4 Cards) */}
-          <StatCards />
-
-          {/* 2. Analytics Row: Revenue Overview & Subscription Donut Chart */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-            <div className="lg:col-span-2">
-              <RevenueChart />
-            </div>
-            <div>
-              <SubscriptionChart />
-            </div>
-          </div>
-
-          {/* 3. Bottom Row: Recent Companies Table & Recent Activity Feed */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-            <div className="lg:col-span-2">
-              <RecentCompanies />
-            </div>
-            <div>
-              <RecentActivity />
-            </div>
-          </div>
+      {/* 2. Middle Row: Revenue Overview & Subscription Status */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        <div className="lg:col-span-7">
+          <RevenueChart />
         </div>
-      )}
+        <div className="lg:col-span-5">
+          <SubscriptionChart />
+        </div>
+      </div>
+
+      {/* 3. Bottom Row: Recent Companies & Recent Activity */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        <div className="lg:col-span-7">
+          <RecentCompanies />
+        </div>
+        <div className="lg:col-span-5">
+          <RecentActivity />
+        </div>
+      </div>
     </div>
   );
 };

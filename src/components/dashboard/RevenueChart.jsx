@@ -8,101 +8,133 @@ import {
   Tooltip,
   ResponsiveContainer
 } from 'recharts';
-import { TrendingUp, ArrowUpRight, BarChart2 } from 'lucide-react';
-import { REVENUE_DATA } from '../../data/mockData';
+import { BarChart2 } from 'lucide-react';
+
+const REVENUE_TIMEFRAME_DATA = {
+  '30D': [
+    { date: 'Oct 15', revenue: 6.8, showTick: true },
+    { date: 'Oct 17', revenue: 6.8 },
+    { date: 'Oct 19', revenue: 8.5 },
+    { date: 'Oct 21', revenue: 7.2 },
+    { date: 'Oct 22', revenue: 9.8, showTick: true },
+    { date: 'Oct 24', revenue: 9.2 },
+    { date: 'Oct 26', revenue: 11.4 },
+    { date: 'Oct 28', revenue: 9.0 },
+    { date: 'Oct 29', revenue: 10.8, showTick: true },
+    { date: 'Oct 31', revenue: 11.8 },
+    { date: 'Nov 01', revenue: 13.5 },
+    { date: 'Nov 02', revenue: 15.2 },
+    { date: 'Nov 03', revenue: 14.1 },
+    { date: 'Nov 04', revenue: 12.0, showTick: true },
+    { date: 'Nov 06', revenue: 14.0 },
+    { date: 'Nov 07', revenue: 13.2 },
+    { date: 'Nov 08', revenue: 15.6 },
+    { date: 'Nov 09', revenue: 14.2 },
+    { date: 'Nov 10', revenue: 16.0 },
+    { date: 'Nov 11', revenue: 17.6, showTick: true }
+  ],
+  '7D': [
+    { date: 'Nov 05', revenue: 12.5, showTick: true },
+    { date: 'Nov 06', revenue: 13.8 },
+    { date: 'Nov 07', revenue: 13.2 },
+    { date: 'Nov 08', revenue: 15.6, showTick: true },
+    { date: 'Nov 09', revenue: 14.2 },
+    { date: 'Nov 10', revenue: 16.0 },
+    { date: 'Nov 11', revenue: 17.6, showTick: true }
+  ],
+  '90D': [
+    { date: 'Aug 15', revenue: 9.4, showTick: true },
+    { date: 'Sep 01', revenue: 11.2 },
+    { date: 'Sep 15', revenue: 12.5, showTick: true },
+    { date: 'Oct 01', revenue: 13.8 },
+    { date: 'Oct 15', revenue: 14.6, showTick: true },
+    { date: 'Nov 01', revenue: 16.2 },
+    { date: 'Nov 11', revenue: 17.6, showTick: true }
+  ],
+  '1Y': [
+    { date: 'Jan', revenue: 6.2, showTick: true },
+    { date: 'Mar', revenue: 8.5 },
+    { date: 'May', revenue: 10.4, showTick: true },
+    { date: 'Jul', revenue: 12.8 },
+    { date: 'Sep', revenue: 14.9, showTick: true },
+    { date: 'Nov', revenue: 17.6, showTick: true }
+  ]
+};
 
 export const RevenueChart = () => {
-  const [timeframe, setTimeframe] = useState('monthly');
+  const [activeFilter, setActiveFilter] = useState('30D');
 
-  const chartData = REVENUE_DATA[timeframe];
-
-  // Current headline display based on timeframe
-  const headline = {
-    monthly: { amount: '₹17.6L', growth: '+14%', label: 'Current Month Run Rate' },
-    weekly: { amount: '₹4.7L', growth: '+9.4%', label: 'Current Week Projected' },
-    yearly: { amount: '₹184.2L', growth: '+28.5%', label: 'Year-to-Date Revenue' }
-  }[timeframe];
+  const chartData = REVENUE_TIMEFRAME_DATA[activeFilter] || REVENUE_TIMEFRAME_DATA['30D'];
 
   return (
-    <div className="bg-white rounded-2xl p-5 border border-[#E5EAF2] shadow-[0_1px_3px_rgba(0,0,0,0.04)] flex flex-col justify-between">
-      {/* Header with Title and Filters */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#E5EAF2]">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
-            <BarChart2 className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="text-base font-bold text-[#172033]">Revenue Overview</h3>
-            <p className="text-xs text-[#8292AD]">Cash collection & recurring run-rate trend</p>
-          </div>
+    <div className="bg-white rounded-2xl p-5 border border-[#E5EAF2] shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex flex-col justify-between h-full">
+      {/* Header: Title on Left, Filter pills on Right */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <BarChart2 className="w-5 h-5 text-[#2563EB]" />
+          <h3 className="text-base font-bold text-[#172033]">Revenue Overview</h3>
         </div>
 
-        {/* Timeframe selector buttons */}
-        <div className="flex items-center bg-[#F7F9FC] border border-[#E5EAF2] rounded-xl p-1 self-start sm:self-auto">
-          {['weekly', 'monthly', 'yearly'].map((period) => (
+        <div className="flex items-center gap-1 bg-white">
+          {['7D', '30D', '90D', '1Y'].map((tab) => (
             <button
-              key={period}
-              onClick={() => setTimeframe(period)}
-              className={`px-3 py-1 text-xs font-semibold rounded-lg capitalize transition-all ${
-                timeframe === period
-                  ? 'bg-white text-blue-600 shadow-xs'
+              key={tab}
+              onClick={() => setActiveFilter(tab)}
+              className={`px-3 py-1 text-xs font-semibold rounded-full transition-colors ${
+                activeFilter === tab
+                  ? 'bg-[#EBF3FF] text-[#2563EB]'
                   : 'text-[#8292AD] hover:text-[#172033]'
               }`}
             >
-              {period}
+              {tab}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Metric highlights */}
-      <div className="flex items-baseline gap-3 my-4">
-        <span className="text-2xl font-black text-[#172033] tracking-tight">
-          {headline.amount}
+      {/* Metric Display: ₹17.6L + 15% */}
+      <div className="flex items-center gap-3 mt-3 mb-2">
+        <span className="text-3xl font-extrabold text-[#172033] tracking-tight">
+          ₹17.6L
         </span>
-        <span className="inline-flex items-center gap-0.5 text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
-          <ArrowUpRight className="w-3.5 h-3.5" />
-          {headline.growth}
-        </span>
-        <span className="text-xs text-[#8292AD] font-medium hidden sm:inline">
-          {headline.label}
+        <span className="inline-flex items-center text-xs font-semibold text-emerald-600 bg-[#ECFDF5] border border-[#A7F3D0]/60 px-2.5 py-0.5 rounded-full">
+          ↑ +15%
         </span>
       </div>
 
-      {/* Chart */}
-      <div className="h-64 w-full min-h-[256px]">
-        <ResponsiveContainer width="100%" height={256}>
+      {/* Area Chart matching screenshot */}
+      <div className="w-full h-56 mt-2">
+        <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
             <defs>
-              <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.35} />
-                <stop offset="95%" stopColor="#3B82F6" stopOpacity={0.02} />
+              <linearGradient id="blueGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#2563EB" stopOpacity={0.25} />
+                <stop offset="95%" stopColor="#2563EB" stopOpacity={0.01} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
+            <CartesianGrid strokeDasharray="0" vertical={false} stroke="#F1F5F9" />
             <XAxis
-              dataKey="name"
+              dataKey="date"
               axisLine={false}
               tickLine={false}
+              ticks={['Oct 15', 'Oct 22', 'Oct 29', 'Nov 04', 'Nov 11']}
               tick={{ fill: '#8292AD', fontSize: 11 }}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
+              domain={[0, 20]}
+              ticks={[0, 5, 10, 15, 20]}
               tick={{ fill: '#8292AD', fontSize: 11 }}
-              tickFormatter={(v) => `₹${v}L`}
+              tickFormatter={(v) => `${v}L`}
             />
             <Tooltip
               content={({ active, payload, label }) => {
                 if (active && payload && payload.length) {
                   return (
-                    <div className="bg-white border border-[#E5EAF2] p-2.5 rounded-xl shadow-lg text-xs">
-                      <p className="font-bold text-[#172033] mb-1">{label}</p>
-                      <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-blue-600"></span>
-                        <span className="text-[#8292AD]">Revenue:</span>
-                        <span className="font-bold text-blue-600">₹{payload[0].value} Lakhs</span>
-                      </div>
+                    <div className="bg-white border border-[#E5EAF2] p-2 rounded-xl shadow-md text-xs">
+                      <p className="font-semibold text-[#172033]">{label}</p>
+                      <p className="text-[#2563EB] font-bold">₹{payload[0].value}L</p>
                     </div>
                   );
                 }
@@ -112,25 +144,16 @@ export const RevenueChart = () => {
             <Area
               type="monotone"
               dataKey="revenue"
-              stroke="#3B82F6"
-              strokeWidth={3}
+              stroke="#2563EB"
+              strokeWidth={2.5}
               isAnimationActive={false}
-              fillOpacity={1}
-              fill="url(#revenueGradient)"
+              fill="url(#blueGradient)"
+              dot={{ r: 3.5, fill: '#FFFFFF', stroke: '#2563EB', strokeWidth: 2 }}
+              activeDot={{ r: 5, fill: '#2563EB', stroke: '#FFFFFF', strokeWidth: 2 }}
             />
           </AreaChart>
         </ResponsiveContainer>
       </div>
-
-      {/* Bottom Insights */}
-      <div className="pt-3 border-t border-[#E5EAF2] flex items-center justify-between text-xs text-[#8292AD]">
-        <div className="flex items-center gap-1.5 text-emerald-600 font-semibold">
-          <TrendingUp className="w-3.5 h-3.5" />
-          <span>Strongest expansion in Q4 (+18.4% YoY)</span>
-        </div>
-        <span className="text-[11px]">Next reconciliation: Nov 15</span>
-      </div>
     </div>
   );
 };
-
