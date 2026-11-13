@@ -46,8 +46,8 @@ export const Sidebar = () => {
   };
 
   return (
-    <aside className="hidden md:flex flex-col items-center w-[76px] h-screen sticky top-0 py-2.5 select-none z-40 flex-shrink-0 justify-between overflow-hidden bg-[#060A18] border-r border-[#131B33]">
-      <div className="flex flex-col items-center w-full flex-1 overflow-hidden min-h-0">
+    <aside className="hidden md:flex flex-col items-center w-[76px] h-screen sticky top-0 py-2 select-none z-40 flex-shrink-0 justify-between bg-[#060A18] border-r border-[#131B33]">
+      <div className="flex flex-col items-center w-full flex-1">
         {/* Top Logo Container */}
         <div className="relative group cursor-pointer pt-1 mb-2 flex-shrink-0">
           <div
@@ -61,16 +61,14 @@ export const Sidebar = () => {
               className="w-full h-full object-contain brightness-0 invert"
             />
           </div>
+          {/* Tooltip on hover */}
           <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 px-2.5 py-1 text-[11px] font-semibold rounded-md shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap bg-[#0D152D] text-white border border-[#1A2544]">
             Pulse CRM
           </div>
         </div>
 
-        {/* Navigation items list - ZERO scrollbar visible */}
-        <nav
-          className="flex flex-col items-center w-full overflow-y-auto no-scrollbar flex-1 py-0.5 [&::-webkit-scrollbar]:hidden"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
+        {/* Navigation items list - Fixed & Non-scrolling */}
+        <nav className="flex flex-col items-center w-full flex-1 py-0.5">
           {MAIN_NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
@@ -79,19 +77,19 @@ export const Sidebar = () => {
               <React.Fragment key={item.path}>
                 <NavLink
                   to={item.path}
-                  className={`group relative w-[60px] h-[44px] flex-shrink-0 flex flex-col items-center justify-center rounded-xl transition-all duration-150 ${
+                  className={`group relative w-[60px] h-[38px] flex-shrink-0 flex flex-col items-center justify-center rounded-xl transition-all duration-150 ${
                     isActive
                       ? 'bg-[#0D1938] border border-blue-500/50 text-white shadow-[0_0_12px_rgba(37,99,235,0.28)]'
                       : 'text-[#76849D] hover:text-white hover:bg-[#0D152D]/80 border border-transparent'
                   }`}
                 >
                   <Icon
-                    className={`w-[17px] h-[17px] mb-0.5 transition-transform group-hover:scale-105 stroke-[1.8] ${
+                    className={`w-4 h-4 mb-0.5 transition-transform group-hover:scale-105 stroke-[1.8] ${
                       isActive ? 'text-[#3B82F6]' : 'text-[#e8eaed] group-hover:text-white'
                     }`}
                   />
                   <span
-                    className={`text-[9.5px] tracking-tight leading-none text-center truncate max-w-[56px] ${
+                    className={`text-[9px] tracking-tight leading-none text-center truncate max-w-[56px] ${
                       isActive
                         ? 'font-semibold text-[#93C5FD]'
                         : 'font-medium text-[#e8eaed] group-hover:text-[#E2E8F0]'
@@ -100,22 +98,22 @@ export const Sidebar = () => {
                     {item.short}
                   </span>
 
-                  {/* Tooltip on hover */}
+                  {/* Tooltip on hover - Unclipped */}
                   <div className="absolute left-full ml-3 px-2.5 py-1 text-[11px] font-semibold rounded-md shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap bg-[#0D152D] text-white border border-[#1A2544]">
                     {item.name}
                   </div>
                 </NavLink>
 
                 {/* 1px divider between items */}
-                <div className="w-full h-[1px] my-0.5 flex-shrink-0 transition-colors bg-[#141E38]" />
+                <div className="w-[48px] h-[1px] my-0.5 flex-shrink-0 transition-colors bg-[#141E38]/80" />
               </React.Fragment>
             );
           })}
 
           {/* Quick Actions ⚡ */}
-          <div className="group relative w-[60px] h-[44px] flex-shrink-0 flex flex-col items-center justify-center rounded-xl transition-all duration-150 text-[#76849D] hover:text-white hover:bg-[#0D152D]/80 border border-transparent cursor-pointer">
-            <Zap className="w-[17px] h-[17px] mb-0.5 transition-transform group-hover:scale-105 stroke-[1.8] text-amber-400 fill-amber-400" />
-            <span className="text-[9.5px] tracking-tight leading-none text-center truncate max-w-[56px] font-medium text-amber-300">
+          <div className="group relative w-[60px] h-[38px] flex-shrink-0 flex flex-col items-center justify-center rounded-xl transition-all duration-150 text-[#76849D] hover:text-white hover:bg-[#0D152D]/80 border border-transparent cursor-pointer">
+            <Zap className="w-4 h-4 mb-0.5 transition-transform group-hover:scale-105 stroke-[1.8] text-amber-400 fill-amber-400" />
+            <span className="text-[9px] tracking-tight leading-none text-center truncate max-w-[56px] font-medium text-amber-300">
               Quick ⚡
             </span>
 
@@ -149,12 +147,12 @@ export const Sidebar = () => {
             </div>
           </div>
 
-          <div className="w-full h-[1px] my-0.5 flex-shrink-0 transition-colors bg-[#141E38]" />
+          <div className="w-[48px] h-[1px] my-0.5 flex-shrink-0 transition-colors bg-[#141E38]/80" />
 
           {/* Profile Item with pulsating coral dot */}
           <NavLink
             to="/settings"
-            className={`group relative w-[60px] h-[44px] flex-shrink-0 flex flex-col items-center justify-center rounded-xl transition-all duration-150 ${
+            className={`group relative w-[60px] h-[38px] flex-shrink-0 flex flex-col items-center justify-center rounded-xl transition-all duration-150 ${
               location.pathname === '/settings'
                 ? 'bg-[#0D1938] border border-blue-500/50 text-white shadow-[0_0_12px_rgba(37,99,235,0.28)]'
                 : 'text-[#76849D] hover:text-white hover:bg-[#0D152D]/80 border border-transparent'
@@ -162,14 +160,14 @@ export const Sidebar = () => {
           >
             <span className="absolute top-1 right-2 w-2 h-2 rounded-full bg-[#FF3B5B] ring-2 ring-[#060A18] animate-pulse" />
             <UserIcon
-              className={`w-[17px] h-[17px] mb-0.5 transition-transform group-hover:scale-105 stroke-[1.8] ${
+              className={`w-4 h-4 mb-0.5 transition-transform group-hover:scale-105 stroke-[1.8] ${
                 location.pathname === '/settings'
                   ? 'text-[#3B82F6]'
                   : 'text-[#e8eaed] group-hover:text-white'
               }`}
             />
             <span
-              className={`text-[9.5px] tracking-tight leading-none text-center truncate max-w-[56px] ${
+              className={`text-[9px] tracking-tight leading-none text-center truncate max-w-[56px] ${
                 location.pathname === '/settings'
                   ? 'font-semibold text-[#93C5FD]'
                   : 'font-medium text-[#e8eaed] group-hover:text-[#E2E8F0]'
@@ -185,14 +183,14 @@ export const Sidebar = () => {
       </div>
 
       {/* Logout button at bottom (exact from screenshot) */}
-      <div className="w-full px-1.5 pt-1.5 flex-shrink-0 mt-0.5 transition-colors border-t border-[#141E38]">
+      <div className="w-full px-1.5 pt-1.5 flex-shrink-0 border-t border-[#141E38]">
         <button
           onClick={handleLogout}
-          className="group relative w-[60px] h-[46px] mx-auto flex flex-col items-center justify-center rounded-xl transition-all duration-150 text-[#76849D] hover:text-rose-400 hover:bg-[#1A1222]"
+          className="group relative w-[60px] h-[40px] mx-auto flex flex-col items-center justify-center rounded-xl transition-all duration-150 text-[#76849D] hover:text-rose-400 hover:bg-[#1A1222]"
           title="Sign out"
         >
-          <LogOut className="w-[17px] h-[17px] mb-0.5 group-hover:scale-105 transition-transform stroke-[1.8] text-current" />
-          <span className="text-[9.5px] font-medium leading-none">Logout</span>
+          <LogOut className="w-4 h-4 mb-0.5 group-hover:scale-105 transition-transform stroke-[1.8] text-current" />
+          <span className="text-[9px] font-medium leading-none">Logout</span>
           <div className="absolute left-full ml-3 px-2.5 py-1 text-[11px] font-semibold rounded-md shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap bg-[#1A1222] text-rose-300 border border-rose-900/50">
             Logout
           </div>
