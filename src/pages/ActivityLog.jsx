@@ -121,7 +121,7 @@ export const ActivityLog = () => {
                 <th className="py-3.5 px-3 lg:px-4">Action Performed</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Target Entity</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">IP Address</th>
-                <th className="py-3.5 px-3 lg:px-4">Timestamp</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Timestamp</th>
                 <th className="py-3.5 px-3 lg:px-4 text-right">Result</th>
               </tr>
             </thead>
@@ -142,7 +142,11 @@ export const ActivityLog = () => {
                   </td>
 
                   <td className="py-3.5 px-3 lg:px-4 font-medium text-[#172033]">
-                    {log.action}
+                    <div>{log.action}</div>
+                    <div className="text-[11px] text-[#8292AD] lg:hidden flex items-center gap-1 mt-0.5">
+                      <Clock className="w-3 h-3 text-slate-400" />
+                      {log.time}
+                    </div>
                   </td>
 
                   <td className="py-3.5 px-3 lg:px-4 text-[#8292AD] max-w-xs truncate hidden lg:table-cell">
@@ -156,7 +160,7 @@ export const ActivityLog = () => {
                     </span>
                   </td>
 
-                  <td className="py-3.5 px-3 lg:px-4 text-[#8292AD] whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 text-[#8292AD] whitespace-nowrap hidden lg:table-cell">
                     <span className="flex items-center gap-1">
                       <Clock className="w-3 h-3 text-slate-400" />
                       {log.time}

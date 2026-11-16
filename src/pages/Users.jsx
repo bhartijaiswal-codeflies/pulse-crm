@@ -175,7 +175,7 @@ export const Users = () => {
               <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
                 <th className="py-3.5 px-3 lg:px-4">User</th>
                 <th className="py-3.5 px-3 lg:px-4">Role</th>
-                <th className="py-3.5 px-3 lg:px-4">Organization</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Organization</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">Department</th>
                 <th className="py-3.5 px-3 lg:px-4">Status</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Last Active</th>
@@ -196,7 +196,9 @@ export const Users = () => {
                         <p className="font-bold text-[#172033] group-hover:text-blue-600">
                           {user.name}
                         </p>
-                        <p className="text-[11px] text-[#8292AD]">{user.email}</p>
+                        <p className="text-[11px] text-[#8292AD]">
+                          {user.email} <span className="lg:hidden text-[#64748B] font-medium">• {user.company}</span>
+                        </p>
                       </div>
                     </div>
                   </td>
@@ -208,7 +210,7 @@ export const Users = () => {
                     </span>
                   </td>
 
-                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap font-medium text-[#172033]">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap font-medium text-[#172033] hidden lg:table-cell">
                     {user.company}
                   </td>
 

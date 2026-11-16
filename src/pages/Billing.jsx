@@ -199,7 +199,7 @@ Pulse CRM Platform • support@pulsecrm.io
                 <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">Plan Description</th>
                 <th className="py-3.5 px-3 lg:px-4">Amount</th>
                 <th className="py-3.5 px-3 lg:px-4">Status</th>
-                <th className="py-3.5 px-3 lg:px-4">Due Date</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Due Date</th>
                 <th className="py-3.5 px-2 sm:px-3 lg:px-4 text-right">Actions</th>
               </tr>
             </thead>
@@ -243,13 +243,14 @@ Pulse CRM Platform • support@pulsecrm.io
                         <AlertTriangle className="w-3 h-3 text-red-600" /> Overdue
                       </span>
                     )}
+                    <span className="block text-[10px] text-[#8292AD] lg:hidden mt-0.5">Due {inv.dueDate}</span>
                   </td>
 
-                  <td className="py-3.5 px-3 lg:px-4 text-[#8292AD] whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 text-[#8292AD] whitespace-nowrap hidden lg:table-cell">
                     {inv.dueDate}
                   </td>
 
-                  <td className="py-3.5 px-2 sm:px-3 lg:px-4 text-right whitespace-nowrap space-x-1 sm:space-x-2">
+                  <td className="py-3 px-2 sm:px-3 lg:px-4 text-right whitespace-nowrap space-x-1 sm:space-x-1.5">
                     {inv.status !== 'Paid' && (
                       <>
                         <button

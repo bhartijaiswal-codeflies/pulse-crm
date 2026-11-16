@@ -162,7 +162,7 @@ export const SupportTickets = () => {
               <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
                 <th className="py-3.5 px-3 lg:px-4">Ticket ID</th>
                 <th className="py-3.5 px-3 lg:px-4">Subject & Category</th>
-                <th className="py-3.5 px-3 lg:px-4">Company</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Company</th>
                 <th className="py-3.5 px-3 lg:px-4">Priority</th>
                 <th className="py-3.5 px-3 lg:px-4">Status</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">Opened</th>
@@ -184,10 +184,12 @@ export const SupportTickets = () => {
                     <p className="font-bold text-[#172033] group-hover:text-blue-600 transition-colors">
                       {t.subject}
                     </p>
-                    <span className="text-[11px] text-[#8292AD]">{t.category}</span>
+                    <span className="text-[11px] text-[#8292AD]">
+                      {t.category} <span className="lg:hidden text-[#64748B] font-medium">• {t.company}</span>
+                    </span>
                   </td>
 
-                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap font-medium text-[#172033]">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap font-medium text-[#172033] hidden lg:table-cell">
                     {t.company}
                   </td>
 

@@ -238,11 +238,11 @@ export const Companies = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
-                <th className="py-3.5 px-3 lg:px-4">Company</th>
+                <th className="py-3.5 px-2 sm:px-3 lg:px-4">Company</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Contact</th>
-                <th className="py-3.5 px-3 lg:px-4">Plan & MRR</th>
-                <th className="py-3.5 px-3 lg:px-4">Status</th>
-                <th className="py-3.5 px-2 lg:px-4 text-center">Seats</th>
+                <th className="py-3.5 px-2 sm:px-3 lg:px-4">Plan & MRR</th>
+                <th className="py-3.5 px-2 sm:px-3 lg:px-4">Status</th>
+                <th className="py-3.5 px-2 lg:px-4 text-center hidden lg:table-cell">Seats</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">Next Billing</th>
                 <th className="py-3.5 px-2 lg:px-4 text-center">Actions</th>
               </tr>
@@ -255,12 +255,12 @@ export const Companies = () => {
                   onClick={() => setSelectedCompany(company)}
                 >
                   {/* Company */}
-                  <td className="py-3.5 px-3 lg:px-4">
-                    <div className="flex items-center gap-2.5 sm:gap-3">
+                  <td className="py-3.5 px-2 sm:px-3 lg:px-4">
+                    <div className="flex items-center gap-2 sm:gap-2.5">
                       <img
                         src={company.logo}
                         alt={company.name}
-                        className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-cover border border-[#E5EAF2] flex-shrink-0"
+                        className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-xl object-cover border border-[#E5EAF2] flex-shrink-0"
                       />
                       <div>
                         <p className="font-bold text-[#172033] group-hover:text-blue-600 transition-colors">
@@ -282,18 +282,20 @@ export const Companies = () => {
                   </td>
 
                   {/* Plan & MRR */}
-                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
+                  <td className="py-3.5 px-2 sm:px-3 lg:px-4 whitespace-nowrap">
                     <span className="font-bold text-[#172033]">{company.mrr}</span>
-                    <span className="block text-[11px] text-[#8292AD]">{company.plan} Tier</span>
+                    <span className="block text-[11px] text-[#8292AD]">
+                      {company.plan} Tier <span className="lg:hidden text-[#64748B] font-medium">• {company.users} seats</span>
+                    </span>
                   </td>
 
                   {/* Status */}
-                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
+                  <td className="py-3.5 px-2 sm:px-3 lg:px-4 whitespace-nowrap">
                     {getStatusBadge(company.status)}
                   </td>
 
-                  {/* Seats */}
-                  <td className="py-3.5 px-2 lg:px-4 whitespace-nowrap text-center">
+                  {/* Seats - Desktop */}
+                  <td className="py-3.5 px-2 lg:px-4 whitespace-nowrap text-center hidden lg:table-cell">
                     <span className="font-semibold text-[#172033]">{company.users}</span>
                     <span className="text-[#8292AD] ml-1 text-[11px]">users</span>
                   </td>
