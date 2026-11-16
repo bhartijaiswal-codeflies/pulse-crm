@@ -86,7 +86,7 @@ export const Settings = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-1.5 border-b border-[#E5EAF2] pb-3 overflow-x-auto no-scrollbar flex-wrap sm:flex-nowrap">
+      <div className="flex items-center gap-1.5 border-b border-[#E5EAF2] pb-3 overflow-x-auto no-scrollbar flex-wrap">
         {[
           { id: 'general', name: 'General Platform', icon: Globe },
           { id: 'profile', name: 'Profile & Security', icon: User },

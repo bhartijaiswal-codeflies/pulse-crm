@@ -194,11 +194,11 @@ Pulse CRM Platform • support@pulsecrm.io
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
-                <th className="py-3.5 px-3 lg:px-4">Invoice #</th>
-                <th className="py-3.5 px-3 lg:px-4">Company</th>
+                <th className="py-3.5 px-2 sm:px-3 lg:px-4">Invoice #</th>
+                <th className="py-3.5 px-2 sm:px-3 lg:px-4">Company</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">Plan Description</th>
-                <th className="py-3.5 px-3 lg:px-4">Amount</th>
-                <th className="py-3.5 px-3 lg:px-4">Status</th>
+                <th className="py-3.5 px-2 sm:px-3 lg:px-4">Amount</th>
+                <th className="py-3.5 px-2 sm:px-3 lg:px-4">Status</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Due Date</th>
                 <th className="py-3.5 px-2 sm:px-3 lg:px-4 text-right">Actions</th>
               </tr>
@@ -206,13 +206,13 @@ Pulse CRM Platform • support@pulsecrm.io
             <tbody className="divide-y divide-[#E5EAF2] text-xs">
               {filteredInvoices.map((inv) => (
                 <tr key={inv.id} className="hover:bg-[#F7F9FC]/80 transition-colors group">
-                  <td className="py-3.5 px-3 lg:px-4 font-mono font-bold text-blue-600 whitespace-nowrap">
+                  <td className="py-3.5 px-2 sm:px-3 lg:px-4 font-mono font-bold text-blue-600 whitespace-nowrap text-[11px] sm:text-xs">
                     {inv.id}
                   </td>
 
-                  <td className="py-3.5 px-3 lg:px-4">
-                    <div className="flex items-center gap-2.5">
-                      <CompanyAvatar src={inv.companyLogo} name={inv.company} className="w-8 h-8" />
+                  <td className="py-3.5 px-2 sm:px-3 lg:px-4">
+                    <div className="flex items-center gap-2">
+                      <CompanyAvatar src={inv.companyLogo} name={inv.company} className="w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0" />
                       <div>
                         <span className="font-bold text-[#172033] block">{inv.company}</span>
                         <span className="text-[11px] text-[#8292AD] xl:hidden">{inv.plan}</span>
@@ -225,11 +225,11 @@ Pulse CRM Platform • support@pulsecrm.io
                     <span className="text-[10px] text-[#8292AD]">{inv.method}</span>
                   </td>
 
-                  <td className="py-3.5 px-3 lg:px-4 font-bold text-[#172033] whitespace-nowrap">
+                  <td className="py-3.5 px-2 sm:px-3 lg:px-4 font-bold text-[#172033] whitespace-nowrap">
                     {inv.amount}
                   </td>
 
-                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
+                  <td className="py-3.5 px-2 sm:px-3 lg:px-4 whitespace-nowrap">
                     {inv.status === 'Paid' ? (
                       <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                         <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Paid
@@ -250,30 +250,32 @@ Pulse CRM Platform • support@pulsecrm.io
                     {inv.dueDate}
                   </td>
 
-                  <td className="py-3 px-2 sm:px-3 lg:px-4 text-right whitespace-nowrap space-x-1 sm:space-x-1.5">
-                    {inv.status !== 'Paid' && (
-                      <>
-                        <button
-                          onClick={() => sendReminder(inv.company, inv.id)}
-                          className="px-2.5 py-1 text-[11px] font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-lg transition-colors inline-flex items-center gap-1"
-                        >
-                          <Send className="w-3 h-3" /> Remind
-                        </button>
-                        <button
-                          onClick={() => markInvoicePaid(inv.id)}
-                          className="px-2.5 py-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-lg transition-colors"
-                        >
-                          Mark Paid
-                        </button>
-                      </>
-                    )}
-                    <button
-                      onClick={() => downloadPDF(inv.id)}
-                      className="p-1.5 text-[#8292AD] hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                      title="Download PDF"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                    </button>
+                  <td className="py-3 px-1.5 sm:px-2.5 lg:px-4 text-right whitespace-nowrap">
+                    <div className="inline-flex items-center justify-end gap-1 sm:gap-1.5">
+                      {inv.status !== 'Paid' && (
+                        <>
+                          <button
+                            onClick={() => sendReminder(inv.company, inv.id)}
+                            className="px-2 py-1 text-[11px] font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-lg transition-colors inline-flex items-center gap-1"
+                          >
+                            <Send className="w-3 h-3" /> Remind
+                          </button>
+                          <button
+                            onClick={() => markInvoicePaid(inv.id)}
+                            className="px-2 py-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-lg transition-colors"
+                          >
+                            Mark Paid
+                          </button>
+                        </>
+                      )}
+                      <button
+                        onClick={() => downloadPDF(inv.id)}
+                        className="p-1.5 text-[#8292AD] hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        title="Download PDF"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
