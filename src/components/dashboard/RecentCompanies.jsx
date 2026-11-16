@@ -13,7 +13,11 @@ import {
   MapPin,
   Calendar,
   Sparkles,
-  CheckCircle2
+  CheckCircle2,
+  Video,
+  Trash2,
+  Copy,
+  Check
 } from 'lucide-react';
 import { ImageUploadOption } from '../common/ImageUploadOption';
 import { useApp } from '../../context/AppContext';
@@ -114,6 +118,25 @@ export const RecentCompanies = () => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [editingCompany, setEditingCompany] = useState(null);
+  const [videoCallCompany, setVideoCallCompany] = useState(null);
+  const [copiedLink, setCopiedLink] = useState(false);
+
+  const handleStartVideoCall = (c) => {
+    setVideoCallCompany(c);
+  };
+
+  const handleCopyMeetingLink = (url) => {
+    navigator.clipboard.writeText(url);
+    setCopiedLink(true);
+    showToast('Meeting invite link copied to clipboard!', 'info');
+    setTimeout(() => setCopiedLink(false), 2000);
+  };
+
+  const handleDelete = (id) => {
+    const target = companiesList.find((c) => c.id === id);
+    setCompaniesList((prev) => prev.filter((c) => c.id !== id));
+    showToast(`${target?.name || 'Company'} removed from recent list`, 'info');
+  };
 
   const renderStatus = (status) => {
     switch (status) {
@@ -172,7 +195,7 @@ export const RecentCompanies = () => {
               <th className="py-2.5 px-2 font-medium">Status</th>
               <th className="py-2.5 px-2 font-medium">Users</th>
               <th className="py-2.5 px-2 font-medium">Next Billing</th>
-              <th className="py-2.5 px-1 text-right"></th>
+              <th className="py-2.5 px-2 text-center font-bold text-[11px] text-[#8292AD] uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[#F1F5F9] text-xs">
@@ -207,78 +230,50 @@ export const RecentCompanies = () => {
                 <td className="py-3 px-2 font-medium text-[#172033]">{c.users}</td>
                 <td className="py-3 px-2 text-[#475569]">{c.nextBilling}</td>
                 <td
-                  className="py-3 px-1 text-right relative"
+                  className="py-3 px-2 text-center whitespace-nowrap"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setActiveMenu(activeMenu === idx ? null : idx);
-                    }}
-                    className={`p-1.5 rounded-lg transition-colors ${
-                      activeMenu === idx
-                        ? 'bg-blue-50 text-blue-600'
-                        : 'text-[#94A3B8] hover:text-[#172033] hover:bg-slate-100'
-                    }`}
-                    title="Actions"
-                  >
-                    <MoreVertical className="w-4 h-4" />
-                  </button>
+                  <div className="flex items-center justify-center gap-1.5">
+                    {/* View Details (Eye - Blue) */}
+                    <button
+                      type="button"
+                      onClick={() => setSelectedCompany(c)}
+                      className="w-7 h-7 rounded-full border border-[#93C5FD] bg-[#EFF6FF]/70 text-[#2563EB] flex items-center justify-center hover:bg-[#DBEAFE] hover:border-[#3B82F6] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                      title="View Details"
+                    >
+                      <Eye className="w-3.5 h-3.5 stroke-[1.8]" />
+                    </button>
 
-                  {/* Backdrop and Dropdown Menu */}
-                  {activeMenu === idx && (
-                    <>
-                      <div
-                        className="fixed inset-0 z-20 cursor-default"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveMenu(null);
-                        }}
-                      />
-                      <div
-                        className={`absolute right-0 ${
-                          idx >= 3 ? 'bottom-8' : 'top-8'
-                        } w-44 bg-white border border-[#E5EAF2] rounded-xl shadow-xl py-1 z-30 animate-in fade-in zoom-in-95 duration-100 text-left`}
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setActiveMenu(null);
-                            setSelectedCompany(c);
-                          }}
-                          className="w-full px-3 py-2 text-xs text-[#172033] hover:bg-[#F7F9FC] flex items-center gap-2 transition-colors font-medium"
-                        >
-                          <Eye className="w-3.5 h-3.5 text-blue-600" />
-                          <span>View Details</span>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setActiveMenu(null);
-                            setEditingCompany({ ...c, index: idx });
-                          }}
-                          className="w-full px-3 py-2 text-xs text-[#172033] hover:bg-[#F7F9FC] flex items-center gap-2 transition-colors font-medium"
-                        >
-                          <Edit2 className="w-3.5 h-3.5 text-slate-600" />
-                          <span>Edit Company</span>
-                        </button>
-                        <div className="my-1 border-t border-[#E5EAF2]" />
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setActiveMenu(null);
-                            navigate('/companies');
-                          }}
-                          className="w-full px-3 py-2 text-xs text-[#172033] hover:bg-[#F7F9FC] flex items-center gap-2 transition-colors"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
-                          <span>Manage All</span>
-                        </button>
-                      </div>
-                    </>
-                  )}
+                    {/* Edit Company (Pencil - Green) */}
+                    <button
+                      type="button"
+                      onClick={() => setEditingCompany({ ...c, index: idx })}
+                      className="w-7 h-7 rounded-full border border-[#86EFAC] bg-[#F0FDF4]/70 text-[#16A34A] flex items-center justify-center hover:bg-[#DCFCE7] hover:border-[#22C55E] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                      title="Edit Company"
+                    >
+                      <Edit2 className="w-3.5 h-3.5 stroke-[1.8]" />
+                    </button>
+
+                    {/* Video Call (Video - Purple) */}
+                    <button
+                      type="button"
+                      onClick={() => handleStartVideoCall(c)}
+                      className="w-7 h-7 rounded-full border border-[#C7D2FE] bg-[#EEF2FF]/70 text-[#4F46E5] flex items-center justify-center hover:bg-[#E0E7FF] hover:border-[#6366F1] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                      title="Start Video Meeting"
+                    >
+                      <Video className="w-3.5 h-3.5 stroke-[1.8]" />
+                    </button>
+
+                    {/* Delete Company (Trash - Red) */}
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(c.id)}
+                      className="w-7 h-7 rounded-full border border-[#FECDD3] bg-[#FFF1F2]/70 text-[#E11D48] flex items-center justify-center hover:bg-[#FFE4E6] hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                      title="Delete Company"
+                    >
+                      <Trash2 className="w-3.5 h-3.5 stroke-[1.8]" />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -511,6 +506,105 @@ export const RecentCompanies = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Instant Video Meeting Modal */}
+      {videoCallCompany && (
+        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div
+            className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]"
+            onClick={() => setVideoCallCompany(null)}
+          />
+          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150">
+            {/* Header */}
+            <div className="px-6 py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-gradient-to-r from-indigo-50/60 to-purple-50/60">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-md">
+                  <Video className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#172033]">Instant Video Meeting</h3>
+                  <p className="text-xs text-[#8292AD]">{videoCallCompany.name}</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setVideoCallCompany(null)}
+                className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="p-6 space-y-4">
+              <div className="flex items-center gap-3 p-3 bg-[#F8FAFC] border border-[#E5EAF2] rounded-xl">
+                {videoCallCompany.logo ? (
+                  <img src={videoCallCompany.logo} alt={videoCallCompany.name} className="w-10 h-10 rounded-xl object-cover border" />
+                ) : (
+                  <div className="w-10 h-10 rounded-xl bg-indigo-500 text-white font-bold flex items-center justify-center">
+                    {videoCallCompany.letter || videoCallCompany.name.charAt(0)}
+                  </div>
+                )}
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold text-[#172033] truncate">{videoCallCompany.name}</p>
+                  <p className="text-xs text-[#8292AD] truncate">{videoCallCompany.contactPerson || 'Lead Contact'} • {videoCallCompany.email || 'contact@client.io'}</p>
+                </div>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+                  Ready
+                </span>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#172033] mb-1.5">Meeting Invite Link</label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    readOnly
+                    value={`https://meet.pulsecrm.io/room/${videoCallCompany.id || 'live'}`}
+                    className="flex-1 px-3 py-2 text-xs bg-[#F8FAFC] rounded-xl border border-[#E5EAF2] text-[#475569] font-mono select-all"
+                  />
+                  <button
+                    onClick={() => handleCopyMeetingLink(`https://meet.pulsecrm.io/room/${videoCallCompany.id || 'live'}`)}
+                    className="px-3 py-2 text-xs font-semibold text-indigo-600 hover:bg-indigo-50 border border-indigo-200 rounded-xl transition-colors flex items-center gap-1.5"
+                  >
+                    {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{copiedLink ? 'Copied' : 'Copy'}</span>
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-indigo-50/60 border border-indigo-100 flex items-start gap-2.5">
+                <Sparkles className="w-4 h-4 text-indigo-600 mt-0.5 flex-shrink-0" />
+                <p className="text-xs text-indigo-900 leading-relaxed">
+                  Secure HD video session with automatic CRM notes logging and screen sharing capabilities.
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-2 flex items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    showToast(`Launching secure video call with ${videoCallCompany.name}...`, 'success');
+                    window.open(`https://meet.google.com/new`, '_blank');
+                    setVideoCallCompany(null);
+                  }}
+                  className="flex-1 py-2.5 px-4 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Video className="w-4 h-4" />
+                  <span>Join Video Call Now</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setVideoCallCompany(null)}
+                  className="py-2.5 px-4 text-xs font-semibold text-[#8292AD] hover:text-[#172033] hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

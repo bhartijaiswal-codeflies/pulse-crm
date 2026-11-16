@@ -14,7 +14,12 @@ import {
   Lock,
   Phone,
   Edit2,
-  Trash2
+  Trash2,
+  Eye,
+  Video,
+  Copy,
+  Check,
+  Sparkles
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ImageUploadOption } from '../components/common/ImageUploadOption';
@@ -26,6 +31,8 @@ export const Users = () => {
   const [isAddUserOpen, setIsAddUserOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [permissionsUser, setPermissionsUser] = useState(null);
+  const [videoCallUser, setVideoCallUser] = useState(null);
+  const [copiedLink, setCopiedLink] = useState(false);
   const [permissions, setPermissions] = useState({
     viewAnalytics: true,
     manageBilling: true,
@@ -172,7 +179,7 @@ export const Users = () => {
                 <th className="py-3.5 px-4">Department</th>
                 <th className="py-3.5 px-4">Status</th>
                 <th className="py-3.5 px-4">Last Active</th>
-                <th className="py-3.5 px-4 text-right">Actions</th>
+                <th className="py-3.5 px-4 text-center font-bold text-[11px] text-[#8292AD] uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#E5EAF2] text-xs">
@@ -228,17 +235,11 @@ export const Users = () => {
                     {user.lastActive}
                   </td>
 
-                  <td className="py-3.5 px-4 text-right whitespace-nowrap">
-                    <div className="flex items-center justify-end gap-1.5">
+                  <td className="py-3.5 px-4 text-center whitespace-nowrap">
+                    <div className="flex items-center justify-center gap-2">
+                      {/* View Permissions (Eye - Blue) */}
                       <button
-                        onClick={() => setEditingUser(user)}
-                        className="px-2.5 py-1 text-xs font-semibold text-blue-600 hover:text-white hover:bg-blue-600 rounded-lg transition-colors border border-blue-200 flex items-center gap-1"
-                        title="Edit User"
-                      >
-                        <Edit2 className="w-3 h-3" />
-                        <span>Edit</span>
-                      </button>
-                      <button
+                        type="button"
                         onClick={() => {
                           setPermissionsUser(user);
                           setPermissions({
@@ -250,9 +251,43 @@ export const Users = () => {
                             deleteRecords: user.role === 'Super Administrator'
                           });
                         }}
-                        className="px-2.5 py-1 text-xs font-semibold text-slate-600 hover:text-[#172033] hover:bg-slate-100 rounded-lg transition-colors border border-[#E5EAF2]"
+                        className="w-8 h-8 rounded-full border border-[#93C5FD] bg-[#EFF6FF]/70 text-[#2563EB] flex items-center justify-center hover:bg-[#DBEAFE] hover:border-[#3B82F6] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                        title="View Permissions & Access"
                       >
-                        Permissions
+                        <Eye className="w-4 h-4 stroke-[1.8]" />
+                      </button>
+
+                      {/* Edit User (Pencil - Green) */}
+                      <button
+                        type="button"
+                        onClick={() => setEditingUser(user)}
+                        className="w-8 h-8 rounded-full border border-[#86EFAC] bg-[#F0FDF4]/70 text-[#16A34A] flex items-center justify-center hover:bg-[#DCFCE7] hover:border-[#22C55E] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                        title="Edit User"
+                      >
+                        <Edit2 className="w-4 h-4 stroke-[1.8]" />
+                      </button>
+
+                      {/* Video Call (Video - Purple) */}
+                      <button
+                        type="button"
+                        onClick={() => setVideoCallUser(user)}
+                        className="w-8 h-8 rounded-full border border-[#C7D2FE] bg-[#EEF2FF]/70 text-[#4F46E5] flex items-center justify-center hover:bg-[#E0E7FF] hover:border-[#6366F1] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                        title="Start Video Meeting"
+                      >
+                        <Video className="w-4 h-4 stroke-[1.8]" />
+                      </button>
+
+                      {/* Delete User (Trash - Red) */}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          deleteUser(user.id);
+                          showToast(`${user.name} removed from team`, 'info');
+                        }}
+                        className="w-8 h-8 rounded-full border border-[#FECDD3] bg-[#FFF1F2]/70 text-[#E11D48] flex items-center justify-center hover:bg-[#FFE4E6] hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                        title="Delete User"
+                      >
+                        <Trash2 className="w-4 h-4 stroke-[1.8]" />
                       </button>
                     </div>
                   </td>
@@ -560,6 +595,104 @@ export const Users = () => {
               >
                 Save Permissions
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Instant Video Meeting Modal */}
+      {videoCallUser && (
+        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div
+            className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]"
+            onClick={() => setVideoCallUser(null)}
+          />
+          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150">
+            {/* Header */}
+            <div className="px-6 py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-gradient-to-r from-indigo-50/60 to-purple-50/60">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-md">
+                  <Video className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#172033]">Direct Video Call</h3>
+                  <p className="text-xs text-[#8292AD]">{videoCallUser.name}</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setVideoCallUser(null)}
+                className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="p-6 space-y-4">
+              <div className="flex items-center gap-3 p-3 bg-[#F8FAFC] border border-[#E5EAF2] rounded-xl">
+                <img src={videoCallUser.avatar} alt={videoCallUser.name} className="w-10 h-10 rounded-full object-cover border" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold text-[#172033] truncate">{videoCallUser.name}</p>
+                  <p className="text-xs text-[#8292AD] truncate">{videoCallUser.role} • {videoCallUser.email}</p>
+                </div>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+                  Online
+                </span>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#172033] mb-1.5">Personal Meeting Room</label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    readOnly
+                    value={`https://meet.pulsecrm.io/call/${videoCallUser.id || 'live'}`}
+                    className="flex-1 px-3 py-2 text-xs bg-[#F8FAFC] rounded-xl border border-[#E5EAF2] text-[#475569] font-mono select-all"
+                  />
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(`https://meet.pulsecrm.io/call/${videoCallUser.id || 'live'}`);
+                      setCopiedLink(true);
+                      showToast('Call link copied to clipboard!', 'info');
+                      setTimeout(() => setCopiedLink(false), 2000);
+                    }}
+                    className="px-3 py-2 text-xs font-semibold text-indigo-600 hover:bg-indigo-50 border border-indigo-200 rounded-xl transition-colors flex items-center gap-1.5"
+                  >
+                    {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{copiedLink ? 'Copied' : 'Copy'}</span>
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-indigo-50/60 border border-indigo-100 flex items-start gap-2.5">
+                <Sparkles className="w-4 h-4 text-indigo-600 mt-0.5 flex-shrink-0" />
+                <p className="text-xs text-indigo-900 leading-relaxed">
+                  Initiate 1-on-1 team discussion or invite guests with end-to-end encrypted video.
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-2 flex items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    showToast(`Calling ${videoCallUser.name}...`, 'success');
+                    window.open(`https://meet.google.com/new`, '_blank');
+                    setVideoCallUser(null);
+                  }}
+                  className="flex-1 py-2.5 px-4 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Video className="w-4 h-4" />
+                  <span>Connect Video Call</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setVideoCallUser(null)}
+                  className="py-2.5 px-4 text-xs font-semibold text-[#8292AD] hover:text-[#172033] hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         </div>
