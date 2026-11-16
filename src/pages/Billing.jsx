@@ -115,11 +115,11 @@ Pulse CRM Platform • support@pulsecrm.io
           <button
             type="button"
             onClick={exportInvoices}
-            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#E5EAF2] hover:bg-slate-50 rounded-xl shadow-xs transition-colors"
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#E5EAF2] hover:bg-slate-50 rounded-xl shadow-xs transition-colors whitespace-nowrap flex-shrink-0 cursor-pointer"
             title="Export invoices as CSV"
           >
-            <Download className="w-4 h-4 text-blue-600" />
-            <span>Export CSV</span>
+            <Download className="w-4 h-4 text-blue-600 flex-shrink-0" />
+            <span className="whitespace-nowrap">Export CSV</span>
           </button>
           <button
             onClick={() => setIsCreateInvoiceOpen(true)}

@@ -198,7 +198,7 @@ export const Companies = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 text-xs bg-[#F7F9FC] border border-[#E5EAF2] rounded-xl text-[#172033] focus:outline-none focus:border-blue-500 font-medium"
+            className="pl-3.5 pr-9 py-2 text-xs bg-[#F7F9FC] border border-[#E5EAF2] rounded-xl text-[#172033] focus:outline-none focus:border-blue-500 font-medium whitespace-nowrap flex-shrink-0 cursor-pointer"
           >
             <option value="All">All Statuses</option>
             <option value="Active">Active</option>
@@ -211,7 +211,7 @@ export const Companies = () => {
           <select
             value={planFilter}
             onChange={(e) => setPlanFilter(e.target.value)}
-            className="px-3 py-2 text-xs bg-[#F7F9FC] border border-[#E5EAF2] rounded-xl text-[#172033] focus:outline-none focus:border-blue-500 font-medium"
+            className="pl-3.5 pr-9 py-2 text-xs bg-[#F7F9FC] border border-[#E5EAF2] rounded-xl text-[#172033] focus:outline-none focus:border-blue-500 font-medium whitespace-nowrap flex-shrink-0 cursor-pointer"
           >
             <option value="All">All Plans</option>
             <option value="Starter">Starter</option>
@@ -223,11 +223,11 @@ export const Companies = () => {
           <button
             type="button"
             onClick={exportToCSV}
-            className="px-3 py-2 text-xs bg-white hover:bg-slate-50 border border-[#E5EAF2] rounded-xl text-[#172033] font-semibold flex items-center gap-1.5 transition-colors shadow-xs"
+            className="px-3.5 py-2 text-xs bg-white hover:bg-slate-50 border border-[#E5EAF2] rounded-xl text-[#172033] font-semibold flex items-center gap-1.5 transition-colors shadow-xs whitespace-nowrap flex-shrink-0 cursor-pointer"
             title="Export filtered companies as CSV"
           >
-            <Download className="w-3.5 h-3.5 text-blue-600" />
-            <span>Export CSV</span>
+            <Download className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" />
+            <span className="whitespace-nowrap">Export CSV</span>
           </button>
         </div>
       </div>

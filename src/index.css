@@ -17,6 +17,18 @@
   height: 6px;
 }
 
+/* Custom Select Arrow with generous spacing from the right edge */
+select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238292AD' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+  background-size: 0.875rem 0.875rem !important;
+  padding-right: 2.25rem !important;
+}
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
@@ -124,6 +136,10 @@ html.dark select {
   background-color: #0D1938 !important;
   color: #F8FAFC !important;
   border-color: #1E2D54 !important;
+}
+
+html.dark select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
 }
 
 html.dark input::placeholder,
