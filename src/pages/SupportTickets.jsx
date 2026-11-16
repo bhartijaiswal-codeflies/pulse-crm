@@ -236,8 +236,8 @@ export const SupportTickets = () => {
 
       {/* Ticket Details & Thread Modal */}
       {selectedTicket && (
-        <div className="fixed inset-y-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="fixed inset-y-0 right-0 left-0 md:left-[76px]" onClick={() => setSelectedTicket(null)} />
+        <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setSelectedTicket(null)} />
           <div className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 max-h-[85vh] flex flex-col">
             <div className="px-6 py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-[#F7F9FC]">
               <div>
@@ -326,8 +326,8 @@ export const SupportTickets = () => {
 
       {/* New Ticket Modal */}
       {isNewTicketOpen && (
-        <div className="fixed inset-y-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="fixed inset-y-0 right-0 left-0 md:left-[76px]" onClick={() => setIsNewTicketOpen(false)} />
+        <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setIsNewTicketOpen(false)} />
           <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] p-6 space-y-4 z-10 animate-in zoom-in-95">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
               <h3 className="text-base font-bold text-[#172033]">Create Support Incident</h3>

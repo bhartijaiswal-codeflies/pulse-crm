@@ -183,8 +183,8 @@ export const RecentCompanies = () => {
 
       {/* Edit Company Modal from Dashboard */}
       {editingCompany && (
-        <div className="fixed inset-y-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="fixed inset-y-0 right-0 left-0 md:left-[76px]" onClick={() => setEditingCompany(null)} />
+        <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setEditingCompany(null)} />
           <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[85vh] flex flex-col text-left">
             <div className="px-6 py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-[#F7F9FC]">
               <h3 className="text-base font-bold text-[#172033]">Edit Company Details</h3>
