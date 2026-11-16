@@ -159,8 +159,8 @@ Pulse CRM Platform • support@pulsecrm.io
       </div>
 
       {/* Filters and Search */}
-      <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
-        <div className="relative w-full md:w-80">
+      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+        <div className="relative w-full lg:w-80 flex-1 min-w-[200px]">
           <Search className="w-4 h-4 text-[#8292AD] absolute left-3 top-2.5" />
           <input
             type="text"
@@ -171,7 +171,7 @@ Pulse CRM Platform • support@pulsecrm.io
           />
         </div>
 
-        <div className="flex items-center gap-2 self-start md:self-auto overflow-x-auto w-full md:w-auto">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar flex-wrap sm:flex-nowrap">
           {['All', 'Paid', 'Pending', 'Overdue'].map((status) => (
             <button
               key={status}
@@ -194,39 +194,42 @@ Pulse CRM Platform • support@pulsecrm.io
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
-                <th className="py-3.5 px-4">Invoice #</th>
-                <th className="py-3.5 px-4">Company</th>
-                <th className="py-3.5 px-4">Plan Description</th>
-                <th className="py-3.5 px-4">Amount</th>
-                <th className="py-3.5 px-4">Status</th>
-                <th className="py-3.5 px-4">Due Date</th>
-                <th className="py-3.5 px-4 text-right">Actions</th>
+                <th className="py-3.5 px-3 lg:px-4">Invoice #</th>
+                <th className="py-3.5 px-3 lg:px-4">Company</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">Plan Description</th>
+                <th className="py-3.5 px-3 lg:px-4">Amount</th>
+                <th className="py-3.5 px-3 lg:px-4">Status</th>
+                <th className="py-3.5 px-3 lg:px-4">Due Date</th>
+                <th className="py-3.5 px-2 sm:px-3 lg:px-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#E5EAF2] text-xs">
               {filteredInvoices.map((inv) => (
                 <tr key={inv.id} className="hover:bg-[#F7F9FC]/80 transition-colors group">
-                  <td className="py-3.5 px-4 font-mono font-bold text-blue-600 whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 font-mono font-bold text-blue-600 whitespace-nowrap">
                     {inv.id}
                   </td>
 
-                  <td className="py-3.5 px-4">
+                  <td className="py-3.5 px-3 lg:px-4">
                     <div className="flex items-center gap-2.5">
                       <CompanyAvatar src={inv.companyLogo} name={inv.company} className="w-8 h-8" />
-                      <span className="font-bold text-[#172033]">{inv.company}</span>
+                      <div>
+                        <span className="font-bold text-[#172033] block">{inv.company}</span>
+                        <span className="text-[11px] text-[#8292AD] xl:hidden">{inv.plan}</span>
+                      </div>
                     </div>
                   </td>
 
-                  <td className="py-3.5 px-4 text-[#8292AD] whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 text-[#8292AD] whitespace-nowrap hidden xl:table-cell">
                     <span className="text-[#172033] font-medium block">{inv.plan}</span>
                     <span className="text-[10px] text-[#8292AD]">{inv.method}</span>
                   </td>
 
-                  <td className="py-3.5 px-4 font-bold text-[#172033] whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 font-bold text-[#172033] whitespace-nowrap">
                     {inv.amount}
                   </td>
 
-                  <td className="py-3.5 px-4 whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
                     {inv.status === 'Paid' ? (
                       <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                         <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Paid
@@ -242,11 +245,11 @@ Pulse CRM Platform • support@pulsecrm.io
                     )}
                   </td>
 
-                  <td className="py-3.5 px-4 text-[#8292AD] whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 text-[#8292AD] whitespace-nowrap">
                     {inv.dueDate}
                   </td>
 
-                  <td className="py-3.5 px-4 text-right whitespace-nowrap space-x-2">
+                  <td className="py-3.5 px-2 sm:px-3 lg:px-4 text-right whitespace-nowrap space-x-1 sm:space-x-2">
                     {inv.status !== 'Paid' && (
                       <>
                         <button

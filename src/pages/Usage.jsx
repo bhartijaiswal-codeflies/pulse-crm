@@ -207,28 +207,28 @@ export const Usage = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
-                <th className="py-3.5 px-4">Company</th>
-                <th className="py-3.5 px-4">Plan Tier</th>
-                <th className="py-3.5 px-4">Cloud Storage</th>
-                <th className="py-3.5 px-4">API Invocations</th>
-                <th className="py-3.5 px-4">Seats Used</th>
-                <th className="py-3.5 px-4">Quota Health</th>
-                <th className="py-3.5 px-4 text-right">Action</th>
+                <th className="py-3.5 px-3 lg:px-4">Company</th>
+                <th className="py-3.5 px-3 lg:px-4">Plan Tier</th>
+                <th className="py-3.5 px-3 lg:px-4">Cloud Storage</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">API Invocations</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Seats Used</th>
+                <th className="py-3.5 px-3 lg:px-4">Quota Health</th>
+                <th className="py-3.5 px-3 lg:px-4 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#E5EAF2] text-xs">
               {USAGE_METRICS.topCompaniesUsage.map((c, i) => (
                 <tr key={i} className="hover:bg-[#F7F9FC]/80 transition-colors">
-                  <td className="py-3.5 px-4 font-bold text-[#172033]">{c.name}</td>
-                  <td className="py-3.5 px-4">
+                  <td className="py-3.5 px-3 lg:px-4 font-bold text-[#172033] whitespace-nowrap">{c.name}</td>
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
                     <span className="font-semibold text-blue-600 bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-full text-[11px]">
                       {c.plan}
                     </span>
                   </td>
-                  <td className="py-3.5 px-4 font-semibold text-[#172033]">{c.storage}</td>
-                  <td className="py-3.5 px-4 text-[#8292AD]">{c.apiCalls}</td>
-                  <td className="py-3.5 px-4 font-semibold text-[#172033]">{c.users} active</td>
-                  <td className="py-3.5 px-4">
+                  <td className="py-3.5 px-3 lg:px-4 font-semibold text-[#172033] whitespace-nowrap">{c.storage}</td>
+                  <td className="py-3.5 px-3 lg:px-4 text-[#8292AD] whitespace-nowrap hidden xl:table-cell">{c.apiCalls}</td>
+                  <td className="py-3.5 px-3 lg:px-4 font-semibold text-[#172033] whitespace-nowrap hidden lg:table-cell">{c.users} active</td>
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
                     <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${
                       c.status.includes('Warning')
                         ? 'bg-amber-50 text-amber-700 border border-amber-200'
@@ -237,10 +237,10 @@ export const Usage = () => {
                       {c.status}
                     </span>
                   </td>
-                  <td className="py-3.5 px-4 text-right">
+                  <td className="py-3.5 px-3 lg:px-4 text-right whitespace-nowrap">
                     <button
                       onClick={() => handleUpgrade(c.name)}
-                      className="text-xs font-bold text-blue-600 hover:text-blue-700"
+                      className="text-xs font-bold text-blue-600 hover:text-blue-700 whitespace-nowrap"
                     >
                       Manage Limit
                     </button>

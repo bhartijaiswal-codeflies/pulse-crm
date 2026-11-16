@@ -143,9 +143,9 @@ export const Subscriptions = () => {
       </div>
 
       {/* Tabs and Search */}
-      <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-1.5 bg-[#F7F9FC] p-1 rounded-xl border border-[#E5EAF2] w-full md:w-auto overflow-x-auto">
+        <div className="flex items-center gap-1.5 bg-[#F7F9FC] p-1 rounded-xl border border-[#E5EAF2] w-full lg:w-auto overflow-x-auto no-scrollbar flex-wrap sm:flex-nowrap">
           {tabs.map((tab) => (
             <button
               key={tab.name}
@@ -167,7 +167,7 @@ export const Subscriptions = () => {
         </div>
 
         {/* Search */}
-        <div className="relative w-full md:w-72">
+        <div className="relative w-full lg:w-72 flex-shrink-0">
           <Search className="w-4 h-4 text-[#8292AD] absolute left-3 top-2.5" />
           <input
             type="text"
@@ -185,13 +185,13 @@ export const Subscriptions = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
-                <th className="py-3.5 px-4">Company</th>
-                <th className="py-3.5 px-4">Plan Tier</th>
-                <th className="py-3.5 px-4">Recurring MRR</th>
-                <th className="py-3.5 px-4">Status</th>
-                <th className="py-3.5 px-4">Auto Renew</th>
-                <th className="py-3.5 px-4">Next Renewal</th>
-                <th className="py-3.5 px-4 text-center font-bold text-[11px] text-[#8292AD] uppercase tracking-wider">Actions</th>
+                <th className="py-3.5 px-3 lg:px-4">Company</th>
+                <th className="py-3.5 px-3 lg:px-4">Plan Tier</th>
+                <th className="py-3.5 px-3 lg:px-4">Recurring MRR</th>
+                <th className="py-3.5 px-3 lg:px-4">Status</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">Auto Renew</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Next Renewal</th>
+                <th className="py-3.5 px-2 lg:px-4 text-center font-bold text-[11px] text-[#8292AD] uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#E5EAF2] text-xs">
@@ -201,7 +201,7 @@ export const Subscriptions = () => {
                   className="hover:bg-[#F7F9FC]/80 transition-colors group cursor-pointer"
                   onClick={() => setSelectedSub(company)}
                 >
-                  <td className="py-3.5 px-4">
+                  <td className="py-3.5 px-3 lg:px-4">
                     <div className="flex items-center gap-3">
                       <img
                         src={company.logo}
@@ -217,18 +217,18 @@ export const Subscriptions = () => {
                     </div>
                   </td>
 
-                  <td className="py-3.5 px-4 whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
                     <span className="font-semibold text-blue-600 bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-full text-[11px]">
                       {company.plan}
                     </span>
                   </td>
 
-                  <td className="py-3.5 px-4 whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
                     <span className="font-bold text-[#172033]">{company.mrr}</span>
                     <span className="text-[10px] text-[#8292AD] block">Billed Monthly</span>
                   </td>
 
-                  <td className="py-3.5 px-4 whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
                     <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${
                       company.status === 'Active'
                         ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
@@ -242,7 +242,7 @@ export const Subscriptions = () => {
                     </span>
                   </td>
 
-                  <td className="py-3.5 px-4 whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap hidden xl:table-cell" onClick={(e) => e.stopPropagation()}>
                     <button
                       onClick={() => toggleAutoRenew(company)}
                       className={`px-2 py-0.5 text-[11px] font-semibold rounded-lg border transition-colors ${
@@ -255,12 +255,12 @@ export const Subscriptions = () => {
                     </button>
                   </td>
 
-                  <td className="py-3.5 px-4 whitespace-nowrap text-[#8292AD]">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap text-[#8292AD] hidden lg:table-cell">
                     {company.nextBilling}
                   </td>
 
                   <td
-                    className="py-2.5 px-2 md:py-3.5 md:px-4 text-center whitespace-nowrap"
+                    className="py-2 px-1.5 sm:py-3 sm:px-2 md:px-3 text-center whitespace-nowrap"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2">

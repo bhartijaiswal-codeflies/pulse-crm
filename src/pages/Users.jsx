@@ -138,8 +138,8 @@ export const Users = () => {
       </div>
 
       {/* Search & Filters */}
-      <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
-        <div className="relative w-full md:w-80">
+      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+        <div className="relative w-full lg:w-80 flex-1 min-w-[200px]">
           <Search className="w-4 h-4 text-[#8292AD] absolute left-3 top-2.5" />
           <input
             type="text"
@@ -150,7 +150,7 @@ export const Users = () => {
           />
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto">
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar flex-wrap sm:flex-nowrap">
           {['All', 'Super Administrator', 'Company Admin', 'Billing Manager', 'Developer'].map((role) => (
             <button
               key={role}
@@ -173,19 +173,19 @@ export const Users = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
-                <th className="py-3.5 px-4">User</th>
-                <th className="py-3.5 px-4">Role</th>
-                <th className="py-3.5 px-4">Organization</th>
-                <th className="py-3.5 px-4">Department</th>
-                <th className="py-3.5 px-4">Status</th>
-                <th className="py-3.5 px-4">Last Active</th>
-                <th className="py-3.5 px-4 text-center font-bold text-[11px] text-[#8292AD] uppercase tracking-wider">Actions</th>
+                <th className="py-3.5 px-3 lg:px-4">User</th>
+                <th className="py-3.5 px-3 lg:px-4">Role</th>
+                <th className="py-3.5 px-3 lg:px-4">Organization</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">Department</th>
+                <th className="py-3.5 px-3 lg:px-4">Status</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Last Active</th>
+                <th className="py-3.5 px-2 lg:px-4 text-center font-bold text-[11px] text-[#8292AD] uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#E5EAF2] text-xs">
               {filteredUsers.map((user) => (
                 <tr key={user.id} className="hover:bg-[#F7F9FC]/80 transition-colors group">
-                  <td className="py-3.5 px-4">
+                  <td className="py-3.5 px-3 lg:px-4">
                     <div className="flex items-center gap-3">
                       <img
                         src={user.avatar}
@@ -201,22 +201,22 @@ export const Users = () => {
                     </div>
                   </td>
 
-                  <td className="py-3.5 px-4 whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
                     <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${getRoleBadge(user.role)}`}>
                       <Shield className="w-3 h-3" />
                       {user.role}
                     </span>
                   </td>
 
-                  <td className="py-3.5 px-4 whitespace-nowrap font-medium text-[#172033]">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap font-medium text-[#172033]">
                     {user.company}
                   </td>
 
-                  <td className="py-3.5 px-4 whitespace-nowrap text-[#8292AD]">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap text-[#8292AD] hidden xl:table-cell">
                     {user.department}
                   </td>
 
-                  <td className="py-3.5 px-4 whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
                     <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${
                       user.status === 'Active'
                         ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
@@ -231,11 +231,11 @@ export const Users = () => {
                     </span>
                   </td>
 
-                  <td className="py-3.5 px-4 whitespace-nowrap text-[#8292AD]">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap text-[#8292AD] hidden lg:table-cell">
                     {user.lastActive}
                   </td>
 
-                  <td className="py-2.5 px-2 md:py-3.5 md:px-4 text-center whitespace-nowrap">
+                  <td className="py-2 px-1.5 sm:py-3.5 sm:px-2 md:px-3 text-center whitespace-nowrap">
                     <div className="flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2">
                       {/* View Permissions (Eye - Blue) */}
                       <button

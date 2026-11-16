@@ -179,9 +179,9 @@ export const Companies = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
+      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         {/* Search */}
-        <div className="relative w-full md:w-80">
+        <div className="relative w-full lg:w-72 xl:w-80 flex-1 min-w-[200px]">
           <Search className="w-4 h-4 text-[#8292AD] absolute left-3 top-2.5" />
           <input
             type="text"
@@ -193,7 +193,7 @@ export const Companies = () => {
         </div>
 
         {/* Filters */}
-        <div className="flex items-center gap-2.5 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+        <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar flex-wrap sm:flex-nowrap">
           {/* Status Filter */}
           <select
             value={statusFilter}
@@ -238,13 +238,13 @@ export const Companies = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
-                <th className="py-3.5 px-4">Company</th>
-                <th className="py-3.5 px-4">Contact</th>
-                <th className="py-3.5 px-4">Plan & MRR</th>
-                <th className="py-3.5 px-4">Status</th>
-                <th className="py-3.5 px-4">Seats</th>
-                <th className="py-3.5 px-4">Next Billing</th>
-                <th className="py-3.5 px-4 text-center">Actions</th>
+                <th className="py-3.5 px-3 lg:px-4">Company</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Contact</th>
+                <th className="py-3.5 px-3 lg:px-4">Plan & MRR</th>
+                <th className="py-3.5 px-3 lg:px-4">Status</th>
+                <th className="py-3.5 px-2 lg:px-4 text-center">Seats</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">Next Billing</th>
+                <th className="py-3.5 px-2 lg:px-4 text-center">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#E5EAF2] text-xs">
@@ -255,56 +255,57 @@ export const Companies = () => {
                   onClick={() => setSelectedCompany(company)}
                 >
                   {/* Company */}
-                  <td className="py-3.5 px-4">
-                    <div className="flex items-center gap-3">
+                  <td className="py-3.5 px-3 lg:px-4">
+                    <div className="flex items-center gap-2.5 sm:gap-3">
                       <img
                         src={company.logo}
                         alt={company.name}
-                        className="w-10 h-10 rounded-xl object-cover border border-[#E5EAF2] flex-shrink-0"
+                        className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-cover border border-[#E5EAF2] flex-shrink-0"
                       />
                       <div>
                         <p className="font-bold text-[#172033] group-hover:text-blue-600 transition-colors">
                           {company.name}
                         </p>
                         <p className="text-[11px] text-[#8292AD] flex items-center gap-1">
-                          <MapPin className="w-3 h-3" />
-                          {company.location || 'India'}
+                          <MapPin className="w-3 h-3 flex-shrink-0" />
+                          <span>{company.location || 'India'}</span>
+                          <span className="lg:hidden text-[#64748B] font-medium">• {company.contactPerson}</span>
                         </p>
                       </div>
                     </div>
                   </td>
 
-                  {/* Contact */}
-                  <td className="py-3.5 px-4">
+                  {/* Contact - Desktop */}
+                  <td className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">
                     <p className="font-semibold text-[#172033]">{company.contactPerson}</p>
                     <p className="text-[11px] text-[#8292AD]">{company.email}</p>
                   </td>
 
                   {/* Plan & MRR */}
-                  <td className="py-3.5 px-4 whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
                     <span className="font-bold text-[#172033]">{company.mrr}</span>
                     <span className="block text-[11px] text-[#8292AD]">{company.plan} Tier</span>
                   </td>
 
                   {/* Status */}
-                  <td className="py-3.5 px-4 whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
                     {getStatusBadge(company.status)}
                   </td>
 
                   {/* Seats */}
-                  <td className="py-3.5 px-4 whitespace-nowrap">
+                  <td className="py-3.5 px-2 lg:px-4 whitespace-nowrap text-center">
                     <span className="font-semibold text-[#172033]">{company.users}</span>
                     <span className="text-[#8292AD] ml-1 text-[11px]">users</span>
                   </td>
 
-                  {/* Next Billing */}
-                  <td className="py-3.5 px-4 whitespace-nowrap text-[#8292AD]">
+                  {/* Next Billing - XL screens */}
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap text-[#8292AD] hidden xl:table-cell">
                     {company.nextBilling}
                   </td>
 
                   {/* Actions Column matching reference: Eye (Blue), Edit (Green), Video (Purple), Delete (Red) */}
                   <td
-                    className="py-2.5 px-2 md:py-3.5 md:px-4 text-center whitespace-nowrap"
+                    className="py-2 px-1.5 sm:py-3 sm:px-2 md:px-3 text-center whitespace-nowrap"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2">

@@ -81,8 +81,8 @@ export const ActivityLog = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
-        <div className="relative w-full md:w-80">
+      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+        <div className="relative w-full lg:w-80 flex-1 min-w-[200px]">
           <Search className="w-4 h-4 text-[#8292AD] absolute left-3 top-2.5" />
           <input
             type="text"
@@ -93,7 +93,7 @@ export const ActivityLog = () => {
           />
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto">
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar flex-wrap sm:flex-nowrap">
           {['All', 'Admin', 'System', 'Company', 'User'].map((cat) => (
             <button
               key={cat}
@@ -116,19 +116,19 @@ export const ActivityLog = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
-                <th className="py-3.5 px-4">Event Category</th>
-                <th className="py-3.5 px-4">Actor / Subject</th>
-                <th className="py-3.5 px-4">Action Performed</th>
-                <th className="py-3.5 px-4">Target Entity</th>
-                <th className="py-3.5 px-4">IP Address</th>
-                <th className="py-3.5 px-4">Timestamp</th>
-                <th className="py-3.5 px-4 text-right">Result</th>
+                <th className="py-3.5 px-3 lg:px-4">Event Category</th>
+                <th className="py-3.5 px-3 lg:px-4">Actor / Subject</th>
+                <th className="py-3.5 px-3 lg:px-4">Action Performed</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Target Entity</th>
+                <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">IP Address</th>
+                <th className="py-3.5 px-3 lg:px-4">Timestamp</th>
+                <th className="py-3.5 px-3 lg:px-4 text-right">Result</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#E5EAF2] text-xs">
               {filteredLogs.map((log) => (
                 <tr key={log.id} className="hover:bg-[#F7F9FC]/80 transition-colors">
-                  <td className="py-3.5 px-4 whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
                     <div className="flex items-center gap-2">
                       <div className="p-1.5 rounded-lg bg-slate-50 border border-[#E5EAF2]">
                         {getCategoryIcon(log.category)}
@@ -137,33 +137,33 @@ export const ActivityLog = () => {
                     </div>
                   </td>
 
-                  <td className="py-3.5 px-4 font-bold text-[#172033] whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 font-bold text-[#172033] whitespace-nowrap">
                     {log.actor}
                   </td>
 
-                  <td className="py-3.5 px-4 font-medium text-[#172033]">
+                  <td className="py-3.5 px-3 lg:px-4 font-medium text-[#172033]">
                     {log.action}
                   </td>
 
-                  <td className="py-3.5 px-4 text-[#8292AD] max-w-xs truncate">
+                  <td className="py-3.5 px-3 lg:px-4 text-[#8292AD] max-w-xs truncate hidden lg:table-cell">
                     {log.target}
                   </td>
 
-                  <td className="py-3.5 px-4 font-mono text-[11px] text-[#8292AD] whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 font-mono text-[11px] text-[#8292AD] whitespace-nowrap hidden xl:table-cell">
                     <span className="flex items-center gap-1">
                       <Globe className="w-3 h-3 text-slate-400" />
                       {log.ip}
                     </span>
                   </td>
 
-                  <td className="py-3.5 px-4 text-[#8292AD] whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 text-[#8292AD] whitespace-nowrap">
                     <span className="flex items-center gap-1">
                       <Clock className="w-3 h-3 text-slate-400" />
                       {log.time}
                     </span>
                   </td>
 
-                  <td className="py-3.5 px-4 text-right whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 text-right whitespace-nowrap">
                     <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${
                       log.status === 'Success'
                         ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
