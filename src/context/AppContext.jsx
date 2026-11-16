@@ -25,6 +25,25 @@ export const AppProvider = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedDateRange, setSelectedDateRange] = useState('Today: Nov 12, 2026');
 
+  // Theme state with localStorage persistence
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem('pulse_theme') === 'dark';
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('pulse_theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('pulse_theme', 'light');
+    }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => {
+    setIsDarkMode((prev) => !prev);
+  };
+
   // Modals & Palettes
   const [isAddCompanyOpen, setIsAddCompanyOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
@@ -175,6 +194,9 @@ export const AppProvider = ({ children }) => {
         setMobileMenuOpen,
         selectedDateRange,
         setSelectedDateRange,
+        isDarkMode,
+        setIsDarkMode,
+        toggleTheme,
         isAddCompanyOpen,
         setIsAddCompanyOpen,
         isCommandPaletteOpen,

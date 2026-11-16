@@ -37,6 +37,8 @@ export const Header = () => {
     setIsCommandPaletteOpen,
     notifications,
     setNotifications,
+    isDarkMode,
+    toggleTheme,
     showToast
   } = useApp();
 
@@ -46,7 +48,6 @@ export const Header = () => {
   const [isDateOpen, setIsDateOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const dateRef = useRef(null);
   const notifRef = useRef(null);
@@ -76,9 +77,9 @@ export const Header = () => {
     showToast('All notifications marked as read', 'info');
   };
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    showToast(isDarkMode ? 'Light mode enabled' : 'Dark accent mode active');
+  const handleToggleTheme = () => {
+    toggleTheme();
+    showToast(!isDarkMode ? 'Dark mode enabled' : 'Light mode enabled', 'info');
   };
 
   return (
@@ -161,12 +162,12 @@ export const Header = () => {
 
           {/* Quick Theme Toggle */}
           <button
-            onClick={toggleTheme}
-            className="p-2 text-[#8292AD] hover:text-[#172033] hover:bg-[#F7F9FC] rounded-xl border border-transparent hover:border-[#E5EAF2] transition-colors"
-            title="Toggle Display Theme"
+            onClick={handleToggleTheme}
+            className="p-2 text-[#8292AD] hover:text-[#172033] hover:bg-[#F7F9FC] rounded-xl border border-transparent hover:border-[#E5EAF2] transition-colors cursor-pointer"
+            title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
           >
             {isDarkMode ? (
-              <Moon className="w-4 h-4 text-blue-600" />
+              <Moon className="w-4 h-4 text-blue-400" />
             ) : (
               <Sun className="w-4 h-4 text-amber-500 hover:rotate-45 transition-transform" />
             )}
