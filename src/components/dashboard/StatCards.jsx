@@ -18,7 +18,7 @@ export const StatCards = () => {
         </div>
       ),
       sparkline: (
-        <svg viewBox="0 0 100 35" fill="none" className="w-24 h-9">
+        <svg viewBox="0 0 100 35" fill="none" className="w-16 h-7 sm:w-20 sm:h-8" preserveAspectRatio="none">
           <path
             d="M 2 24 C 15 24, 25 18, 38 21 C 50 25, 62 10, 75 14 C 85 16, 92 8, 98 6"
             stroke="#3B82F6"
@@ -42,7 +42,7 @@ export const StatCards = () => {
         </div>
       ),
       sparkline: (
-        <svg viewBox="0 0 100 35" fill="none" className="w-24 h-9">
+        <svg viewBox="0 0 100 35" fill="none" className="w-16 h-7 sm:w-20 sm:h-8" preserveAspectRatio="none">
           <path
             d="M 2 22 C 16 22, 28 26, 42 18 C 55 12, 68 22, 80 14 C 90 8, 94 12, 98 4"
             stroke="#10B981"
@@ -66,7 +66,7 @@ export const StatCards = () => {
         </div>
       ),
       sparkline: (
-        <svg viewBox="0 0 100 35" fill="none" className="w-24 h-9">
+        <svg viewBox="0 0 100 35" fill="none" className="w-16 h-7 sm:w-20 sm:h-8" preserveAspectRatio="none">
           <path
             d="M 2 22 C 14 22, 24 25, 36 21 C 48 16, 60 26, 74 18 C 86 10, 92 16, 98 8"
             stroke="#8B5CF6"
@@ -89,7 +89,7 @@ export const StatCards = () => {
         </div>
       ),
       sparkline: (
-        <svg viewBox="0 0 100 35" fill="none" className="w-24 h-9">
+        <svg viewBox="0 0 100 35" fill="none" className="w-16 h-7 sm:w-20 sm:h-8" preserveAspectRatio="none">
           <path
             d="M 2 20 C 15 16, 26 22, 38 18 C 50 14, 62 20, 74 12 C 86 6, 92 14, 98 10"
             stroke="#F59E0B"
@@ -109,14 +109,14 @@ export const StatCards = () => {
         <div
           key={idx}
           onClick={card.onClick}
-          className={`rounded-2xl p-5 border ${card.bgClass} shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between`}
+          className={`rounded-2xl p-4 sm:p-5 border ${card.bgClass} shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden relative`}
         >
           {/* Top Row: Icon + Title & Value on Left, Sparkline on Right */}
           <div className="flex items-start justify-between gap-2">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
               {card.icon}
-              <div>
-                <p className="text-xs font-medium text-[#475569] dark:text-slate-400 leading-tight">
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-[#475569] dark:text-slate-400 leading-tight truncate" title={card.title}>
                   {card.title}
                 </p>
                 <h3 className="text-2xl font-bold text-[#172033] dark:text-white mt-1 tracking-tight">
@@ -126,24 +126,24 @@ export const StatCards = () => {
             </div>
 
             {/* Sparkline curve */}
-            <div className="flex-shrink-0 pt-1">
+            <div className="flex-shrink-0 pt-0.5 overflow-hidden">
               {card.sparkline}
             </div>
           </div>
 
           {/* Bottom Row: Percentage & Subtitle */}
-          <div className="mt-4 pt-1 flex items-center text-xs">
+          <div className="mt-4 pt-1 flex items-center text-xs whitespace-nowrap overflow-hidden">
             {card.growth ? (
               <>
-                <span className={`${card.trendColor} font-semibold flex items-center gap-0.5`}>
+                <span className={`${card.trendColor} font-semibold flex items-center gap-0.5 flex-shrink-0`}>
                   ↑ {card.growth}
                 </span>
-                <span className="text-[#64748B] dark:text-slate-400 ml-1.5 font-normal">
+                <span className="text-[#64748B] dark:text-slate-400 ml-1.5 font-normal truncate">
                   {card.comparison}
                 </span>
               </>
             ) : (
-              <span className="text-[#D97706] font-semibold">
+              <span className="text-[#D97706] font-semibold truncate">
                 {card.customComparison}
               </span>
             )}

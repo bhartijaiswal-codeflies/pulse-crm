@@ -34,9 +34,9 @@ export const SubscriptionChart = () => {
       </div>
 
       {/* Donut and Legend row */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-5 my-auto pt-2">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 lg:gap-3 xl:gap-5 my-auto pt-2">
         {/* Donut Chart with Center Total */}
-        <div className="relative w-44 h-44 flex-shrink-0 flex items-center justify-center cursor-pointer" onClick={() => navigate('/subscriptions')}>
+        <div className="relative w-36 h-36 sm:w-40 sm:h-40 xl:w-44 xl:h-44 flex-shrink-0 flex items-center justify-center cursor-pointer" onClick={() => navigate('/subscriptions')}>
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Tooltip
@@ -57,8 +57,8 @@ export const SubscriptionChart = () => {
                 data={STATUS_DATA}
                 cx="50%"
                 cy="50%"
-                innerRadius={54}
-                outerRadius={72}
+                innerRadius={46}
+                outerRadius={64}
                 paddingAngle={2}
                 dataKey="value"
                 startAngle={110}
@@ -80,32 +80,32 @@ export const SubscriptionChart = () => {
 
           {/* Center text: 248 Total */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span className="text-2xl font-bold text-[#172033] leading-none">248</span>
-            <span className="text-xs text-[#8292AD] mt-1 font-medium">Total</span>
+            <span className="text-xl sm:text-2xl font-bold text-[#172033] leading-none">248</span>
+            <span className="text-[10px] sm:text-xs text-[#8292AD] mt-1 font-medium">Total</span>
           </div>
         </div>
 
         {/* Legend Table on Right */}
-        <div className="flex-1 w-full space-y-2.5 pl-0 sm:pl-3">
+        <div className="flex-1 w-full min-w-0 space-y-2 pl-0 sm:pl-2 xl:pl-3">
           {STATUS_DATA.map((item) => (
             <div
               key={item.name}
               onClick={() => handleSelectStatus(item.name)}
-              className="flex items-center justify-between text-xs font-medium p-1.5 -mx-1.5 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer group"
+              className="flex items-center justify-between gap-2 text-xs font-medium p-1 sm:p-1.5 -mx-1 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer group"
               title={`View ${item.name} subscriptions`}
             >
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2 min-w-0">
                 <span
                   className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                   style={{ backgroundColor: item.color }}
                 />
-                <span className="text-[#334155] group-hover:text-blue-600 transition-colors font-medium">
+                <span className="text-[#334155] group-hover:text-blue-600 transition-colors font-medium truncate">
                   {item.name}
                 </span>
               </div>
-              <div className="flex items-center gap-4 text-right">
-                <span className="font-bold text-[#172033]">{item.value}</span>
-                <span className="text-[#64748B] w-12">{item.percentage}</span>
+              <div className="flex items-center gap-2 sm:gap-3 text-right flex-shrink-0">
+                <span className="font-bold text-[#172033] min-w-[20px] text-right">{item.value}</span>
+                <span className="text-[#64748B] min-w-[38px] text-right text-[11px] font-normal">{item.percentage}</span>
               </div>
             </div>
           ))}

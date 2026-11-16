@@ -186,27 +186,27 @@ export const RecentCompanies = () => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto md:overflow-visible">
+      <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-[#F1F5F9] text-xs font-semibold text-[#64748B]">
+            <tr className="border-b border-[#F1F5F9] dark:border-[#17203F] text-xs font-semibold text-[#64748B] dark:text-slate-400">
               <th className="py-2.5 px-2 font-medium">Company</th>
-              <th className="py-2.5 px-2 font-medium">Plan</th>
-              <th className="py-2.5 px-2 font-medium">Status</th>
-              <th className="py-2.5 px-2 font-medium">Users</th>
-              <th className="py-2.5 px-2 font-medium">Next Billing</th>
-              <th className="py-2.5 px-2 text-center font-bold text-[11px] text-[#8292AD] uppercase tracking-wider">Actions</th>
+              <th className="py-2.5 px-1.5 font-medium">Plan</th>
+              <th className="py-2.5 px-1.5 font-medium">Status</th>
+              <th className="py-2.5 px-1 text-center font-medium">Users</th>
+              <th className="py-2.5 px-1.5 font-medium whitespace-nowrap">Next Billing</th>
+              <th className="py-2.5 px-1.5 text-center font-bold text-[11px] text-[#8292AD] uppercase tracking-wider whitespace-nowrap">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#F1F5F9] text-xs">
+          <tbody className="divide-y divide-[#F1F5F9] dark:divide-[#17203F] text-xs">
             {companiesList.map((c, idx) => (
               <tr
                 key={c.id || idx}
-                className="hover:bg-[#F8FAFC] transition-colors group cursor-pointer"
+                className="hover:bg-[#F8FAFC] dark:hover:bg-[#121D3D] transition-colors group cursor-pointer"
                 onClick={() => setSelectedCompany(c)}
               >
-                <td className="py-3 px-2">
-                  <div className="flex items-center gap-2.5">
+                <td className="py-2.5 px-2">
+                  <div className="flex items-center gap-2 min-w-0 max-w-[130px] sm:max-w-[160px]">
                     {c.logo ? (
                       <img
                         src={c.logo}
@@ -220,58 +220,58 @@ export const RecentCompanies = () => {
                         {c.letter}
                       </div>
                     )}
-                    <span className="font-semibold text-[#172033] group-hover:text-blue-600 transition-colors">
+                    <span className="font-semibold text-[#172033] dark:text-white group-hover:text-blue-600 transition-colors truncate">
                       {c.name}
                     </span>
                   </div>
                 </td>
-                <td className="py-3 px-2 text-[#475569]">{c.plan}</td>
-                <td className="py-3 px-2">{renderStatus(c.status)}</td>
-                <td className="py-3 px-2 font-medium text-[#172033]">{c.users}</td>
-                <td className="py-3 px-2 text-[#475569]">{c.nextBilling}</td>
+                <td className="py-2.5 px-1.5 text-[#475569] dark:text-slate-400 whitespace-nowrap">{c.plan}</td>
+                <td className="py-2.5 px-1.5 whitespace-nowrap">{renderStatus(c.status)}</td>
+                <td className="py-2.5 px-1 text-center font-medium text-[#172033] dark:text-white">{c.users}</td>
+                <td className="py-2.5 px-1.5 text-[#475569] dark:text-slate-400 whitespace-nowrap">{c.nextBilling}</td>
                 <td
-                  className="py-2.5 px-1 sm:px-2 text-center whitespace-nowrap"
+                  className="py-2 px-1.5 text-center whitespace-nowrap"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="flex items-center justify-center gap-1 sm:gap-1.5">
+                  <div className="flex items-center justify-center gap-1">
                     {/* View Details (Eye - Blue) */}
                     <button
                       type="button"
                       onClick={() => setSelectedCompany(c)}
-                      className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#93C5FD] bg-[#EFF6FF]/70 text-[#2563EB] flex items-center justify-center hover:bg-[#DBEAFE] hover:border-[#3B82F6] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                      className="w-6 h-6 rounded-full border border-[#93C5FD] bg-[#EFF6FF]/70 text-[#2563EB] flex items-center justify-center hover:bg-[#DBEAFE] hover:border-[#3B82F6] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                       title="View Details"
                     >
-                      <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[1.8]" />
+                      <Eye className="w-3 h-3 stroke-[1.8]" />
                     </button>
 
                     {/* Edit Company (Pencil - Green) */}
                     <button
                       type="button"
                       onClick={() => setEditingCompany({ ...c, index: idx })}
-                      className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#86EFAC] bg-[#F0FDF4]/70 text-[#16A34A] flex items-center justify-center hover:bg-[#DCFCE7] hover:border-[#22C55E] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                      className="w-6 h-6 rounded-full border border-[#86EFAC] bg-[#F0FDF4]/70 text-[#16A34A] flex items-center justify-center hover:bg-[#DCFCE7] hover:border-[#22C55E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                       title="Edit Company"
                     >
-                      <Edit2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[1.8]" />
+                      <Edit2 className="w-3 h-3 stroke-[1.8]" />
                     </button>
 
                     {/* Video Call (Video - Purple) */}
                     <button
                       type="button"
                       onClick={() => handleStartVideoCall(c)}
-                      className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#C7D2FE] bg-[#EEF2FF]/70 text-[#4F46E5] flex items-center justify-center hover:bg-[#E0E7FF] hover:border-[#6366F1] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                      className="w-6 h-6 rounded-full border border-[#C7D2FE] bg-[#EEF2FF]/70 text-[#4F46E5] flex items-center justify-center hover:bg-[#E0E7FF] hover:border-[#6366F1] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                       title="Start Video Meeting"
                     >
-                      <Video className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[1.8]" />
+                      <Video className="w-3 h-3 stroke-[1.8]" />
                     </button>
 
                     {/* Delete Company (Trash - Red) */}
                     <button
                       type="button"
                       onClick={() => handleDelete(c.id)}
-                      className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#FECDD3] bg-[#FFF1F2]/70 text-[#E11D48] flex items-center justify-center hover:bg-[#FFE4E6] hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                      className="w-6 h-6 rounded-full border border-[#FECDD3] bg-[#FFF1F2]/70 text-[#E11D48] flex items-center justify-center hover:bg-[#FFE4E6] hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                       title="Delete Company"
                     >
-                      <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[1.8]" />
+                      <Trash2 className="w-3 h-3 stroke-[1.8]" />
                     </button>
                   </div>
                 </td>
