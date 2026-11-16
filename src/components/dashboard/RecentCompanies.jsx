@@ -194,7 +194,7 @@ export const RecentCompanies = () => {
               <th className="py-2.5 px-1.5 font-medium">Plan</th>
               <th className="py-2.5 px-1.5 font-medium">Status</th>
               <th className="py-2.5 px-1 text-center font-medium">Users</th>
-              <th className="py-2.5 px-1.5 font-medium whitespace-nowrap">Next Billing</th>
+              <th className="py-2.5 px-1.5 font-medium whitespace-nowrap hidden xl:table-cell">Next Billing</th>
               <th className="py-2.5 px-1.5 text-center font-bold text-[11px] text-[#8292AD] uppercase tracking-wider whitespace-nowrap">Actions</th>
             </tr>
           </thead>
@@ -228,7 +228,7 @@ export const RecentCompanies = () => {
                 <td className="py-2.5 px-1.5 text-[#475569] dark:text-slate-400 whitespace-nowrap">{c.plan}</td>
                 <td className="py-2.5 px-1.5 whitespace-nowrap">{renderStatus(c.status)}</td>
                 <td className="py-2.5 px-1 text-center font-medium text-[#172033] dark:text-white">{c.users}</td>
-                <td className="py-2.5 px-1.5 text-[#475569] dark:text-slate-400 whitespace-nowrap">{c.nextBilling}</td>
+                <td className="py-2.5 px-1.5 text-[#475569] dark:text-slate-400 whitespace-nowrap hidden xl:table-cell">{c.nextBilling}</td>
                 <td
                   className="py-2 px-1.5 text-center whitespace-nowrap"
                   onClick={(e) => e.stopPropagation()}
