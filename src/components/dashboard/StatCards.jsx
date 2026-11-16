@@ -13,7 +13,7 @@ export const StatCards = () => {
       comparison: 'vs previous 30 days',
       trendColor: 'text-[#10B981]',
       icon: (
-        <div className="w-10 h-10 rounded-xl bg-[#EBF3FF] flex items-center justify-center text-[#2563EB] flex-shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-[#EBF3FF] dark:bg-[#1E293B] flex items-center justify-center text-[#2563EB] dark:text-[#60A5FA] flex-shrink-0">
           <Building2 className="w-5 h-5" />
         </div>
       ),
@@ -27,7 +27,7 @@ export const StatCards = () => {
           />
         </svg>
       ),
-      bgClass: 'bg-gradient-to-br from-[#F5F8FF]/80 via-white to-white border-[#E0EDFD]',
+      bgClass: 'bg-gradient-to-br from-[#F5F8FF]/80 via-white to-white border-[#E0EDFD] dark:from-[#131D3F]/80 dark:via-[#0D152D] dark:to-[#0D152D] dark:border-[#1A2548]',
       onClick: () => navigate('/companies')
     },
     {
@@ -37,7 +37,7 @@ export const StatCards = () => {
       comparison: 'vs previous 30 days',
       trendColor: 'text-[#10B981]',
       icon: (
-        <div className="w-10 h-10 rounded-xl bg-[#ECFDF5] flex items-center justify-center text-[#10B981] flex-shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-[#ECFDF5] dark:bg-[#064E3B]/40 flex items-center justify-center text-[#10B981] dark:text-[#34D399] flex-shrink-0">
           <Users className="w-5 h-5" />
         </div>
       ),
@@ -51,7 +51,7 @@ export const StatCards = () => {
           />
         </svg>
       ),
-      bgClass: 'bg-gradient-to-br from-[#F2FDF6]/80 via-white to-white border-[#DCFCE7]',
+      bgClass: 'bg-gradient-to-br from-[#F2FDF6]/80 via-white to-white border-[#DCFCE7] dark:from-[#0E2A1E]/80 dark:via-[#0D152D] dark:to-[#0D152D] dark:border-[#1A2548]',
       onClick: () => navigate('/subscriptions')
     },
     {
@@ -61,7 +61,7 @@ export const StatCards = () => {
       comparison: 'vs previous 30 days',
       trendColor: 'text-[#10B981]',
       icon: (
-        <div className="w-10 h-10 rounded-xl bg-[#F5F3FF] flex items-center justify-center text-[#7C3AED] flex-shrink-0 font-bold text-lg">
+        <div className="w-10 h-10 rounded-xl bg-[#F5F3FF] dark:bg-[#3B1F64]/50 flex items-center justify-center text-[#7C3AED] dark:text-[#A78BFA] flex-shrink-0 font-bold text-lg">
           ₹
         </div>
       ),
@@ -75,7 +75,7 @@ export const StatCards = () => {
           />
         </svg>
       ),
-      bgClass: 'bg-gradient-to-br from-[#FAF5FF]/80 via-white to-white border-[#F3E8FF]',
+      bgClass: 'bg-gradient-to-br from-[#FAF5FF]/80 via-white to-white border-[#F3E8FF] dark:from-[#21163F]/80 dark:via-[#0D152D] dark:to-[#0D152D] dark:border-[#1A2548]',
       onClick: () => navigate('/billing')
     },
     {
@@ -84,7 +84,7 @@ export const StatCards = () => {
       customComparison: '₹2.4L outstanding',
       trendColor: 'text-[#F59E0B]',
       icon: (
-        <div className="w-10 h-10 rounded-xl bg-[#FFFBEB] flex items-center justify-center text-[#F59E0B] flex-shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-[#FFFBEB] dark:bg-[#451A03]/50 flex items-center justify-center text-[#F59E0B] dark:text-[#FBBF24] flex-shrink-0">
           <CreditCard className="w-5 h-5" />
         </div>
       ),
@@ -98,7 +98,7 @@ export const StatCards = () => {
           />
         </svg>
       ),
-      bgClass: 'bg-gradient-to-br from-[#FFFDF5]/80 via-white to-white border-[#FEF3C7]',
+      bgClass: 'bg-gradient-to-br from-[#FFFDF5]/80 via-white to-white border-[#FEF3C7] dark:from-[#2B1F0A]/80 dark:via-[#0D152D] dark:to-[#0D152D] dark:border-[#1A2548]',
       onClick: () => navigate('/billing')
     }
   ];
@@ -116,10 +116,10 @@ export const StatCards = () => {
             <div className="flex items-center gap-3">
               {card.icon}
               <div>
-                <p className="text-xs font-medium text-[#475569] leading-tight">
+                <p className="text-xs font-medium text-[#475569] dark:text-slate-400 leading-tight">
                   {card.title}
                 </p>
-                <h3 className="text-2xl font-bold text-[#172033] mt-1 tracking-tight">
+                <h3 className="text-2xl font-bold text-[#172033] dark:text-white mt-1 tracking-tight">
                   {card.value}
                 </h3>
               </div>
@@ -138,7 +138,7 @@ export const StatCards = () => {
                 <span className={`${card.trendColor} font-semibold flex items-center gap-0.5`}>
                   ↑ {card.growth}
                 </span>
-                <span className="text-[#64748B] ml-1.5 font-normal">
+                <span className="text-[#64748B] dark:text-slate-400 ml-1.5 font-normal">
                   {card.comparison}
                 </span>
               </>

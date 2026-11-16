@@ -81,6 +81,15 @@ html.dark .bg-white {
   border-color: #1A2548 !important;
 }
 
+/* Gradient Stops Fallback for Dark Cards */
+html.dark .via-white {
+  --tw-gradient-via-position: 50%;
+  --tw-gradient-stops: var(--tw-gradient-from), #0D152D var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+html.dark .to-white {
+  --tw-gradient-to: #0D152D var(--tw-gradient-to-position) !important;
+}
+
 /* General Borders & Dividers */
 html.dark .border-\[\#E5EAF2\],
 html.dark .border-slate-100,
