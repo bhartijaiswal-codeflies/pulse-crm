@@ -322,9 +322,9 @@ export const Companies = () => {
 
       {/* Company Details Modal / Drawer */}
       {selectedCompany && (
-        <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div
-            className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px]"
+            className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]"
             onClick={() => setSelectedCompany(null)}
           />
           <div className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[85vh] flex flex-col">
@@ -428,9 +428,9 @@ export const Companies = () => {
 
       {/* Edit Company Modal */}
       {editingCompany && (
-        <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div
-            className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px]"
+            className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]"
             onClick={() => setEditingCompany(null)}
           />
           <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[90vh] flex flex-col">

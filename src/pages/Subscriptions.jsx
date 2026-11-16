@@ -252,8 +252,8 @@ export const Subscriptions = () => {
 
       {/* Subscription Details Modal */}
       {selectedSub && (
-        <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setSelectedSub(null)} />
+        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setSelectedSub(null)} />
           <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-6 space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
               <div className="flex items-center gap-3">
@@ -322,8 +322,8 @@ export const Subscriptions = () => {
 
       {/* Edit Subscription Modal */}
       {editingSub && (
-        <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setEditingSub(null)} />
+        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setEditingSub(null)} />
           <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-6 space-y-4 max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
               <div className="flex items-center gap-2">
