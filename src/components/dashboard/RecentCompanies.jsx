@@ -230,48 +230,48 @@ export const RecentCompanies = () => {
                 <td className="py-3 px-2 font-medium text-[#172033]">{c.users}</td>
                 <td className="py-3 px-2 text-[#475569]">{c.nextBilling}</td>
                 <td
-                  className="py-3 px-2 text-center whitespace-nowrap"
+                  className="py-2.5 px-1 sm:px-2 text-center whitespace-nowrap"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="flex items-center justify-center gap-1.5">
+                  <div className="flex items-center justify-center gap-1 sm:gap-1.5">
                     {/* View Details (Eye - Blue) */}
                     <button
                       type="button"
                       onClick={() => setSelectedCompany(c)}
-                      className="w-7 h-7 rounded-full border border-[#93C5FD] bg-[#EFF6FF]/70 text-[#2563EB] flex items-center justify-center hover:bg-[#DBEAFE] hover:border-[#3B82F6] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                      className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#93C5FD] bg-[#EFF6FF]/70 text-[#2563EB] flex items-center justify-center hover:bg-[#DBEAFE] hover:border-[#3B82F6] hover:scale-105 transition-all shadow-xs cursor-pointer"
                       title="View Details"
                     >
-                      <Eye className="w-3.5 h-3.5 stroke-[1.8]" />
+                      <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[1.8]" />
                     </button>
 
                     {/* Edit Company (Pencil - Green) */}
                     <button
                       type="button"
                       onClick={() => setEditingCompany({ ...c, index: idx })}
-                      className="w-7 h-7 rounded-full border border-[#86EFAC] bg-[#F0FDF4]/70 text-[#16A34A] flex items-center justify-center hover:bg-[#DCFCE7] hover:border-[#22C55E] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                      className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#86EFAC] bg-[#F0FDF4]/70 text-[#16A34A] flex items-center justify-center hover:bg-[#DCFCE7] hover:border-[#22C55E] hover:scale-105 transition-all shadow-xs cursor-pointer"
                       title="Edit Company"
                     >
-                      <Edit2 className="w-3.5 h-3.5 stroke-[1.8]" />
+                      <Edit2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[1.8]" />
                     </button>
 
                     {/* Video Call (Video - Purple) */}
                     <button
                       type="button"
                       onClick={() => handleStartVideoCall(c)}
-                      className="w-7 h-7 rounded-full border border-[#C7D2FE] bg-[#EEF2FF]/70 text-[#4F46E5] flex items-center justify-center hover:bg-[#E0E7FF] hover:border-[#6366F1] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                      className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#C7D2FE] bg-[#EEF2FF]/70 text-[#4F46E5] flex items-center justify-center hover:bg-[#E0E7FF] hover:border-[#6366F1] hover:scale-105 transition-all shadow-xs cursor-pointer"
                       title="Start Video Meeting"
                     >
-                      <Video className="w-3.5 h-3.5 stroke-[1.8]" />
+                      <Video className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[1.8]" />
                     </button>
 
                     {/* Delete Company (Trash - Red) */}
                     <button
                       type="button"
                       onClick={() => handleDelete(c.id)}
-                      className="w-7 h-7 rounded-full border border-[#FECDD3] bg-[#FFF1F2]/70 text-[#E11D48] flex items-center justify-center hover:bg-[#FFE4E6] hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer"
+                      className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#FECDD3] bg-[#FFF1F2]/70 text-[#E11D48] flex items-center justify-center hover:bg-[#FFE4E6] hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer"
                       title="Delete Company"
                     >
-                      <Trash2 className="w-3.5 h-3.5 stroke-[1.8]" />
+                      <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[1.8]" />
                     </button>
                   </div>
                 </td>

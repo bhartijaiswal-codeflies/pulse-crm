@@ -25,18 +25,18 @@ export const AppProvider = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedDateRange, setSelectedDateRange] = useState('Today: Nov 12, 2026');
 
-  // Theme state with localStorage persistence
+  // Theme state with localStorage persistence (Default is Light Mode)
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.getItem('pulse_theme') === 'dark';
+    return localStorage.getItem('pulse_theme_preference') === 'dark';
   });
 
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
-      localStorage.setItem('pulse_theme', 'dark');
+      localStorage.setItem('pulse_theme_preference', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
-      localStorage.setItem('pulse_theme', 'light');
+      localStorage.setItem('pulse_theme_preference', 'light');
     }
   }, [isDarkMode]);
 
