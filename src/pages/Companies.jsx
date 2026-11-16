@@ -18,7 +18,8 @@ import {
   AlertTriangle,
   XCircle,
   Eye,
-  X
+  X,
+  Download
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ImageUploadOption } from '../components/common/ImageUploadOption';
@@ -94,6 +95,22 @@ export const Companies = () => {
     if (!editingCompany) return;
     updateCompany(editingCompany.id, editingCompany);
     setEditingCompany(null);
+  };
+
+  const exportToCSV = () => {
+    const headers = 'ID,Company,Contact,Email,Plan,Status,Seats,MRR,NextBilling\n';
+    const rows = filtered.map(c =>
+      `"${c.id}","${c.name}","${c.contactPerson}","${c.email}","${c.plan}","${c.status}",${c.users},"${c.mrr}","${c.nextBilling}"`
+    ).join('\n');
+    const blob = new Blob([headers + rows], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'Pulse_Companies.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Companies data exported to CSV successfully!');
   };
 
   return (
@@ -184,6 +201,17 @@ export const Companies = () => {
             <option value="Growth">Growth</option>
             <option value="Enterprise">Enterprise</option>
           </select>
+
+          {/* Export CSV Button */}
+          <button
+            type="button"
+            onClick={exportToCSV}
+            className="px-3 py-2 text-xs bg-white hover:bg-slate-50 border border-[#E5EAF2] rounded-xl text-[#172033] font-semibold flex items-center gap-1.5 transition-colors shadow-xs"
+            title="Export filtered companies as CSV"
+          >
+            <Download className="w-3.5 h-3.5 text-blue-600" />
+            <span>Export CSV</span>
+          </button>
         </div>
       </div>
 
@@ -203,7 +231,7 @@ export const Companies = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-[#E5EAF2] text-xs">
-              {filtered.map((company) => (
+              {filtered.map((company, index) => (
                 <tr
                   key={company.id}
                   className="hover:bg-[#F7F9FC]/80 transition-colors group cursor-pointer"
@@ -263,48 +291,66 @@ export const Companies = () => {
                     onClick={(e) => e.stopPropagation()}
                   >
                     <button
+                      type="button"
                       onClick={() => setActionMenuId(actionMenuId === company.id ? null : company.id)}
-                      className="p-1.5 rounded-lg text-[#8292AD] hover:text-[#172033] hover:bg-slate-200/60 transition-colors"
+                      className={`p-1.5 rounded-lg transition-colors ${
+                        actionMenuId === company.id
+                          ? 'bg-blue-50 text-blue-600'
+                          : 'text-[#8292AD] hover:text-[#172033] hover:bg-slate-200/60'
+                      }`}
+                      title="Actions"
                     >
                       <MoreVertical className="w-4 h-4" />
                     </button>
 
                     {actionMenuId === company.id && (
-                      <div
-                        onMouseLeave={() => setActionMenuId(null)}
-                        className="absolute right-4 top-10 w-44 bg-white border border-[#E5EAF2] rounded-xl shadow-xl py-1 z-30 animate-in fade-in zoom-in-95 duration-100 text-left"
-                      >
-                        <button
-                          onClick={() => {
-                            setActionMenuId(null);
-                            setSelectedCompany(company);
-                          }}
-                          className="w-full px-3 py-1.5 text-xs text-[#172033] hover:bg-[#F7F9FC] flex items-center gap-2"
+                      <>
+                        <div
+                          className="fixed inset-0 z-20 cursor-default"
+                          onClick={() => setActionMenuId(null)}
+                        />
+                        <div
+                          className={`absolute right-4 ${
+                            index >= filtered.length - 2 ? 'bottom-8' : 'top-10'
+                          } w-44 bg-white border border-[#E5EAF2] rounded-xl shadow-xl py-1 z-30 animate-in fade-in zoom-in-95 duration-100 text-left`}
+                          onClick={(e) => e.stopPropagation()}
                         >
-                          <Eye className="w-3.5 h-3.5 text-blue-600" />
-                          <span>View Details</span>
-                        </button>
-                        <button
-                          onClick={() => {
-                            setActionMenuId(null);
-                            setEditingCompany(company);
-                          }}
-                          className="w-full px-3 py-1.5 text-xs text-[#172033] hover:bg-[#F7F9FC] flex items-center gap-2"
-                        >
-                          <Edit2 className="w-3.5 h-3.5 text-slate-500" />
-                          <span>Edit Company</span>
-                        </button>
-                        <button
-                          onClick={() => {
-                            deleteCompany(company.id);
-                            setActionMenuId(null);
-                          }}
-                          className="w-full px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 flex items-center gap-2"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                          <span>Delete Company</span>
-                        </button>
-                      </div>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setActionMenuId(null);
+                              setSelectedCompany(company);
+                            }}
+                            className="w-full px-3 py-2 text-xs text-[#172033] hover:bg-[#F7F9FC] flex items-center gap-2 font-medium"
+                          >
+                            <Eye className="w-3.5 h-3.5 text-blue-600" />
+                            <span>View Details</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setActionMenuId(null);
+                              setEditingCompany(company);
+                            }}
+                            className="w-full px-3 py-2 text-xs text-[#172033] hover:bg-[#F7F9FC] flex items-center gap-2 font-medium"
+                          >
+                            <Edit2 className="w-3.5 h-3.5 text-slate-500" />
+                            <span>Edit Company</span>
+                          </button>
+                          <div className="my-1 border-t border-[#E5EAF2]" />
+                          <button
+                            type="button"
+                            onClick={() => {
+                              deleteCompany(company.id);
+                              setActionMenuId(null);
+                            }}
+                            className="w-full px-3 py-2 text-xs text-red-600 hover:bg-red-50 flex items-center gap-2 font-medium"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                            <span>Delete Company</span>
+                          </button>
+                        </div>
+                      </>
                     )}
                   </td>
                 </tr>

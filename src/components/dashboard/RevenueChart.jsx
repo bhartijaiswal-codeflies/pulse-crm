@@ -11,60 +11,84 @@ import {
 import { BarChart2 } from 'lucide-react';
 
 const REVENUE_TIMEFRAME_DATA = {
-  '30D': [
-    { date: 'Oct 15', revenue: 6.8, showTick: true },
-    { date: 'Oct 17', revenue: 6.8 },
-    { date: 'Oct 19', revenue: 8.5 },
-    { date: 'Oct 21', revenue: 7.2 },
-    { date: 'Oct 22', revenue: 9.8, showTick: true },
-    { date: 'Oct 24', revenue: 9.2 },
-    { date: 'Oct 26', revenue: 11.4 },
-    { date: 'Oct 28', revenue: 9.0 },
-    { date: 'Oct 29', revenue: 10.8, showTick: true },
-    { date: 'Oct 31', revenue: 11.8 },
-    { date: 'Nov 01', revenue: 13.5 },
-    { date: 'Nov 02', revenue: 15.2 },
-    { date: 'Nov 03', revenue: 14.1 },
-    { date: 'Nov 04', revenue: 12.0, showTick: true },
-    { date: 'Nov 06', revenue: 14.0 },
-    { date: 'Nov 07', revenue: 13.2 },
-    { date: 'Nov 08', revenue: 15.6 },
-    { date: 'Nov 09', revenue: 14.2 },
-    { date: 'Nov 10', revenue: 16.0 },
-    { date: 'Nov 11', revenue: 17.6, showTick: true }
-  ],
-  '7D': [
-    { date: 'Nov 05', revenue: 12.5, showTick: true },
-    { date: 'Nov 06', revenue: 13.8 },
-    { date: 'Nov 07', revenue: 13.2 },
-    { date: 'Nov 08', revenue: 15.6, showTick: true },
-    { date: 'Nov 09', revenue: 14.2 },
-    { date: 'Nov 10', revenue: 16.0 },
-    { date: 'Nov 11', revenue: 17.6, showTick: true }
-  ],
-  '90D': [
-    { date: 'Aug 15', revenue: 9.4, showTick: true },
-    { date: 'Sep 01', revenue: 11.2 },
-    { date: 'Sep 15', revenue: 12.5, showTick: true },
-    { date: 'Oct 01', revenue: 13.8 },
-    { date: 'Oct 15', revenue: 14.6, showTick: true },
-    { date: 'Nov 01', revenue: 16.2 },
-    { date: 'Nov 11', revenue: 17.6, showTick: true }
-  ],
-  '1Y': [
-    { date: 'Jan', revenue: 6.2, showTick: true },
-    { date: 'Mar', revenue: 8.5 },
-    { date: 'May', revenue: 10.4, showTick: true },
-    { date: 'Jul', revenue: 12.8 },
-    { date: 'Sep', revenue: 14.9, showTick: true },
-    { date: 'Nov', revenue: 17.6, showTick: true }
-  ]
+  '30D': {
+    value: '₹17.6L',
+    growth: '↑ +15%',
+    data: [
+      { date: 'Oct 15', revenue: 6.8, showTick: true },
+      { date: 'Oct 17', revenue: 6.8 },
+      { date: 'Oct 19', revenue: 8.5 },
+      { date: 'Oct 21', revenue: 7.2 },
+      { date: 'Oct 22', revenue: 9.8, showTick: true },
+      { date: 'Oct 24', revenue: 9.2 },
+      { date: 'Oct 26', revenue: 11.4 },
+      { date: 'Oct 28', revenue: 9.0 },
+      { date: 'Oct 29', revenue: 10.8, showTick: true },
+      { date: 'Oct 31', revenue: 11.8 },
+      { date: 'Nov 01', revenue: 13.5 },
+      { date: 'Nov 02', revenue: 15.2 },
+      { date: 'Nov 03', revenue: 14.1 },
+      { date: 'Nov 04', revenue: 12.0, showTick: true },
+      { date: 'Nov 06', revenue: 14.0 },
+      { date: 'Nov 07', revenue: 13.2 },
+      { date: 'Nov 08', revenue: 15.6 },
+      { date: 'Nov 09', revenue: 14.2 },
+      { date: 'Nov 10', revenue: 16.0 },
+      { date: 'Nov 11', revenue: 17.6, showTick: true }
+    ]
+  },
+  '7D': {
+    value: '₹4.8L',
+    growth: '↑ +8.4%',
+    data: [
+      { date: 'Nov 05', revenue: 12.5, showTick: true },
+      { date: 'Nov 06', revenue: 13.8 },
+      { date: 'Nov 07', revenue: 13.2, showTick: true },
+      { date: 'Nov 08', revenue: 15.6 },
+      { date: 'Nov 09', revenue: 14.2, showTick: true },
+      { date: 'Nov 10', revenue: 16.0 },
+      { date: 'Nov 11', revenue: 17.6, showTick: true }
+    ]
+  },
+  '90D': {
+    value: '₹51.2L',
+    growth: '↑ +22.1%',
+    data: [
+      { date: 'Aug 15', revenue: 9.4, showTick: true },
+      { date: 'Sep 01', revenue: 11.2, showTick: true },
+      { date: 'Sep 15', revenue: 12.5 },
+      { date: 'Oct 01', revenue: 13.8, showTick: true },
+      { date: 'Oct 15', revenue: 14.6 },
+      { date: 'Nov 01', revenue: 16.2, showTick: true },
+      { date: 'Nov 11', revenue: 17.6, showTick: true }
+    ]
+  },
+  '1Y': {
+    value: '₹1.82Cr',
+    growth: '↑ +38.6%',
+    data: [
+      { date: 'Jan', revenue: 6.2, showTick: true },
+      { date: 'Mar', revenue: 8.5, showTick: true },
+      { date: 'May', revenue: 10.4, showTick: true },
+      { date: 'Jul', revenue: 12.8, showTick: true },
+      { date: 'Sep', revenue: 14.9, showTick: true },
+      { date: 'Nov', revenue: 17.6, showTick: true }
+    ]
+  }
 };
 
-export const RevenueChart = () => {
-  const [activeFilter, setActiveFilter] = useState('30D');
+export const RevenueChart = ({ externalFilter, onFilterChange }) => {
+  const [internalFilter, setInternalFilter] = useState('30D');
+  const activeFilter = externalFilter || internalFilter;
 
-  const chartData = REVENUE_TIMEFRAME_DATA[activeFilter] || REVENUE_TIMEFRAME_DATA['30D'];
+  const currentConfig = REVENUE_TIMEFRAME_DATA[activeFilter] || REVENUE_TIMEFRAME_DATA['30D'];
+  const chartData = currentConfig.data;
+  const visibleTicks = chartData.filter(d => d.showTick).map(d => d.date);
+
+  const handleSelect = (tab) => {
+    if (onFilterChange) onFilterChange(tab);
+    setInternalFilter(tab);
+  };
 
   return (
     <div className="bg-white rounded-2xl p-5 border border-[#E5EAF2] shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex flex-col justify-between h-full">
@@ -79,11 +103,12 @@ export const RevenueChart = () => {
           {['7D', '30D', '90D', '1Y'].map((tab) => (
             <button
               key={tab}
-              onClick={() => setActiveFilter(tab)}
-              className={`px-3 py-1 text-xs font-semibold rounded-full transition-colors ${
+              type="button"
+              onClick={() => handleSelect(tab)}
+              className={`px-3 py-1 text-xs font-semibold rounded-full transition-colors cursor-pointer ${
                 activeFilter === tab
                   ? 'bg-[#EBF3FF] text-[#2563EB]'
-                  : 'text-[#8292AD] hover:text-[#172033]'
+                  : 'text-[#8292AD] hover:text-[#172033] hover:bg-slate-50'
               }`}
             >
               {tab}
@@ -92,17 +117,17 @@ export const RevenueChart = () => {
         </div>
       </div>
 
-      {/* Metric Display: ₹17.6L + 15% */}
+      {/* Metric Display */}
       <div className="flex items-center gap-3 mt-3 mb-2">
         <span className="text-3xl font-extrabold text-[#172033] tracking-tight">
-          ₹17.6L
+          {currentConfig.value}
         </span>
         <span className="inline-flex items-center text-xs font-semibold text-emerald-600 bg-[#ECFDF5] border border-[#A7F3D0]/60 px-2.5 py-0.5 rounded-full">
-          ↑ +15%
+          {currentConfig.growth}
         </span>
       </div>
 
-      {/* Area Chart matching screenshot */}
+      {/* Area Chart */}
       <div className="w-full h-56 mt-2">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -117,7 +142,7 @@ export const RevenueChart = () => {
               dataKey="date"
               axisLine={false}
               tickLine={false}
-              ticks={['Oct 15', 'Oct 22', 'Oct 29', 'Nov 04', 'Nov 11']}
+              ticks={visibleTicks}
               tick={{ fill: '#8292AD', fontSize: 11 }}
             />
             <YAxis
@@ -132,9 +157,9 @@ export const RevenueChart = () => {
               content={({ active, payload, label }) => {
                 if (active && payload && payload.length) {
                   return (
-                    <div className="bg-white border border-[#E5EAF2] p-2 rounded-xl shadow-md text-xs">
+                    <div className="bg-white border border-[#E5EAF2] p-2.5 rounded-xl shadow-md text-xs">
                       <p className="font-semibold text-[#172033]">{label}</p>
-                      <p className="text-[#2563EB] font-bold">₹{payload[0].value}L</p>
+                      <p className="text-[#2563EB] font-bold mt-0.5">₹{payload[0].value}L</p>
                     </div>
                   );
                 }

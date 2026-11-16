@@ -30,7 +30,19 @@ export const ActivityLog = () => {
   });
 
   const handleExport = () => {
-    showToast('Audit trail exported to immutable CSV', 'info');
+    const headers = 'ID,Actor,Action,Target,Category,Timestamp,IP\n';
+    const rows = filteredLogs.map(l =>
+      `"${l.id}","${l.actor}","${l.action}","${l.target}","${l.category}","${l.timestamp}","${l.ip}"`
+    ).join('\n');
+    const blob = new Blob([headers + rows], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'Pulse_Audit_Log.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Audit trail exported to CSV successfully!', 'success');
   };
 
   const getCategoryIcon = (cat) => {

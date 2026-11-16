@@ -51,7 +51,47 @@ export const Billing = () => {
   };
 
   const downloadPDF = (id) => {
-    showToast(`Downloading invoice ${id} PDF...`);
+    const inv = invoices.find(i => i.id === id);
+    if (!inv) return;
+    const content = `===================================================
+PULSE CRM OFFICIAL INVOICE RECEIPT
+===================================================
+Invoice Number: ${inv.id}
+Due Date:       ${inv.dueDate}
+Company:        ${inv.company}
+Plan:           ${inv.plan}
+Payment Method: ${inv.method}
+Status:         ${inv.status}
+---------------------------------------------------
+TOTAL AMOUNT:   ${inv.amount}
+===================================================
+Pulse CRM Platform • support@pulsecrm.io
+===================================================`;
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `${inv.id}_Receipt.txt`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast(`Invoice ${inv.id} receipt downloaded!`, 'success');
+  };
+
+  const exportInvoices = () => {
+    const headers = 'Invoice ID,Company,Plan,Amount,Status,DueDate,Method\n';
+    const rows = filteredInvoices.map(i =>
+      `"${i.id}","${i.company}","${i.plan}","${i.amount}","${i.status}","${i.dueDate}","${i.method}"`
+    ).join('\n');
+    const blob = new Blob([headers + rows], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'Pulse_Invoices.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Invoices exported to CSV successfully!');
   };
 
   const sendReminder = (company, id) => {
@@ -71,13 +111,24 @@ export const Billing = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => setIsCreateInvoiceOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 transition-all self-start sm:self-auto"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Create Invoice</span>
-        </button>
+        <div className="flex items-center gap-2.5 self-start sm:self-auto">
+          <button
+            type="button"
+            onClick={exportInvoices}
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#E5EAF2] hover:bg-slate-50 rounded-xl shadow-xs transition-colors"
+            title="Export invoices as CSV"
+          >
+            <Download className="w-4 h-4 text-blue-600" />
+            <span>Export CSV</span>
+          </button>
+          <button
+            onClick={() => setIsCreateInvoiceOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 transition-all cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Create Invoice</span>
+          </button>
+        </div>
       </div>
 
       {/* Metrics Row */}

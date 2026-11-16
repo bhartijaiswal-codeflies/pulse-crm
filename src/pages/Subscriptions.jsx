@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
   Repeat,
   CheckCircle,
@@ -13,17 +14,28 @@ import {
   X,
   CreditCard,
   Building2,
-  Edit2
+  Edit2,
+  Plus,
+  Power
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ImageUploadOption } from '../components/common/ImageUploadOption';
 
 export const Subscriptions = () => {
-  const { companies, updateCompany, showToast } = useApp();
-  const [activeTab, setActiveTab] = useState('All');
+  const { companies, updateCompany, setIsAddCompanyOpen, showToast } = useApp();
+  const [searchParams] = useSearchParams();
+  const statusParam = searchParams.get('status');
+
+  const [activeTab, setActiveTab] = useState(statusParam || 'All');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSub, setSelectedSub] = useState(null);
   const [editingSub, setEditingSub] = useState(null);
+
+  useEffect(() => {
+    if (statusParam) {
+      setActiveTab(statusParam);
+    }
+  }, [statusParam]);
 
   const tabs = [
     { name: 'All', count: companies.length },
@@ -57,10 +69,18 @@ export const Subscriptions = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200">
+        <div className="flex items-center gap-2.5">
+          <span className="hidden sm:inline-flex text-xs font-semibold px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200">
             92.4% Net Revenue Retention
           </span>
+          <button
+            type="button"
+            onClick={() => setIsAddCompanyOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 transition-all cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>New Subscription</span>
+          </button>
         </div>
       </div>
 
@@ -287,27 +307,50 @@ export const Subscriptions = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between gap-2.5 pt-3 border-t border-[#E5EAF2]">
-              <button
-                onClick={() => {
-                  setEditingSub(selectedSub);
-                  setSelectedSub(null);
-                }}
-                className="px-3 py-2 text-xs font-semibold text-blue-600 hover:bg-blue-50 rounded-xl transition-colors flex items-center gap-1.5 border border-blue-200"
-              >
-                <Edit2 className="w-3.5 h-3.5" />
-                <span>Edit Logo & Plan</span>
-              </button>
-              <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 pt-3 border-t border-[#E5EAF2]">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
                 <button
+                  type="button"
+                  onClick={() => {
+                    setEditingSub(selectedSub);
+                    setSelectedSub(null);
+                  }}
+                  className="px-3 py-2 text-xs font-semibold text-blue-600 hover:bg-blue-50 rounded-xl transition-colors flex items-center gap-1.5 border border-blue-200"
+                >
+                  <Edit2 className="w-3.5 h-3.5" />
+                  <span>Edit Plan</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const nextStatus = selectedSub.status === 'Cancelled' ? 'Active' : 'Cancelled';
+                    updateCompany(selectedSub.id, { ...selectedSub, status: nextStatus });
+                    showToast(`Subscription for ${selectedSub.name} is now ${nextStatus}`, nextStatus === 'Active' ? 'success' : 'warning');
+                    setSelectedSub(null);
+                  }}
+                  className={`px-3 py-2 text-xs font-semibold rounded-xl transition-colors flex items-center gap-1.5 border ${
+                    selectedSub.status === 'Cancelled'
+                      ? 'text-emerald-700 bg-emerald-50 border-emerald-200 hover:bg-emerald-100'
+                      : 'text-red-600 bg-red-50 border-red-200 hover:bg-red-100'
+                  }`}
+                >
+                  <Power className="w-3.5 h-3.5" />
+                  <span>{selectedSub.status === 'Cancelled' ? 'Reactivate' : 'Cancel Plan'}</span>
+                </button>
+              </div>
+
+              <div className="flex gap-2 w-full sm:w-auto justify-end">
+                <button
+                  type="button"
                   onClick={() => setSelectedSub(null)}
-                  className="px-4 py-2 text-xs font-semibold text-[#8292AD]"
+                  className="px-4 py-2 text-xs font-semibold text-[#8292AD] hover:text-[#172033]"
                 >
                   Close
                 </button>
                 <button
+                  type="button"
                   onClick={() => {
-                    showToast(`Invoice reminder triggered for ${selectedSub.name}`);
+                    showToast(`Invoice notice dispatched to ${selectedSub.name}`);
                     setSelectedSub(null);
                   }}
                   className="px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl"

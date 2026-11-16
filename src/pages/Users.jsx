@@ -25,6 +25,15 @@ export const Users = () => {
   const [roleFilter, setRoleFilter] = useState('All');
   const [isAddUserOpen, setIsAddUserOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
+  const [permissionsUser, setPermissionsUser] = useState(null);
+  const [permissions, setPermissions] = useState({
+    viewAnalytics: true,
+    manageBilling: true,
+    editCompanies: true,
+    inviteUsers: true,
+    apiAccess: false,
+    deleteRecords: false
+  });
 
   const [newUser, setNewUser] = useState({
     name: '',
@@ -230,7 +239,17 @@ export const Users = () => {
                         <span>Edit</span>
                       </button>
                       <button
-                        onClick={() => showToast(`Permissions configured for ${user.name}`)}
+                        onClick={() => {
+                          setPermissionsUser(user);
+                          setPermissions({
+                            viewAnalytics: true,
+                            manageBilling: user.role.includes('Admin') || user.role.includes('Billing'),
+                            editCompanies: user.role.includes('Admin'),
+                            inviteUsers: user.role.includes('Admin'),
+                            apiAccess: user.role.includes('Admin') || user.role.includes('Developer'),
+                            deleteRecords: user.role === 'Super Administrator'
+                          });
+                        }}
                         className="px-2.5 py-1 text-xs font-semibold text-slate-600 hover:text-[#172033] hover:bg-slate-100 rounded-lg transition-colors border border-[#E5EAF2]"
                       >
                         Permissions
@@ -474,6 +493,74 @@ export const Users = () => {
                 </div>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Permissions Modal */}
+      {permissionsUser && (
+        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setPermissionsUser(null)} />
+          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-6 space-y-4 max-h-[85vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
+              <div className="flex items-center gap-2">
+                <Shield className="w-5 h-5 text-blue-600" />
+                <div>
+                  <h3 className="text-base font-bold text-[#172033]">Access Permissions</h3>
+                  <p className="text-xs text-[#8292AD]">{permissionsUser.name} • {permissionsUser.role}</p>
+                </div>
+              </div>
+              <button onClick={() => setPermissionsUser(null)} className="p-1.5 text-slate-400 hover:text-slate-700">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-3 pt-1">
+              {[
+                { key: 'viewAnalytics', title: 'Dashboard & Analytics', desc: 'Can view revenue charts, MRR numbers, and conversion rates' },
+                { key: 'manageBilling', title: 'Billing & Invoicing', desc: 'Can issue invoices, mark payments paid, and manage cards' },
+                { key: 'editCompanies', title: 'Manage Companies', desc: 'Can create, edit details, and modify tenant accounts' },
+                { key: 'inviteUsers', title: 'Invite & Manage Team', desc: 'Can invite new administrators and update role assignments' },
+                { key: 'apiAccess', title: 'API Keys & Webhooks', desc: 'Can rotate secret API credentials and view audit telemetry' },
+                { key: 'deleteRecords', title: 'Delete Records', desc: 'Can delete companies, subscriptions, or team members' },
+              ].map(perm => (
+                <label
+                  key={perm.key}
+                  className="flex items-start gap-3 p-2.5 rounded-xl border border-[#E5EAF2] hover:bg-slate-50 cursor-pointer transition-colors"
+                >
+                  <input
+                    type="checkbox"
+                    checked={permissions[perm.key]}
+                    onChange={(e) => setPermissions({ ...permissions, [perm.key]: e.target.checked })}
+                    className="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300"
+                  />
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold text-[#172033]">{perm.title}</p>
+                    <p className="text-[11px] text-[#8292AD] mt-0.5">{perm.desc}</p>
+                  </div>
+                </label>
+              ))}
+            </div>
+
+            <div className="pt-3 border-t border-[#E5EAF2] flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => setPermissionsUser(null)}
+                className="px-4 py-2 text-xs font-semibold text-[#8292AD] hover:text-[#172033]"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  showToast(`Access permissions updated for ${permissionsUser.name}!`, 'success');
+                  setPermissionsUser(null);
+                }}
+                className="px-5 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs"
+              >
+                Save Permissions
+              </button>
+            </div>
           </div>
         </div>
       )}

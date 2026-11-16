@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Search,
+  Calendar,
   Bell,
   Sun,
   Moon,
   ChevronDown,
   Menu,
+  PanelLeft,
   Check,
   User,
   Shield,
@@ -16,8 +18,21 @@ import {
 import { useApp } from '../../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 
+const DATE_OPTIONS = [
+  'Today: Nov 12, 2026',
+  'Last 7 Days',
+  'Last 30 Days',
+  'This Month: Nov 2026',
+  'This Quarter (Q4)',
+  'Year to Date (2026)'
+];
+
 export const Header = () => {
   const {
+    sidebarCollapsed,
+    setSidebarCollapsed,
+    selectedDateRange,
+    setSelectedDateRange,
     setMobileMenuOpen,
     setIsCommandPaletteOpen,
     notifications,
@@ -28,16 +43,21 @@ export const Header = () => {
   const navigate = useNavigate();
 
   // Dropdown states
+  const [isDateOpen, setIsDateOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  const dateRef = useRef(null);
   const notifRef = useRef(null);
   const profileRef = useRef(null);
 
   // Close dropdowns on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
+      if (dateRef.current && !dateRef.current.contains(event.target)) {
+        setIsDateOpen(false);
+      }
       if (notifRef.current && !notifRef.current.contains(event.target)) {
         setIsNotifOpen(false);
       }
@@ -74,6 +94,18 @@ export const Header = () => {
             <Menu className="w-5 h-5" />
           </button>
 
+          {/* Desktop Sidebar Rail/Full Toggle (Matches screenshot) */}
+          <button
+            onClick={() => {
+              setSidebarCollapsed(!sidebarCollapsed);
+              showToast(sidebarCollapsed ? 'Sidebar expanded' : 'Sidebar rail view');
+            }}
+            className="hidden md:flex p-2 rounded-xl text-[#8292AD] hover:text-[#172033] hover:bg-[#F7F9FC] border border-[#E5EAF2] transition-colors"
+            title={sidebarCollapsed ? "Expand Sidebar" : "Collapse to Rail View"}
+          >
+            <PanelLeft className="w-4 h-4" />
+          </button>
+
           {/* Global Search Input */}
           <div
             onClick={() => setIsCommandPaletteOpen(true)}
@@ -83,7 +115,7 @@ export const Header = () => {
             <input
               type="text"
               readOnly
-              placeholder="Search companies, subscriptions, invoices..."
+              placeholder="Search companies, subscriptions, invoices... [⌘K]"
               className="w-full bg-transparent text-xs sm:text-sm text-[#172033] placeholder-[#8292AD] focus:outline-none cursor-pointer select-none"
             />
             <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-semibold text-[#8292AD] bg-white border border-[#E5EAF2] rounded shadow-xs ml-2">
@@ -92,8 +124,41 @@ export const Header = () => {
           </div>
         </div>
 
-        {/* Right: Theme toggle, Notification, Profile */}
+        {/* Right: Date selector, Theme toggle, Notification, Profile */}
         <div className="flex items-center gap-2 md:gap-3">
+          {/* Date Selector Dropdown (matches screenshot pill) */}
+          <div className="relative" ref={dateRef}>
+            <button
+              onClick={() => setIsDateOpen(!isDateOpen)}
+              className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-[#F7F9FC] border border-[#E5EAF2] rounded-xl text-xs font-semibold text-[#172033] hover:bg-slate-100 transition-colors"
+            >
+              <Calendar className="w-3.5 h-3.5 text-blue-600" />
+              <span>{selectedDateRange}</span>
+              <ChevronDown className="w-3.5 h-3.5 text-[#8292AD]" />
+            </button>
+
+            {isDateOpen && (
+              <div className="absolute right-0 mt-2 w-52 bg-white border border-[#E5EAF2] rounded-2xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                {DATE_OPTIONS.map((opt) => (
+                  <button
+                    key={opt}
+                    onClick={() => {
+                      setSelectedDateRange(opt);
+                      setIsDateOpen(false);
+                      showToast(`Filtered by ${opt}`, 'info');
+                    }}
+                    className={`w-full px-4 py-2 text-xs text-left flex items-center justify-between hover:bg-[#F7F9FC] ${
+                      selectedDateRange === opt ? 'font-bold text-blue-600 bg-blue-50/50' : 'text-[#172033]'
+                    }`}
+                  >
+                    <span>{opt}</span>
+                    {selectedDateRange === opt && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Quick Theme Toggle */}
           <button
             onClick={toggleTheme}

@@ -46,7 +46,19 @@ export const Analytics = () => {
   const [timeframe, setTimeframe] = useState('monthly');
 
   const handleExport = () => {
-    showToast('Analytics export generated (CSV)', 'info');
+    const headers = 'Month,Revenue (Lakhs),Subscriptions,Expenses (Lakhs)\n';
+    const rows = REVENUE_DATA.monthly.map(m =>
+      `"${m.name}",${m.revenue},${m.subscriptions},${m.expenses}`
+    ).join('\n');
+    const blob = new Blob([headers + rows], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'Pulse_Revenue_Analytics.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Analytics dataset exported to CSV successfully!', 'success');
   };
 
   return (

@@ -14,6 +14,21 @@ const DATE_OPTIONS = [
   'This Year (2026)'
 ];
 
+const rangeToTabMap = {
+  'Today': '7D',
+  'Last 7 Days': '7D',
+  'Last 30 Days': '30D',
+  'Last 90 Days': '90D',
+  'This Year (2026)': '1Y'
+};
+
+const tabToRangeMap = {
+  '7D': 'Last 7 Days',
+  '30D': 'Last 30 Days',
+  '90D': 'Last 90 Days',
+  '1Y': 'This Year (2026)'
+};
+
 export const Dashboard = () => {
   const [selectedRange, setSelectedRange] = useState('Last 30 Days');
   const [isDateOpen, setIsDateOpen] = useState(false);
@@ -45,8 +60,9 @@ export const Dashboard = () => {
         {/* Date Dropdown button matching screenshot */}
         <div className="relative" ref={dropdownRef}>
           <button
+            type="button"
             onClick={() => setIsDateOpen(!isDateOpen)}
-            className="flex items-center gap-2 bg-white border border-[#E5EAF2] hover:bg-slate-50 text-xs font-medium text-[#172033] px-3.5 py-2 rounded-xl shadow-xs transition-colors"
+            className="flex items-center gap-2 bg-white border border-[#E5EAF2] hover:bg-slate-50 text-xs font-medium text-[#172033] px-3.5 py-2 rounded-xl shadow-xs transition-colors cursor-pointer"
           >
             <Calendar className="w-4 h-4 text-[#64748B]" />
             <span>{selectedRange}</span>
@@ -54,16 +70,17 @@ export const Dashboard = () => {
           </button>
 
           {isDateOpen && (
-            <div className="absolute right-0 mt-2 w-44 bg-white border border-[#E5EAF2] rounded-xl shadow-lg py-1.5 z-30 animate-in fade-in duration-100">
+            <div className="absolute right-0 mt-2 w-48 bg-white border border-[#E5EAF2] rounded-xl shadow-xl py-1.5 z-30 animate-in fade-in duration-100">
               {DATE_OPTIONS.map((opt) => (
                 <button
                   key={opt}
+                  type="button"
                   onClick={() => {
                     setSelectedRange(opt);
                     setIsDateOpen(false);
                   }}
-                  className={`w-full text-left px-3.5 py-1.5 text-xs flex items-center justify-between hover:bg-[#F8FAFC] transition-colors ${
-                    selectedRange === opt ? 'text-[#2563EB] font-bold' : 'text-[#334155]'
+                  className={`w-full text-left px-3.5 py-2 text-xs flex items-center justify-between hover:bg-[#F8FAFC] transition-colors cursor-pointer ${
+                    selectedRange === opt ? 'text-[#2563EB] font-bold bg-blue-50/50' : 'text-[#334155]'
                   }`}
                 >
                   <span>{opt}</span>
@@ -81,7 +98,14 @@ export const Dashboard = () => {
       {/* 2. Middle Row: Revenue Overview & Subscription Status */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
         <div className="lg:col-span-7">
-          <RevenueChart />
+          <RevenueChart
+            externalFilter={rangeToTabMap[selectedRange] || '30D'}
+            onFilterChange={(tab) => {
+              if (tabToRangeMap[tab]) {
+                setSelectedRange(tabToRangeMap[tab]);
+              }
+            }}
+          />
         </div>
         <div className="lg:col-span-5">
           <SubscriptionChart />
