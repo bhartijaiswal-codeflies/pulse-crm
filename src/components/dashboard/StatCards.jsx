@@ -111,28 +111,26 @@ export const StatCards = () => {
           onClick={card.onClick}
           className={`rounded-2xl p-4 sm:p-5 border ${card.bgClass} shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden relative`}
         >
-          {/* Top Row: Icon + Title & Value on Left, Sparkline on Right */}
-          <div className="flex items-start justify-between gap-2">
-            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
-              {card.icon}
-              <div className="min-w-0">
-                <p className="text-xs font-medium text-[#475569] dark:text-slate-400 leading-tight truncate" title={card.title}>
-                  {card.title}
-                </p>
-                <h3 className="text-2xl font-bold text-[#172033] dark:text-white mt-1 tracking-tight">
-                  {card.value}
-                </h3>
-              </div>
-            </div>
-
-            {/* Sparkline curve */}
-            <div className="flex-shrink-0 pt-0.5 overflow-hidden">
+          {/* Top Row: Icon on left, Sparkline on right */}
+          <div className="flex items-center justify-between">
+            {card.icon}
+            <div className="flex-shrink-0">
               {card.sparkline}
             </div>
           </div>
 
+          {/* Middle: Title & Value */}
+          <div className="mt-3">
+            <p className="text-xs font-medium text-[#475569] dark:text-slate-400 leading-tight">
+              {card.title}
+            </p>
+            <h3 className="text-2xl font-bold text-[#172033] dark:text-white mt-1 tracking-tight">
+              {card.value}
+            </h3>
+          </div>
+
           {/* Bottom Row: Percentage & Subtitle */}
-          <div className="mt-4 pt-1 flex items-center text-xs whitespace-nowrap overflow-hidden">
+          <div className="mt-3 pt-1 flex items-center text-xs">
             {card.growth ? (
               <>
                 <span className={`${card.trendColor} font-semibold flex items-center gap-0.5 flex-shrink-0`}>

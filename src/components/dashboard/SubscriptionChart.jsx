@@ -34,9 +34,9 @@ export const SubscriptionChart = () => {
       </div>
 
       {/* Donut and Legend row */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 lg:gap-3 xl:gap-5 my-auto pt-2">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 xl:gap-5 my-auto pt-2">
         {/* Donut Chart with Center Total */}
-        <div className="relative w-36 h-36 sm:w-40 sm:h-40 xl:w-44 xl:h-44 flex-shrink-0 flex items-center justify-center cursor-pointer" onClick={() => navigate('/subscriptions')}>
+        <div className="relative w-32 h-32 sm:w-36 sm:h-36 xl:w-40 xl:h-40 flex-shrink-0 flex items-center justify-center cursor-pointer" onClick={() => navigate('/subscriptions')}>
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Tooltip
@@ -57,8 +57,8 @@ export const SubscriptionChart = () => {
                 data={STATUS_DATA}
                 cx="50%"
                 cy="50%"
-                innerRadius={46}
-                outerRadius={64}
+                innerRadius={38}
+                outerRadius={54}
                 paddingAngle={2}
                 dataKey="value"
                 startAngle={110}
@@ -94,18 +94,18 @@ export const SubscriptionChart = () => {
               className="flex items-center justify-between gap-2 text-xs font-medium p-1 sm:p-1.5 -mx-1 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer group"
               title={`View ${item.name} subscriptions`}
             >
-              <div className="flex items-center gap-2 min-w-0">
+              <div className="flex items-center gap-2">
                 <span
                   className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                   style={{ backgroundColor: item.color }}
                 />
-                <span className="text-[#334155] group-hover:text-blue-600 transition-colors font-medium truncate">
+                <span className="text-[#334155] group-hover:text-blue-600 transition-colors font-medium whitespace-nowrap">
                   {item.name}
                 </span>
               </div>
-              <div className="flex items-center gap-2 sm:gap-3 text-right flex-shrink-0">
+              <div className="flex items-center gap-2.5 sm:gap-3 text-right flex-shrink-0">
                 <span className="font-bold text-[#172033] min-w-[20px] text-right">{item.value}</span>
-                <span className="text-[#64748B] min-w-[38px] text-right text-[11px] font-normal">{item.percentage}</span>
+                <span className="text-[#64748B] min-w-[36px] text-right text-[11px] font-normal">{item.percentage}</span>
               </div>
             </div>
           ))}
