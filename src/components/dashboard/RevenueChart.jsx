@@ -9,6 +9,7 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import { BarChart2 } from 'lucide-react';
+import { useApp } from '../../context/AppContext';
 
 const REVENUE_TIMEFRAME_DATA = {
   '30D': {
@@ -78,6 +79,7 @@ const REVENUE_TIMEFRAME_DATA = {
 };
 
 export const RevenueChart = ({ externalFilter, onFilterChange }) => {
+  const { isDarkMode } = useApp();
   const [internalFilter, setInternalFilter] = useState('30D');
   const activeFilter = externalFilter || internalFilter;
 
@@ -137,20 +139,24 @@ export const RevenueChart = ({ externalFilter, onFilterChange }) => {
                 <stop offset="95%" stopColor="#2563EB" stopOpacity={0.01} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="0" vertical={false} stroke="#F1F5F9" />
+            <CartesianGrid
+              strokeDasharray="0"
+              vertical={false}
+              stroke={isDarkMode ? '#1E2D54' : '#F1F5F9'}
+            />
             <XAxis
               dataKey="date"
               axisLine={false}
               tickLine={false}
               ticks={visibleTicks}
-              tick={{ fill: '#8292AD', fontSize: 11 }}
+              tick={{ fill: isDarkMode ? '#94A3B8' : '#8292AD', fontSize: 11 }}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
               domain={[0, 20]}
               ticks={[0, 5, 10, 15, 20]}
-              tick={{ fill: '#8292AD', fontSize: 11 }}
+              tick={{ fill: isDarkMode ? '#94A3B8' : '#8292AD', fontSize: 11 }}
               tickFormatter={(v) => `${v}L`}
             />
             <Tooltip
