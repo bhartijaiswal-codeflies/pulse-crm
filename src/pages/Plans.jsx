@@ -73,10 +73,10 @@ export const Plans = () => {
 
       {/* Monthly / Yearly Billing Toggle */}
       <div className="flex items-center justify-center my-6">
-        <div className="bg-white p-1.5 rounded-2xl border border-[#E5EAF2] shadow-xs flex items-center gap-2">
+        <div className="bg-white p-1 sm:p-1.5 rounded-2xl border border-[#E5EAF2] shadow-xs flex items-center gap-1.5 sm:gap-2">
           <button
             onClick={() => setIsYearly(false)}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-all ${
               !isYearly ? 'bg-blue-600 text-white shadow-xs' : 'text-[#8292AD] hover:text-[#172033]'
             }`}
           >
@@ -84,12 +84,12 @@ export const Plans = () => {
           </button>
           <button
             onClick={() => setIsYearly(true)}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               isYearly ? 'bg-blue-600 text-white shadow-xs' : 'text-[#8292AD] hover:text-[#172033]'
             }`}
           >
             <span>Annual Billing</span>
-            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-extrabold ${
+            <span className={`text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full font-extrabold ${
               isYearly ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-800'
             }`}>
               SAVE 20%
@@ -186,9 +186,9 @@ export const Plans = () => {
 
       {/* Edit Plan Modal */}
       {editingPlan && (
-        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setEditingPlan(null)} />
-          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] p-6 space-y-4 z-10 animate-in zoom-in-95">
+          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] p-4 sm:p-6 space-y-4 z-10 animate-in zoom-in-95 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
               <h3 className="text-base font-bold text-[#172033]">Edit {editingPlan.name}</h3>
               <button onClick={() => setEditingPlan(null)} className="p-1.5 text-slate-400 hover:text-slate-700">
@@ -207,7 +207,7 @@ export const Plans = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-[#172033] mb-1">Monthly Price (₹)</label>
                   <input
@@ -238,17 +238,17 @@ export const Plans = () => {
                 />
               </div>
 
-              <div className="pt-3 border-t border-[#E5EAF2] flex justify-end gap-2.5">
+              <div className="pt-3 border-t border-[#E5EAF2] flex flex-col sm:flex-row justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setEditingPlan(null)}
-                  className="px-4 py-2 text-xs font-semibold text-[#8292AD]"
+                  className="px-4 py-2 text-xs font-semibold text-[#8292AD] cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl"
+                  className="px-5 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl cursor-pointer"
                 >
                   Save Changes
                 </button>
@@ -260,9 +260,9 @@ export const Plans = () => {
 
       {/* Create New Plan Modal */}
       {isAddPlanOpen && (
-        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setIsAddPlanOpen(false)} />
-          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] p-6 space-y-4 z-10 animate-in zoom-in-95">
+          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] p-4 sm:p-6 space-y-4 z-10 animate-in zoom-in-95 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
               <h3 className="text-base font-bold text-[#172033]">Create New Pricing Tier</h3>
               <button onClick={() => setIsAddPlanOpen(false)} className="p-1.5 text-slate-400 hover:text-slate-700">
@@ -283,7 +283,7 @@ export const Plans = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-[#172033] mb-1">Monthly Price (₹)</label>
                   <input
@@ -315,17 +315,17 @@ export const Plans = () => {
                 />
               </div>
 
-              <div className="pt-3 border-t border-[#E5EAF2] flex justify-end gap-2.5">
+              <div className="pt-3 border-t border-[#E5EAF2] flex flex-col sm:flex-row justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setIsAddPlanOpen(false)}
-                  className="px-4 py-2 text-xs font-semibold text-[#8292AD]"
+                  className="px-4 py-2 text-xs font-semibold text-[#8292AD] cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl"
+                  className="px-5 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl cursor-pointer"
                 >
                   Create Tier
                 </button>

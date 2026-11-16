@@ -110,14 +110,20 @@ export const Header = () => {
           {/* Global Search Input */}
           <div
             onClick={() => setIsCommandPaletteOpen(true)}
-            className="relative flex items-center w-full max-w-md bg-[#F7F9FC] hover:bg-slate-100/80 border border-[#E5EAF2] rounded-xl px-3.5 py-2 cursor-pointer transition-all duration-200 group focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100"
+            className="relative flex items-center w-full max-w-md bg-[#F7F9FC] hover:bg-slate-100/80 border border-[#E5EAF2] rounded-xl px-3 sm:px-3.5 py-2 cursor-pointer transition-all duration-200 group focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100"
           >
-            <Search className="w-4 h-4 text-[#8292AD] group-hover:text-blue-500 transition-colors mr-2.5 flex-shrink-0" />
+            <Search className="w-4 h-4 text-[#8292AD] group-hover:text-blue-500 transition-colors mr-2 sm:mr-2.5 flex-shrink-0" />
+            <input
+              type="text"
+              readOnly
+              placeholder="Search... [⌘K]"
+              className="w-full bg-transparent text-xs text-[#172033] placeholder-[#8292AD] focus:outline-none cursor-pointer select-none sm:hidden"
+            />
             <input
               type="text"
               readOnly
               placeholder="Search companies, subscriptions, invoices... [⌘K]"
-              className="w-full bg-transparent text-xs sm:text-sm text-[#172033] placeholder-[#8292AD] focus:outline-none cursor-pointer select-none"
+              className="w-full bg-transparent text-xs sm:text-sm text-[#172033] placeholder-[#8292AD] focus:outline-none cursor-pointer select-none hidden sm:block"
             />
             <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-semibold text-[#8292AD] bg-white border border-[#E5EAF2] rounded shadow-xs ml-2">
               ⌘K
@@ -187,7 +193,7 @@ export const Header = () => {
             </button>
 
             {isNotifOpen && (
-              <div className="absolute right-0 mt-2 w-80 md:w-96 bg-white border border-[#E5EAF2] rounded-2xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+              <div className="absolute right-0 mt-2 w-[calc(100vw-2rem)] sm:w-80 md:w-96 bg-white border border-[#E5EAF2] rounded-2xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                 <div className="px-4 py-2 border-b border-[#E5EAF2] flex items-center justify-between">
                   <div>
                     <h4 className="text-sm font-bold text-[#172033]">Notifications</h4>
@@ -260,7 +266,7 @@ export const Header = () => {
             </button>
 
             {isProfileOpen && (
-              <div className="absolute right-0 mt-2 w-64 bg-white border border-[#E5EAF2] rounded-2xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+              <div className="absolute right-0 mt-2 w-[calc(100vw-2rem)] sm:w-64 bg-white border border-[#E5EAF2] rounded-2xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                 <div className="px-4 py-3 border-b border-[#E5EAF2]">
                   <p className="text-xs text-[#8292AD]">Signed in as</p>
                   <p className="text-sm font-bold text-[#172033]">bobby.singh@pulsecrm.io</p>

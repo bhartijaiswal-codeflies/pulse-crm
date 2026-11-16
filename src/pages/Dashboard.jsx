@@ -47,7 +47,7 @@ export const Dashboard = () => {
   return (
     <div className="space-y-5 animate-in fade-in duration-150">
       {/* Top Header: Title + Subtitle on Left, Date Filter on Right */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
           <h1 className="text-2xl font-bold text-[#172033] tracking-tight">
             Dashboard
@@ -58,7 +58,7 @@ export const Dashboard = () => {
         </div>
 
         {/* Date Dropdown button matching screenshot */}
-        <div className="relative" ref={dropdownRef}>
+        <div className="relative self-start sm:self-auto" ref={dropdownRef}>
           <button
             type="button"
             onClick={() => setIsDateOpen(!isDateOpen)}

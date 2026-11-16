@@ -283,22 +283,22 @@ export const RecentCompanies = () => {
 
       {/* View Company Details Modal */}
       {selectedCompany && (
-        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div
             className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]"
             onClick={() => setSelectedCompany(null)}
           />
-          <div className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[85vh] flex flex-col text-left">
-            <div className="px-6 py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-[#F7F9FC]">
+          <div className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[90vh] sm:max-h-[85vh] flex flex-col text-left">
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-[#F7F9FC]">
               <div className="flex items-center gap-3">
                 <img
                   src={selectedCompany.logo}
                   alt={selectedCompany.name}
-                  className="w-12 h-12 rounded-xl object-cover border border-[#E5EAF2]"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-cover border border-[#E5EAF2]"
                 />
                 <div>
-                  <h3 className="text-base font-bold text-[#172033]">{selectedCompany.name}</h3>
-                  <p className="text-xs text-[#8292AD]">{selectedCompany.industry} • ID: {selectedCompany.id}</p>
+                  <h3 className="text-sm sm:text-base font-bold text-[#172033]">{selectedCompany.name}</h3>
+                  <p className="text-[11px] sm:text-xs text-[#8292AD]">{selectedCompany.industry} • ID: {selectedCompany.id}</p>
                 </div>
               </div>
               <button
@@ -310,9 +310,9 @@ export const RecentCompanies = () => {
               </button>
             </div>
 
-            <div className="p-6 space-y-5 overflow-y-auto">
+            <div className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto">
               {/* Snapshot Cards */}
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
                 <div className="bg-[#F8FAFC] border border-[#E5EAF2] rounded-xl p-3">
                   <span className="text-[10px] text-[#8292AD] font-semibold uppercase tracking-wider block">Current Plan</span>
                   <span className="text-sm font-bold text-[#172033] mt-0.5 block">{selectedCompany.plan}</span>
@@ -331,27 +331,27 @@ export const RecentCompanies = () => {
               <div>
                 <h4 className="text-xs font-bold text-[#172033] uppercase tracking-wider mb-3">Contact & Organization Info</h4>
                 <div className="space-y-2.5 text-xs text-[#475569]">
-                  <div className="flex items-center justify-between py-1.5 border-b border-[#F1F5F9]">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between py-1.5 border-b border-[#F1F5F9] gap-0.5 sm:gap-2">
                     <span className="flex items-center gap-2 text-[#8292AD]">
                       <Sparkles className="w-3.5 h-3.5" /> Primary Contact
                     </span>
                     <span className="font-semibold text-[#172033]">{selectedCompany.contactPerson}</span>
                   </div>
-                  <div className="flex items-center justify-between py-1.5 border-b border-[#F1F5F9]">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between py-1.5 border-b border-[#F1F5F9] gap-0.5 sm:gap-2">
                     <span className="flex items-center gap-2 text-[#8292AD]">
                       <Mail className="w-3.5 h-3.5" /> Work Email
                     </span>
-                    <a href={`mailto:${selectedCompany.email}`} className="text-blue-600 hover:underline">
+                    <a href={`mailto:${selectedCompany.email}`} className="text-blue-600 hover:underline break-all">
                       {selectedCompany.email}
                     </a>
                   </div>
-                  <div className="flex items-center justify-between py-1.5 border-b border-[#F1F5F9]">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between py-1.5 border-b border-[#F1F5F9] gap-0.5 sm:gap-2">
                     <span className="flex items-center gap-2 text-[#8292AD]">
                       <Phone className="w-3.5 h-3.5" /> Phone Number
                     </span>
                     <span>{selectedCompany.phone}</span>
                   </div>
-                  <div className="flex items-center justify-between py-1.5 border-b border-[#F1F5F9]">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between py-1.5 border-b border-[#F1F5F9] gap-0.5 sm:gap-2">
                     <span className="flex items-center gap-2 text-[#8292AD]">
                       <MapPin className="w-3.5 h-3.5" /> Headquarters
                     </span>
@@ -393,11 +393,11 @@ export const RecentCompanies = () => {
 
       {/* Edit Company Modal from Dashboard */}
       {editingCompany && (
-        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setEditingCompany(null)} />
-          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[85vh] flex flex-col text-left">
-            <div className="px-6 py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-[#F7F9FC]">
-              <h3 className="text-base font-bold text-[#172033]">Edit Company Details</h3>
+          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[90vh] sm:max-h-[85vh] flex flex-col text-left">
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-[#F7F9FC]">
+              <h3 className="text-sm sm:text-base font-bold text-[#172033]">Edit Company Details</h3>
               <button
                 type="button"
                 onClick={() => setEditingCompany(null)}
@@ -419,7 +419,7 @@ export const RecentCompanies = () => {
                 setEditingCompany(null);
                 showToast && showToast(`Company "${editingCompany.name}" updated successfully!`, 'success');
               }}
-              className="p-6 space-y-4 overflow-y-auto"
+              className="p-4 sm:p-6 space-y-4 overflow-y-auto"
             >
               {/* Image Option */}
               <ImageUploadOption
@@ -441,7 +441,7 @@ export const RecentCompanies = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-[#172033] mb-1">Plan</label>
                   <select
@@ -469,7 +469,7 @@ export const RecentCompanies = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-[#172033] mb-1">Users / Seats</label>
                   <input
@@ -512,21 +512,21 @@ export const RecentCompanies = () => {
 
       {/* Instant Video Meeting Modal */}
       {videoCallCompany && (
-        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div
             className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]"
             onClick={() => setVideoCallCompany(null)}
           />
-          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] z-10 animate-in zoom-in-95 duration-150">
             {/* Header */}
-            <div className="px-6 py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-gradient-to-r from-indigo-50/60 to-purple-50/60">
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-gradient-to-r from-indigo-50/60 to-purple-50/60">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-md">
-                  <Video className="w-5 h-5" />
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-md">
+                  <Video className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-[#172033]">Instant Video Meeting</h3>
-                  <p className="text-xs text-[#8292AD]">{videoCallCompany.name}</p>
+                  <h3 className="text-sm sm:text-base font-bold text-[#172033]">Instant Video Meeting</h3>
+                  <p className="text-[11px] sm:text-xs text-[#8292AD]">{videoCallCompany.name}</p>
                 </div>
               </div>
               <button
@@ -538,7 +538,7 @@ export const RecentCompanies = () => {
             </div>
 
             {/* Body */}
-            <div className="p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-4">
               <div className="flex items-center gap-3 p-3 bg-[#F8FAFC] border border-[#E5EAF2] rounded-xl">
                 {videoCallCompany.logo ? (
                   <img src={videoCallCompany.logo} alt={videoCallCompany.name} className="w-10 h-10 rounded-xl object-cover border" />
@@ -558,7 +558,7 @@ export const RecentCompanies = () => {
 
               <div>
                 <label className="block text-xs font-semibold text-[#172033] mb-1.5">Meeting Invite Link</label>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   <input
                     type="text"
                     readOnly
@@ -567,7 +567,7 @@ export const RecentCompanies = () => {
                   />
                   <button
                     onClick={() => handleCopyMeetingLink(`https://meet.pulsecrm.io/room/${videoCallCompany.id || 'live'}`)}
-                    className="px-3 py-2 text-xs font-semibold text-indigo-600 hover:bg-indigo-50 border border-indigo-200 rounded-xl transition-colors flex items-center gap-1.5"
+                    className="px-3 py-2 text-xs font-semibold text-indigo-600 hover:bg-indigo-50 border border-indigo-200 rounded-xl transition-colors flex items-center justify-center gap-1.5"
                   >
                     {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copiedLink ? 'Copied' : 'Copy'}</span>
@@ -583,7 +583,7 @@ export const RecentCompanies = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-2 flex items-center gap-2.5">
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
                 <button
                   type="button"
                   onClick={() => {
@@ -591,7 +591,7 @@ export const RecentCompanies = () => {
                     window.open(`https://meet.google.com/new`, '_blank');
                     setVideoCallCompany(null);
                   }}
-                  className="flex-1 py-2.5 px-4 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:flex-1 py-2.5 px-4 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors shadow-md flex items-center justify-center gap-2 cursor-pointer text-center"
                 >
                   <Video className="w-4 h-4" />
                   <span>Join Video Call Now</span>
@@ -599,7 +599,7 @@ export const RecentCompanies = () => {
                 <button
                   type="button"
                   onClick={() => setVideoCallCompany(null)}
-                  className="py-2.5 px-4 text-xs font-semibold text-[#8292AD] hover:text-[#172033] hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+                  className="w-full sm:w-auto py-2.5 px-4 text-xs font-semibold text-[#8292AD] hover:text-[#172033] hover:bg-slate-100 rounded-xl transition-colors cursor-pointer text-center"
                 >
                   Cancel
                 </button>

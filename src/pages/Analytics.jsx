@@ -119,7 +119,7 @@ export const Analytics = () => {
       </div>
 
       {/* Primary Chart: Monthly Revenue vs Operating Costs */}
-      <div className="bg-white rounded-2xl p-6 border border-[#E5EAF2] shadow-xs">
+      <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5EAF2] shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#E5EAF2]">
           <div>
             <h3 className="text-base font-bold text-[#172033]">
@@ -176,7 +176,7 @@ export const Analytics = () => {
       {/* Secondary Row: Plan Distribution & Cohort Retention */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Plan Revenue Distribution */}
-        <div className="bg-white rounded-2xl p-6 border border-[#E5EAF2] shadow-xs flex flex-col justify-between">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5EAF2] shadow-xs flex flex-col justify-between">
           <div>
             <h3 className="text-base font-bold text-[#172033]">Revenue Contribution by Plan Tier</h3>
             <p className="text-xs text-[#8292AD] mb-4">Enterprise tier contributes 47% of recurring ARR</p>
@@ -202,14 +202,14 @@ export const Analytics = () => {
             </div>
           </div>
 
-          <div className="pt-4 mt-4 border-t border-[#E5EAF2] text-xs text-[#8292AD] flex justify-between">
+          <div className="pt-4 mt-4 border-t border-[#E5EAF2] text-xs text-[#8292AD] flex flex-col sm:flex-row justify-between gap-1">
             <span>Total Tracked Plans: 4</span>
             <span className="font-bold text-blue-600">Enterprise Upsell Pipeline: 14</span>
           </div>
         </div>
 
         {/* Cohort Retention Heatmap */}
-        <div className="bg-white rounded-2xl p-6 border border-[#E5EAF2] shadow-xs">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5EAF2] shadow-xs">
           <h3 className="text-base font-bold text-[#172033]">Customer Retention Cohort (%)</h3>
           <p className="text-xs text-[#8292AD] mb-4">Monthly subscription retention curve</p>
 

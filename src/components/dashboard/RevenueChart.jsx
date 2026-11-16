@@ -95,19 +95,19 @@ export const RevenueChart = ({ externalFilter, onFilterChange }) => {
   return (
     <div className="bg-white rounded-2xl p-5 border border-[#E5EAF2] shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex flex-col justify-between h-full">
       {/* Header: Title on Left, Filter pills on Right */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <div className="flex items-center gap-2">
           <BarChart2 className="w-5 h-5 text-[#2563EB]" />
           <h3 className="text-base font-bold text-[#172033]">Revenue Overview</h3>
         </div>
 
-        <div className="flex items-center gap-1 bg-white">
+        <div className="flex items-center gap-1 self-start sm:self-auto bg-white">
           {['7D', '30D', '90D', '1Y'].map((tab) => (
             <button
               key={tab}
               type="button"
               onClick={() => handleSelect(tab)}
-              className={`px-3 py-1 text-xs font-semibold rounded-full transition-colors cursor-pointer ${
+              className={`px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-full transition-colors cursor-pointer ${
                 activeFilter === tab
                   ? 'bg-[#EBF3FF] text-[#2563EB]'
                   : 'text-[#8292AD] hover:text-[#172033] hover:bg-slate-50'

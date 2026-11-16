@@ -111,7 +111,7 @@ Pulse CRM Platform • support@pulsecrm.io
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5 self-start sm:self-auto">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 self-start sm:self-auto">
           <button
             type="button"
             onClick={exportInvoices}
@@ -123,7 +123,7 @@ Pulse CRM Platform • support@pulsecrm.io
           </button>
           <button
             onClick={() => setIsCreateInvoiceOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 transition-all cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 transition-all cursor-pointer whitespace-nowrap"
           >
             <Plus className="w-4 h-4" />
             <span>Create Invoice</span>
@@ -280,9 +280,9 @@ Pulse CRM Platform • support@pulsecrm.io
 
       {/* Create Invoice Modal */}
       {isCreateInvoiceOpen && (
-        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+        <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setIsCreateInvoiceOpen(false)} />
-          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-6 space-y-4 max-h-[85vh] overflow-y-auto">
+          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-4 sm:p-6 space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
@@ -324,7 +324,7 @@ Pulse CRM Platform • support@pulsecrm.io
                 </select>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-[#172033] mb-1">Plan / Item</label>
                   <input
@@ -345,7 +345,7 @@ Pulse CRM Platform • support@pulsecrm.io
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-[#172033] mb-1">Due Date</label>
                   <input
@@ -366,17 +366,17 @@ Pulse CRM Platform • support@pulsecrm.io
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#E5EAF2] flex justify-end gap-2.5">
+              <div className="pt-4 border-t border-[#E5EAF2] flex flex-col sm:flex-row justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setIsCreateInvoiceOpen(false)}
-                  className="px-4 py-2 text-xs font-semibold text-[#8292AD]"
+                  className="px-4 py-2 text-xs font-semibold text-[#8292AD] cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl"
+                  className="px-5 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl cursor-pointer"
                 >
                   Issue Invoice
                 </button>

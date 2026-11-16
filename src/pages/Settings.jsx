@@ -113,7 +113,7 @@ export const Settings = () => {
 
       {/* Tab 1: General Platform */}
       {activeTab === 'general' && (
-        <div className="bg-white rounded-2xl p-6 border border-[#E5EAF2] shadow-xs max-w-3xl space-y-5 animate-in fade-in duration-150">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5EAF2] shadow-xs max-w-3xl space-y-5 animate-in fade-in duration-150">
           <div>
             <h3 className="text-base font-bold text-[#172033]">Tenant Branding & Locale</h3>
             <p className="text-xs text-[#8292AD]">Global parameters applied across all tenant organizations</p>
@@ -192,7 +192,7 @@ export const Settings = () => {
 
       {/* Tab 2: Profile & Security */}
       {activeTab === 'profile' && (
-        <div className="bg-white rounded-2xl p-6 border border-[#E5EAF2] shadow-xs max-w-3xl space-y-6 animate-in fade-in duration-150">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5EAF2] shadow-xs max-w-3xl space-y-6 animate-in fade-in duration-150">
           <div>
             <h3 className="text-base font-bold text-[#172033]">Administrator Profile</h3>
             <p className="text-xs text-[#8292AD]">Super user credentials and multi-factor authentication</p>
@@ -274,7 +274,7 @@ export const Settings = () => {
 
       {/* Tab 3: Notifications */}
       {activeTab === 'notifications' && (
-        <div className="bg-white rounded-2xl p-6 border border-[#E5EAF2] shadow-xs max-w-3xl space-y-5 animate-in fade-in duration-150">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5EAF2] shadow-xs max-w-3xl space-y-5 animate-in fade-in duration-150">
           <div>
             <h3 className="text-base font-bold text-[#172033]">Automated Alerts & Webhook Triggers</h3>
             <p className="text-xs text-[#8292AD]">Real-time operational notifications dispatched across channels</p>
@@ -320,7 +320,7 @@ export const Settings = () => {
 
       {/* Tab 4: API Keys */}
       {activeTab === 'api' && (
-        <div className="bg-white rounded-2xl p-6 border border-[#E5EAF2] shadow-xs max-w-3xl space-y-5 animate-in fade-in duration-150">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5EAF2] shadow-xs max-w-3xl space-y-5 animate-in fade-in duration-150">
           <div>
             <h3 className="text-base font-bold text-[#172033]">Production API Credentials</h3>
             <p className="text-xs text-[#8292AD]">Use these REST tokens to authenticate webhooks and automate tenant billing</p>
@@ -333,11 +333,11 @@ export const Settings = () => {
                 type="text"
                 readOnly
                 value={apiKey}
-                className="flex-1 font-mono text-xs px-3 py-2 bg-white border border-[#E5EAF2] rounded-xl text-[#172033] select-all"
+                className="flex-1 min-w-0 font-mono text-xs px-3 py-2 bg-white border border-[#E5EAF2] rounded-xl text-[#172033] select-all"
               />
               <button
                 onClick={handleCopyKey}
-                className="px-3.5 py-2 bg-white border border-[#E5EAF2] hover:bg-slate-100 rounded-xl text-xs font-bold text-[#172033] flex items-center gap-1.5 shadow-xs"
+                className="px-3.5 py-2 bg-white border border-[#E5EAF2] hover:bg-slate-100 rounded-xl text-xs font-bold text-[#172033] flex items-center gap-1.5 shadow-xs flex-shrink-0 cursor-pointer"
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Copied' : 'Copy'}</span>
@@ -348,11 +348,11 @@ export const Settings = () => {
             </p>
           </div>
 
-          <div className="flex items-center justify-between pt-4 border-t border-[#E5EAF2]">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-4 border-t border-[#E5EAF2]">
             <span className="text-xs text-[#8292AD]">Last rotated: Nov 12, 2026</span>
             <button
               onClick={handleRotateKey}
-              className="flex items-center gap-2 px-4 py-2 border border-red-200 text-red-600 hover:bg-red-50 text-xs font-bold rounded-xl transition-colors"
+              className="flex items-center gap-2 px-4 py-2 border border-red-200 text-red-600 hover:bg-red-50 text-xs font-bold rounded-xl transition-colors cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Rotate API Secret Key</span>
