@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { X, Building2, Mail, Phone, MapPin, Users, Layers, IndianRupee } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
+import { ImageUploadOption } from './ImageUploadOption';
 
 export const AddCompanyModal = () => {
   const { isAddCompanyOpen, setIsAddCompanyOpen, addCompany, plans } = useApp();
 
   const [formData, setFormData] = useState({
     name: '',
+    logo: '',
     industry: 'Enterprise Software',
     contactPerson: '',
     email: '',
@@ -58,9 +60,9 @@ export const AddCompanyModal = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-y-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
       <div
-        className="fixed inset-0"
+        className="fixed inset-y-0 right-0 left-0 md:left-[76px]"
         onClick={() => setIsAddCompanyOpen(false)}
       />
 
@@ -86,6 +88,15 @@ export const AddCompanyModal = () => {
 
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
+          {/* Company Logo Option */}
+          <ImageUploadOption
+            value={formData.logo}
+            onChange={(newLogo) => setFormData({ ...formData, logo: newLogo })}
+            label="Company Logo / Image"
+            shape="rounded-xl"
+            type="company"
+          />
+
           {/* Company Name */}
           <div>
             <label className="block text-xs font-semibold text-[#172033] mb-1">

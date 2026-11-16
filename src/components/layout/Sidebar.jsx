@@ -46,7 +46,7 @@ export const Sidebar = () => {
   };
 
   return (
-    <aside className="hidden md:flex flex-col items-center w-[76px] h-screen sticky top-0 py-3 select-none z-40 flex-shrink-0 justify-between bg-[#060A18] border-r border-[#131B33]">
+    <aside className="hidden md:flex flex-col items-center w-[76px] h-screen sticky top-0 py-3 select-none z-50 flex-shrink-0 justify-between bg-[#060A18] border-r border-[#131B33]">
       <div className="flex flex-col items-center w-full flex-1 min-h-0">
         {/* Top Logo Container */}
         <div className="relative group cursor-pointer pt-1 mb-2 flex-shrink-0">

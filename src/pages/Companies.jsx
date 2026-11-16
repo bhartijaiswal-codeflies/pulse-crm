@@ -21,6 +21,7 @@ import {
   X
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { ImageUploadOption } from '../components/common/ImageUploadOption';
 
 export const Companies = () => {
   const {
@@ -321,9 +322,9 @@ export const Companies = () => {
 
       {/* Company Details Modal / Drawer */}
       {selectedCompany && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+        <div className="fixed inset-y-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div
-            className="fixed inset-0"
+            className="fixed inset-y-0 right-0 left-0 md:left-[76px]"
             onClick={() => setSelectedCompany(null)}
           />
           <div className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[85vh] flex flex-col">
@@ -427,12 +428,12 @@ export const Companies = () => {
 
       {/* Edit Company Modal */}
       {editingCompany && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+        <div className="fixed inset-y-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div
-            className="fixed inset-0"
+            className="fixed inset-y-0 right-0 left-0 md:left-[76px]"
             onClick={() => setEditingCompany(null)}
           />
-          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[90vh] flex flex-col">
             <div className="px-6 py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-[#F7F9FC]">
               <h3 className="text-base font-bold text-[#172033]">Edit Company Details</h3>
               <button onClick={() => setEditingCompany(null)} className="p-1.5 text-slate-400 hover:text-slate-700">
@@ -440,7 +441,16 @@ export const Companies = () => {
               </button>
             </div>
 
-            <form onSubmit={handleSaveEdit} className="p-6 space-y-4">
+            <form onSubmit={handleSaveEdit} className="p-6 space-y-4 overflow-y-auto">
+              {/* Image / Logo Upload Option */}
+              <ImageUploadOption
+                value={editingCompany.logo}
+                onChange={(newLogo) => setEditingCompany({ ...editingCompany, logo: newLogo })}
+                label="Company Logo / Image"
+                shape="rounded-xl"
+                type="company"
+              />
+
               <div>
                 <label className="block text-xs font-semibold text-[#172033] mb-1">Company Name</label>
                 <input

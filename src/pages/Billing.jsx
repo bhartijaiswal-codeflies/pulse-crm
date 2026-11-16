@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { CompanyAvatar } from '../components/common/Avatar';
 import { useApp } from '../context/AppContext';
+import { ImageUploadOption } from '../components/common/ImageUploadOption';
 
 export const Billing = () => {
   const { invoices, markInvoicePaid, addInvoice, showToast, companies } = useApp();
@@ -25,6 +26,7 @@ export const Billing = () => {
   // New Invoice form state
   const [newInv, setNewInv] = useState({
     company: companies[0]?.name || 'Acme Technologies',
+    companyLogo: companies[0]?.logo || 'https://images.unsplash.com/photo-1557683316-973673baf926?w=100&h=100&fit=crop&crop=faces',
     plan: 'Growth (Monthly)',
     amount: '₹19,999',
     dueDate: 'Nov 30, 2026',
@@ -227,9 +229,9 @@ export const Billing = () => {
 
       {/* Create Invoice Modal */}
       {isCreateInvoiceOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="fixed inset-0" onClick={() => setIsCreateInvoiceOpen(false)} />
-          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-6 space-y-4">
+        <div className="fixed inset-y-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="fixed inset-y-0 right-0 left-0 md:left-[76px]" onClick={() => setIsCreateInvoiceOpen(false)} />
+          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-6 space-y-4 max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
@@ -243,11 +245,26 @@ export const Billing = () => {
             </div>
 
             <form onSubmit={handleCreateInvoice} className="space-y-4">
+              <ImageUploadOption
+                value={newInv.companyLogo}
+                onChange={(logo) => setNewInv({ ...newInv, companyLogo: logo })}
+                label="Invoice Company Logo"
+                shape="rounded-xl"
+                type="company"
+              />
+
               <div>
                 <label className="block text-xs font-semibold text-[#172033] mb-1">Company</label>
                 <select
                   value={newInv.company}
-                  onChange={(e) => setNewInv({ ...newInv, company: e.target.value })}
+                  onChange={(e) => {
+                    const comp = companies.find(c => c.name === e.target.value);
+                    setNewInv({
+                      ...newInv,
+                      company: e.target.value,
+                      companyLogo: comp?.logo || newInv.companyLogo
+                    });
+                  }}
                   className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 bg-white"
                 >
                   {companies.map(c => (

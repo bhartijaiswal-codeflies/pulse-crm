@@ -117,6 +117,17 @@ export const AppProvider = ({ children }) => {
     showToast(`User ${user.name} invited!`);
   };
 
+  const updateUser = (id, updatedFields) => {
+    setUsers(users.map(u => u.id === id ? { ...u, ...updatedFields } : u));
+    showToast('User details updated successfully!');
+  };
+
+  const deleteUser = (id) => {
+    const u = users.find(user => user.id === id);
+    setUsers(users.filter(user => user.id !== id));
+    showToast(`User "${u?.name || 'User'}" removed.`, 'info');
+  };
+
   // Ticket Actions
   const addTicket = (newTkt) => {
     const tkt = {
@@ -151,6 +162,8 @@ export const AppProvider = ({ children }) => {
         updateTicketStatus,
         users,
         addUser,
+        updateUser,
+        deleteUser,
         plans,
         setPlans,
         activityLogs,

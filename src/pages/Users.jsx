@@ -12,19 +12,24 @@ import {
   XCircle,
   X,
   Lock,
-  Phone
+  Phone,
+  Edit2,
+  Trash2
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { ImageUploadOption } from '../components/common/ImageUploadOption';
 
 export const Users = () => {
-  const { users, addUser, showToast } = useApp();
+  const { users, addUser, updateUser, deleteUser, showToast } = useApp();
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('All');
   const [isAddUserOpen, setIsAddUserOpen] = useState(false);
+  const [editingUser, setEditingUser] = useState(null);
 
   const [newUser, setNewUser] = useState({
     name: '',
     email: '',
+    avatar: '',
     role: 'Company Admin',
     company: 'Pulse CRM HQ',
     department: 'Operations',
@@ -215,12 +220,22 @@ export const Users = () => {
                   </td>
 
                   <td className="py-3.5 px-4 text-right whitespace-nowrap">
-                    <button
-                      onClick={() => showToast(`Permissions configured for ${user.name}`)}
-                      className="px-2.5 py-1 text-xs font-semibold text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-transparent hover:border-blue-200"
-                    >
-                      Permissions
-                    </button>
+                    <div className="flex items-center justify-end gap-1.5">
+                      <button
+                        onClick={() => setEditingUser(user)}
+                        className="px-2.5 py-1 text-xs font-semibold text-blue-600 hover:text-white hover:bg-blue-600 rounded-lg transition-colors border border-blue-200 flex items-center gap-1"
+                        title="Edit User"
+                      >
+                        <Edit2 className="w-3 h-3" />
+                        <span>Edit</span>
+                      </button>
+                      <button
+                        onClick={() => showToast(`Permissions configured for ${user.name}`)}
+                        className="px-2.5 py-1 text-xs font-semibold text-slate-600 hover:text-[#172033] hover:bg-slate-100 rounded-lg transition-colors border border-[#E5EAF2]"
+                      >
+                        Permissions
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -231,9 +246,9 @@ export const Users = () => {
 
       {/* Add User Modal */}
       {isAddUserOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="fixed inset-0" onClick={() => setIsAddUserOpen(false)} />
-          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-6 space-y-4">
+        <div className="fixed inset-y-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="fixed inset-y-0 right-0 left-0 md:left-[76px]" onClick={() => setIsAddUserOpen(false)} />
+          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-6 space-y-4 max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
               <div className="flex items-center gap-2">
                 <UsersIcon className="w-5 h-5 text-blue-600" />
@@ -245,6 +260,15 @@ export const Users = () => {
             </div>
 
             <form onSubmit={handleAddSubmit} className="space-y-4">
+              {/* User Avatar Option */}
+              <ImageUploadOption
+                value={newUser.avatar}
+                onChange={(newAvatar) => setNewUser({ ...newUser, avatar: newAvatar })}
+                label="User Photo / Avatar"
+                shape="rounded-full"
+                type="user"
+              />
+
               <div>
                 <label className="block text-xs font-semibold text-[#172033] mb-1">Full Name *</label>
                 <input
@@ -310,6 +334,144 @@ export const Users = () => {
                 >
                   Send Invitation
                 </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit User Modal */}
+      {editingUser && (
+        <div className="fixed inset-y-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="fixed inset-y-0 right-0 left-0 md:left-[76px]" onClick={() => setEditingUser(null)} />
+          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-6 space-y-4 max-h-[85vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
+              <div className="flex items-center gap-2">
+                <Edit2 className="w-5 h-5 text-blue-600" />
+                <h3 className="text-base font-bold text-[#172033]">Edit User Profile</h3>
+              </div>
+              <button onClick={() => setEditingUser(null)} className="p-1.5 text-slate-400 hover:text-slate-700">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                updateUser(editingUser.id, editingUser);
+                setEditingUser(null);
+              }}
+              className="space-y-4"
+            >
+              {/* User Avatar Option */}
+              <ImageUploadOption
+                value={editingUser.avatar}
+                onChange={(newAvatar) => setEditingUser({ ...editingUser, avatar: newAvatar })}
+                label="User Photo / Avatar"
+                shape="rounded-full"
+                type="user"
+              />
+
+              <div>
+                <label className="block text-xs font-semibold text-[#172033] mb-1">Full Name</label>
+                <input
+                  type="text"
+                  required
+                  value={editingUser.name}
+                  onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#172033] mb-1">Work Email</label>
+                <input
+                  type="email"
+                  required
+                  value={editingUser.email}
+                  onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 focus:outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-[#172033] mb-1">Access Role</label>
+                  <select
+                    value={editingUser.role}
+                    onChange={(e) => setEditingUser({ ...editingUser, role: e.target.value })}
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 bg-white"
+                  >
+                    <option value="Super Admin">Super Admin</option>
+                    <option value="Company Admin">Company Admin</option>
+                    <option value="Billing Manager">Billing Manager</option>
+                    <option value="Support Agent">Support Agent</option>
+                    <option value="Developer">Developer</option>
+                    <option value="Member">Member</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-[#172033] mb-1">Status</label>
+                  <select
+                    value={editingUser.status}
+                    onChange={(e) => setEditingUser({ ...editingUser, status: e.target.value })}
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 bg-white"
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-[#172033] mb-1">Organization</label>
+                  <input
+                    type="text"
+                    value={editingUser.company}
+                    onChange={(e) => setEditingUser({ ...editingUser, company: e.target.value })}
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-[#172033] mb-1">Department</label>
+                  <input
+                    type="text"
+                    value={editingUser.department}
+                    onChange={(e) => setEditingUser({ ...editingUser, department: e.target.value })}
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-[#E5EAF2] flex justify-between items-center">
+                <button
+                  type="button"
+                  onClick={() => {
+                    deleteUser(editingUser.id);
+                    setEditingUser(null);
+                  }}
+                  className="px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 rounded-xl transition-colors flex items-center gap-1"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Delete User</span>
+                </button>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setEditingUser(null)}
+                    className="px-4 py-2 text-xs font-semibold text-[#8292AD]"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-5 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl"
+                  >
+                    Save Changes
+                  </button>
+                </div>
               </div>
             </form>
           </div>
