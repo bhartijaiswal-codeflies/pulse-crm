@@ -7,7 +7,6 @@ import {
   Moon,
   ChevronDown,
   Menu,
-  PanelLeft,
   Check,
   User,
   Shield,
@@ -29,8 +28,6 @@ const DATE_OPTIONS = [
 
 export const Header = () => {
   const {
-    sidebarCollapsed,
-    setSidebarCollapsed,
     selectedDateRange,
     setSelectedDateRange,
     setMobileMenuOpen,
@@ -95,37 +92,19 @@ export const Header = () => {
             <Menu className="w-5 h-5" />
           </button>
 
-          {/* Desktop Sidebar Rail/Full Toggle (Matches screenshot) */}
-          <button
-            onClick={() => {
-              setSidebarCollapsed(!sidebarCollapsed);
-              showToast(sidebarCollapsed ? 'Sidebar expanded' : 'Sidebar rail view');
-            }}
-            className="hidden md:flex p-2 rounded-xl text-[#8292AD] hover:text-[#172033] hover:bg-[#F7F9FC] border border-[#E5EAF2] transition-colors"
-            title={sidebarCollapsed ? "Expand Sidebar" : "Collapse to Rail View"}
-          >
-            <PanelLeft className="w-4 h-4" />
-          </button>
-
           {/* Global Search Input */}
           <div
             onClick={() => setIsCommandPaletteOpen(true)}
-            className="relative flex items-center w-full max-w-md bg-[#F7F9FC] hover:bg-slate-100/80 border border-[#E5EAF2] rounded-xl px-3 sm:px-3.5 py-2 cursor-pointer transition-all duration-200 group focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100"
+            className="relative flex items-center w-full max-w-md lg:max-w-lg h-10 bg-[#F8FAFC] dark:bg-[#0D152D] hover:bg-slate-100/80 dark:hover:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl px-3 sm:px-3.5 cursor-pointer transition-all duration-200 group focus-within:border-blue-500 dark:focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100 dark:focus-within:ring-blue-900/30"
           >
-            <Search className="w-4 h-4 text-[#8292AD] group-hover:text-blue-500 transition-colors mr-2 sm:mr-2.5 flex-shrink-0" />
+            <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors mr-2.5 flex-shrink-0" />
             <input
               type="text"
               readOnly
-              placeholder="Search... [⌘K]"
-              className="w-full bg-transparent text-xs text-[#172033] placeholder-[#8292AD] focus:outline-none cursor-pointer select-none sm:hidden"
+              placeholder="Search companies, subscriptions, invoices..."
+              className="w-full bg-transparent dark:!bg-transparent text-xs sm:text-sm text-[#172033] dark:text-white placeholder-[#8292AD] dark:placeholder-slate-400 border-none outline-none focus:outline-none focus:ring-0 cursor-pointer select-none p-0"
             />
-            <input
-              type="text"
-              readOnly
-              placeholder="Search companies, subscriptions, invoices... [⌘K]"
-              className="w-full bg-transparent text-xs sm:text-sm text-[#172033] placeholder-[#8292AD] focus:outline-none cursor-pointer select-none hidden sm:block"
-            />
-            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-semibold text-[#8292AD] bg-white border border-[#E5EAF2] rounded shadow-xs ml-2">
+            <kbd className="hidden sm:inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-semibold text-[#8292AD] dark:text-slate-400 bg-white dark:bg-[#141E3C] border border-[#E5EAF2] dark:border-[#22325C] rounded-md shadow-2xs ml-2 flex-shrink-0">
               ⌘K
             </kbd>
           </div>

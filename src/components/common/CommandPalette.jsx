@@ -84,24 +84,24 @@ export const CommandPalette = () => {
         onClick={() => setIsCommandPaletteOpen(false)}
       />
 
-      <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150">
+      <div className="relative w-full max-w-2xl bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] overflow-hidden z-10 animate-in zoom-in-95 duration-150">
         {/* Search Input Bar */}
-        <div className="flex items-center px-4 py-3.5 border-b border-[#E5EAF2] bg-[#F7F9FC]">
-          <Search className="w-5 h-5 text-blue-600 mr-3 flex-shrink-0" />
+        <div className="flex items-center px-4 py-3.5 border-b border-[#E5EAF2] dark:border-[#1A2548] bg-[#F7F9FC] dark:bg-[#0A1128]">
+          <Search className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-3 flex-shrink-0" />
           <input
             type="text"
             autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Type a command or search companies, invoices, users..."
-            className="w-full bg-transparent text-sm text-[#172033] placeholder-[#8292AD] focus:outline-none"
+            className="w-full bg-transparent dark:!bg-transparent text-sm text-[#172033] dark:text-white placeholder-[#8292AD] dark:placeholder-slate-400 border-none outline-none focus:outline-none focus:ring-0 p-0"
           />
           {query && (
-            <button onClick={() => setQuery('')} className="p-1 text-[#8292AD] hover:text-[#172033]">
+            <button onClick={() => setQuery('')} className="p-1 text-[#8292AD] hover:text-[#172033] dark:hover:text-white cursor-pointer">
               <X className="w-4 h-4" />
             </button>
           )}
-          <kbd className="hidden sm:inline-block text-[10px] font-mono bg-white px-2 py-0.5 rounded border border-[#E5EAF2] text-[#8292AD] ml-2">
+          <kbd className="hidden sm:inline-block text-[10px] font-mono bg-white dark:bg-[#141E3C] px-2 py-0.5 rounded border border-[#E5EAF2] dark:border-[#22325C] text-[#8292AD] dark:text-slate-400 ml-2">
             ESC
           </kbd>
         </div>
