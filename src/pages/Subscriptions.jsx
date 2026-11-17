@@ -107,60 +107,60 @@ export const Subscriptions = () => {
 
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Active Subscriptions</p>
+        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Active Subscriptions</p>
           <div className="flex items-baseline justify-between mt-2">
-            <span className="text-2xl font-black text-[#172033]">225</span>
-            <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">+8% MoM</span>
+            <span className="text-2xl font-black text-[#172033] dark:text-white">225</span>
+            <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 dark:text-emerald-400 px-2 py-0.5 rounded-full">+8% MoM</span>
           </div>
-          <p className="text-[11px] text-[#8292AD] mt-1">90.7% of total tenant portfolio</p>
+          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">90.7% of total tenant portfolio</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Trial Subscriptions</p>
+        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Trial Subscriptions</p>
           <div className="flex items-baseline justify-between mt-2">
-            <span className="text-2xl font-black text-blue-600">8</span>
-            <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">62% Conversion</span>
+            <span className="text-2xl font-black text-blue-600 dark:text-blue-400">8</span>
+            <span className="text-xs font-semibold text-blue-600 bg-blue-50 dark:bg-blue-950/60 dark:text-blue-400 px-2 py-0.5 rounded-full">62% Conversion</span>
           </div>
-          <p className="text-[11px] text-[#8292AD] mt-1">Avg 5 days remaining</p>
+          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">Avg 5 days remaining</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Cancelled / At Risk</p>
+        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Cancelled / At Risk</p>
           <div className="flex items-baseline justify-between mt-2">
-            <span className="text-2xl font-black text-red-500">7</span>
-            <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">-1.2% Churn</span>
+            <span className="text-2xl font-black text-red-500 dark:text-red-400">7</span>
+            <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 dark:text-emerald-400 px-2 py-0.5 rounded-full">-1.2% Churn</span>
           </div>
-          <p className="text-[11px] text-[#8292AD] mt-1">Industry low churn benchmark</p>
+          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">Industry low churn benchmark</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Avg Revenue / Account (ARPU)</p>
+        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Avg Revenue / Account (ARPU)</p>
           <div className="flex items-baseline justify-between mt-2">
-            <span className="text-2xl font-black text-[#172033]">₹7,820</span>
-            <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">+14% Growth</span>
+            <span className="text-2xl font-black text-[#172033] dark:text-white">₹7,820</span>
+            <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 dark:text-emerald-400 px-2 py-0.5 rounded-full">+14% Growth</span>
           </div>
-          <p className="text-[11px] text-[#8292AD] mt-1">Boosted by Enterprise tier</p>
+          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">Boosted by Enterprise tier</p>
         </div>
       </div>
 
       {/* Tabs and Search */}
-      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+      <div className="bg-white dark:bg-[#0D152D] p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-1.5 bg-[#F7F9FC] p-1 rounded-xl border border-[#E5EAF2] w-full lg:w-auto overflow-x-auto no-scrollbar flex-wrap sm:flex-nowrap">
+        <div className="flex items-center gap-1.5 bg-[#F7F9FC] dark:bg-[#0A1128] p-1 rounded-xl border border-[#E5EAF2] dark:border-[#1A2548] w-full lg:w-auto overflow-x-auto no-scrollbar flex-nowrap">
           {tabs.map((tab) => (
             <button
               key={tab.name}
               onClick={() => setActiveTab(tab.name)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 ${
                 activeTab === tab.name
-                  ? 'bg-white text-blue-600 shadow-xs'
-                  : 'text-[#8292AD] hover:text-[#172033]'
+                  ? 'bg-white dark:bg-[#121D3D] text-blue-600 dark:text-blue-400 shadow-xs'
+                  : 'text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white'
               }`}
             >
               <span>{tab.name}</span>
               <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                activeTab === tab.name ? 'bg-blue-100 text-blue-700' : 'bg-slate-200 text-slate-600'
+                activeTab === tab.name ? 'bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
               }`}>
                 {tab.count}
               </span>
@@ -170,37 +170,37 @@ export const Subscriptions = () => {
 
         {/* Search */}
         <div className="relative w-full lg:w-72 flex-shrink-0">
-          <Search className="w-4 h-4 text-[#8292AD] absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-2.5" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search subscription..."
-            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] border border-[#E5EAF2] rounded-xl focus:outline-none focus:border-blue-500"
+            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] dark:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500"
           />
         </div>
       </div>
 
       {/* Subscriptions Table */}
-      <div className="bg-white rounded-2xl border border-[#E5EAF2] shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
+      <div className="bg-white dark:bg-[#0D152D] rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
         <div className="overflow-x-auto no-scrollbar">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
+              <tr className="bg-[#F7F9FC] dark:bg-[#0A1128] border-b border-[#E5EAF2] dark:border-[#1A2548] text-[11px] font-bold text-[#8292AD] dark:text-slate-400 uppercase tracking-wider">
                 <th className="py-3.5 px-3 lg:px-4">Company</th>
                 <th className="py-3.5 px-3 lg:px-4">Plan Tier</th>
                 <th className="py-3.5 px-3 lg:px-4">Recurring MRR</th>
                 <th className="py-3.5 px-3 lg:px-4">Status</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">Auto Renew</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Next Renewal</th>
-                <th className="py-3.5 px-2 lg:px-4 text-center font-bold text-[11px] text-[#8292AD] uppercase tracking-wider">Actions</th>
+                <th className="py-3.5 px-1 sm:px-2 text-center font-bold text-[11px] text-[#8292AD] dark:text-slate-400 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5EAF2] text-xs">
+            <tbody className="divide-y divide-[#E5EAF2] dark:divide-[#1A2548] text-xs">
               {filtered.map((company) => (
                 <tr
                   key={company.id}
-                  className="hover:bg-[#F7F9FC]/80 transition-colors group cursor-pointer"
+                  className="hover:bg-[#F7F9FC]/80 dark:hover:bg-[#121D3D]/60 transition-colors group cursor-pointer"
                   onClick={() => setSelectedSub(company)}
                 >
                   <td className="py-3.5 px-3 lg:px-4">
@@ -208,37 +208,37 @@ export const Subscriptions = () => {
                       <img
                         src={company.logo}
                         alt={company.name}
-                        className="w-9 h-9 rounded-xl object-cover border border-[#E5EAF2]"
+                        className="w-9 h-9 rounded-xl object-cover border border-[#E5EAF2] dark:border-[#1E2D54]"
                       />
                       <div>
-                        <p className="font-bold text-[#172033] group-hover:text-blue-600">
+                        <p className="font-bold text-[#172033] dark:text-white group-hover:text-blue-600 transition-colors">
                           {company.name}
                         </p>
-                        <p className="text-[11px] text-[#8292AD]">Since {company.joinedDate}</p>
+                        <p className="text-[11px] text-[#8292AD] dark:text-slate-400">Since {company.joinedDate}</p>
                       </div>
                     </div>
                   </td>
 
                   <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
-                    <span className="font-semibold text-blue-600 bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-full text-[11px]">
+                    <span className="font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900/60 px-2.5 py-0.5 rounded-full text-[11px]">
                       {company.plan}
                     </span>
                   </td>
 
                   <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
-                    <span className="font-bold text-[#172033]">{company.mrr}</span>
-                    <span className="text-[10px] text-[#8292AD] block">Billed Monthly</span>
+                    <span className="font-bold text-[#172033] dark:text-white">{company.mrr}</span>
+                    <span className="text-[10px] text-[#8292AD] dark:text-slate-400 block">Billed Monthly</span>
                   </td>
 
                   <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
                     <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${
                       company.status === 'Active'
-                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                        ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800'
                         : company.status === 'Trial'
-                        ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                        ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800'
                         : company.status === 'Pending Payment'
-                        ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                        : 'bg-red-50 text-red-700 border border-red-200'
+                        ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800'
+                        : 'bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800'
                     }`}>
                       {company.status}
                     </span>
@@ -249,61 +249,61 @@ export const Subscriptions = () => {
                       onClick={() => toggleAutoRenew(company)}
                       className={`px-2 py-0.5 text-[11px] font-semibold rounded-lg border transition-colors ${
                         company.status === 'Cancelled'
-                          ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
-                          : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
+                          ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 border-slate-200 dark:border-slate-700 cursor-not-allowed'
+                          : 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100'
                       }`}
                     >
                       {company.status === 'Cancelled' ? 'Disabled' : 'Enabled'}
                     </button>
                   </td>
 
-                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap text-[#8292AD] hidden lg:table-cell">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap text-[#8292AD] dark:text-slate-400 hidden lg:table-cell">
                     {company.nextBilling}
                   </td>
 
                   <td
-                    className="py-2 px-1.5 sm:py-3 sm:px-2 md:px-3 text-center whitespace-nowrap"
+                    className="py-2.5 px-1 sm:px-2 text-center whitespace-nowrap"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <div className="flex items-center justify-center gap-1 sm:gap-1.5">
+                    <div className="flex items-center justify-center gap-1 sm:gap-1 lg:gap-1.5">
                       {/* View Details */}
                       <button
                         type="button"
                         onClick={() => setSelectedSub(company)}
-                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#93C5FD] bg-[#EFF6FF]/70 text-[#2563EB] flex items-center justify-center hover:bg-[#DBEAFE] hover:border-[#3B82F6] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
+                        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border border-[#93C5FD] dark:border-blue-500/40 bg-[#EFF6FF]/70 dark:bg-blue-950/40 text-[#2563EB] dark:text-blue-400 flex items-center justify-center hover:bg-[#DBEAFE] dark:hover:bg-blue-900/60 hover:border-[#3B82F6] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="View Subscription"
                       >
-                        <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
+                        <Eye className="w-3.5 h-3.5 lg:w-4 lg:h-4 stroke-[1.8]" />
                       </button>
 
                       {/* Edit Subscription */}
                       <button
                         type="button"
                         onClick={() => setEditingSub(company)}
-                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#86EFAC] bg-[#F0FDF4]/70 text-[#16A34A] flex items-center justify-center hover:bg-[#DCFCE7] hover:border-[#22C55E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
+                        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border border-[#86EFAC] dark:border-emerald-500/40 bg-[#F0FDF4]/70 dark:bg-emerald-950/40 text-[#16A34A] dark:text-emerald-400 flex items-center justify-center hover:bg-[#DCFCE7] dark:hover:bg-emerald-900/60 hover:border-[#22C55E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="Edit Plan"
                       >
-                        <Edit2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
+                        <Edit2 className="w-3.5 h-3.5 lg:w-4 lg:h-4 stroke-[1.8]" />
                       </button>
 
                       {/* Video Call */}
                       <button
                         type="button"
                         onClick={() => handleStartVideoCall(company)}
-                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#C7D2FE] bg-[#EEF2FF]/70 text-[#4F46E5] flex items-center justify-center hover:bg-[#E0E7FF] hover:border-[#6366F1] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
+                        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border border-[#C7D2FE] dark:border-indigo-500/40 bg-[#EEF2FF]/70 dark:bg-indigo-950/40 text-[#4F46E5] dark:text-indigo-400 flex items-center justify-center hover:bg-[#E0E7FF] dark:hover:bg-indigo-900/60 hover:border-[#6366F1] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="Schedule Renewal Call"
                       >
-                        <Video className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
+                        <Video className="w-3.5 h-3.5 lg:w-4 lg:h-4 stroke-[1.8]" />
                       </button>
 
                       {/* Cancel / Delete Subscription */}
                       <button
                         type="button"
                         onClick={() => setDeletingSub(company)}
-                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#FECDD3] bg-[#FFF1F2]/70 text-[#E11D48] flex items-center justify-center hover:bg-[#FFE4E6] hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
+                        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border border-[#FECDD3] dark:border-rose-500/40 bg-[#FFF1F2]/70 dark:bg-rose-950/40 text-[#E11D48] dark:text-rose-400 flex items-center justify-center hover:bg-[#FFE4E6] dark:hover:bg-rose-900/60 hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="Cancel / Delete Subscription"
                       >
-                        <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
+                        <Trash2 className="w-3.5 h-3.5 lg:w-4 lg:h-4 stroke-[1.8]" />
                       </button>
                     </div>
                   </td>

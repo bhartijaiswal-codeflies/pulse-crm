@@ -119,40 +119,40 @@ export const Users = () => {
 
       {/* Metrics Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Total Users</p>
-          <p className="text-2xl font-black text-[#172033] mt-1">{users.length}</p>
+        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Total Users</p>
+          <p className="text-2xl font-black text-[#172033] dark:text-white mt-1">{users.length}</p>
         </div>
-        <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Active Now</p>
-          <p className="text-2xl font-black text-emerald-600 mt-1">
+        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Active Now</p>
+          <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">
             {users.filter(u => u.status === 'Active').length}
           </p>
         </div>
-        <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Super Admins</p>
-          <p className="text-2xl font-black text-purple-600 mt-1">1</p>
+        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Super Admins</p>
+          <p className="text-2xl font-black text-purple-600 dark:text-purple-400 mt-1">1</p>
         </div>
-        <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">2FA Enforced</p>
-          <p className="text-2xl font-black text-blue-600 mt-1">100%</p>
+        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">2FA Enforced</p>
+          <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">100%</p>
         </div>
       </div>
 
       {/* Search & Filters */}
-      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+      <div className="bg-white dark:bg-[#0D152D] p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         <div className="relative w-full lg:w-80 flex-1 min-w-[200px]">
-          <Search className="w-4 h-4 text-[#8292AD] absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-2.5" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search users by name, email..."
-            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] border border-[#E5EAF2] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033]"
+            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] dark:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500"
           />
         </div>
 
-        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar flex-wrap sm:flex-nowrap">
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar flex-nowrap pb-1">
           {['All', 'Super Administrator', 'Company Admin', 'Billing Manager', 'Developer'].map((role) => (
             <button
               key={role}
@@ -160,7 +160,7 @@ export const Users = () => {
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 roleFilter === role
                   ? 'bg-blue-600 text-white shadow-xs'
-                  : 'bg-[#F7F9FC] text-[#8292AD] hover:text-[#172033] border border-[#E5EAF2]'
+                  : 'bg-[#F7F9FC] dark:bg-[#121D3D] text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white border border-[#E5EAF2] dark:border-[#1E2D54]'
               }`}
             >
               {role === 'Super Administrator' ? 'Super Admin' : role}
@@ -170,36 +170,36 @@ export const Users = () => {
       </div>
 
       {/* Users Table */}
-      <div className="bg-white rounded-2xl border border-[#E5EAF2] shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
+      <div className="bg-white dark:bg-[#0D152D] rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
         <div className="overflow-x-auto no-scrollbar">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
+              <tr className="bg-[#F7F9FC] dark:bg-[#0A1128] border-b border-[#E5EAF2] dark:border-[#1A2548] text-[11px] font-bold text-[#8292AD] dark:text-slate-400 uppercase tracking-wider">
                 <th className="py-3.5 px-3 lg:px-4">User</th>
                 <th className="py-3.5 px-3 lg:px-4">Role</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Organization</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">Department</th>
                 <th className="py-3.5 px-3 lg:px-4">Status</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Last Active</th>
-                <th className="py-3.5 px-2 lg:px-4 text-center font-bold text-[11px] text-[#8292AD] uppercase tracking-wider">Actions</th>
+                <th className="py-3.5 px-1 sm:px-2 text-center font-bold text-[11px] text-[#8292AD] dark:text-slate-400 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5EAF2] text-xs">
+            <tbody className="divide-y divide-[#E5EAF2] dark:divide-[#1A2548] text-xs">
               {filteredUsers.map((user) => (
-                <tr key={user.id} className="hover:bg-[#F7F9FC]/80 transition-colors group">
+                <tr key={user.id} className="hover:bg-[#F7F9FC]/80 dark:hover:bg-[#121D3D]/60 transition-colors group">
                   <td className="py-3.5 px-3 lg:px-4">
                     <div className="flex items-center gap-3">
                       <img
                         src={user.avatar}
                         alt={user.name}
-                        className="w-9 h-9 rounded-full object-cover border border-[#E5EAF2]"
+                        className="w-9 h-9 rounded-full object-cover border border-[#E5EAF2] dark:border-[#1E2D54]"
                       />
                       <div>
-                        <p className="font-bold text-[#172033] group-hover:text-blue-600">
+                        <p className="font-bold text-[#172033] dark:text-white group-hover:text-blue-600 transition-colors">
                           {user.name}
                         </p>
-                        <p className="text-[11px] text-[#8292AD]">
-                          {user.email} <span className="lg:hidden text-[#64748B] font-medium">• {user.company}</span>
+                        <p className="text-[11px] text-[#8292AD] dark:text-slate-400">
+                          {user.email} <span className="lg:hidden text-[#64748B] dark:text-slate-400 font-medium">• {user.company}</span>
                         </p>
                       </div>
                     </div>
@@ -212,22 +212,22 @@ export const Users = () => {
                     </span>
                   </td>
 
-                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap font-medium text-[#172033] hidden lg:table-cell">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap font-medium text-[#172033] dark:text-white hidden lg:table-cell">
                     {user.company}
                   </td>
 
-                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap text-[#8292AD] hidden xl:table-cell">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap text-[#8292AD] dark:text-slate-400 hidden xl:table-cell">
                     {user.department}
                   </td>
 
                   <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap">
                     <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${
                       user.status === 'Active'
-                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                        : 'bg-slate-100 text-slate-600 border border-slate-200'
+                        ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700'
                     }`}>
                       {user.status === 'Active' ? (
-                        <CheckCircle className="w-3 h-3 text-emerald-600" />
+                        <CheckCircle className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                       ) : (
                         <XCircle className="w-3 h-3 text-slate-400" />
                       )}
@@ -235,12 +235,12 @@ export const Users = () => {
                     </span>
                   </td>
 
-                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap text-[#8292AD] hidden lg:table-cell">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap text-[#8292AD] dark:text-slate-400 hidden lg:table-cell">
                     {user.lastActive}
                   </td>
 
-                  <td className="py-2 px-1.5 sm:py-3.5 sm:px-2 md:px-3 text-center whitespace-nowrap">
-                    <div className="flex items-center justify-center gap-1 sm:gap-1.5">
+                  <td className="py-2.5 px-1 sm:px-2 text-center whitespace-nowrap">
+                    <div className="flex items-center justify-center gap-1 sm:gap-1 lg:gap-1.5">
                       {/* View Permissions (Eye - Blue) */}
                       <button
                         type="button"
@@ -255,40 +255,40 @@ export const Users = () => {
                             deleteRecords: user.role === 'Super Administrator'
                           });
                         }}
-                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#93C5FD] bg-[#EFF6FF]/70 text-[#2563EB] flex items-center justify-center hover:bg-[#DBEAFE] hover:border-[#3B82F6] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
+                        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border border-[#93C5FD] dark:border-blue-500/40 bg-[#EFF6FF]/70 dark:bg-blue-950/40 text-[#2563EB] dark:text-blue-400 flex items-center justify-center hover:bg-[#DBEAFE] dark:hover:bg-blue-900/60 hover:border-[#3B82F6] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="View Permissions & Access"
                       >
-                        <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
+                        <Eye className="w-3.5 h-3.5 lg:w-4 lg:h-4 stroke-[1.8]" />
                       </button>
 
                       {/* Edit User (Pencil - Green) */}
                       <button
                         type="button"
                         onClick={() => setEditingUser(user)}
-                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#86EFAC] bg-[#F0FDF4]/70 text-[#16A34A] flex items-center justify-center hover:bg-[#DCFCE7] hover:border-[#22C55E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
+                        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border border-[#86EFAC] dark:border-emerald-500/40 bg-[#F0FDF4]/70 dark:bg-emerald-950/40 text-[#16A34A] dark:text-emerald-400 flex items-center justify-center hover:bg-[#DCFCE7] dark:hover:bg-emerald-900/60 hover:border-[#22C55E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="Edit User"
                       >
-                        <Edit2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
+                        <Edit2 className="w-3.5 h-3.5 lg:w-4 lg:h-4 stroke-[1.8]" />
                       </button>
 
                       {/* Video Call (Video - Purple) */}
                       <button
                         type="button"
                         onClick={() => setVideoCallUser(user)}
-                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#C7D2FE] bg-[#EEF2FF]/70 text-[#4F46E5] flex items-center justify-center hover:bg-[#E0E7FF] hover:border-[#6366F1] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
+                        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border border-[#C7D2FE] dark:border-indigo-500/40 bg-[#EEF2FF]/70 dark:bg-indigo-950/40 text-[#4F46E5] dark:text-indigo-400 flex items-center justify-center hover:bg-[#E0E7FF] dark:hover:bg-indigo-900/60 hover:border-[#6366F1] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="Start Video Meeting"
                       >
-                        <Video className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
+                        <Video className="w-3.5 h-3.5 lg:w-4 lg:h-4 stroke-[1.8]" />
                       </button>
 
                       {/* Delete User (Trash - Red) */}
                       <button
                         type="button"
                         onClick={() => setDeletingUser(user)}
-                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#FECDD3] bg-[#FFF1F2]/70 text-[#E11D48] flex items-center justify-center hover:bg-[#FFE4E6] hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
+                        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border border-[#FECDD3] dark:border-rose-500/40 bg-[#FFF1F2]/70 dark:bg-rose-950/40 text-[#E11D48] dark:text-rose-400 flex items-center justify-center hover:bg-[#FFE4E6] dark:hover:bg-rose-900/60 hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="Delete User"
                       >
-                        <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
+                        <Trash2 className="w-3.5 h-3.5 lg:w-4 lg:h-4 stroke-[1.8]" />
                       </button>
                     </div>
                   </td>

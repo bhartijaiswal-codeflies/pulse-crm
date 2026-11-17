@@ -100,44 +100,44 @@ export const SupportTickets = () => {
 
       {/* Metrics Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Open Inquiries</p>
-          <p className="text-2xl font-black text-amber-500 mt-1">
+        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Open Inquiries</p>
+          <p className="text-2xl font-black text-amber-500 dark:text-amber-400 mt-1">
             {tickets.filter(t => t.status === 'Open').length}
           </p>
         </div>
-        <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">In Progress</p>
-          <p className="text-2xl font-black text-blue-600 mt-1">
+        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">In Progress</p>
+          <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">
             {tickets.filter(t => t.status === 'In Progress').length}
           </p>
         </div>
-        <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Resolved Today</p>
-          <p className="text-2xl font-black text-emerald-600 mt-1">
+        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Resolved Today</p>
+          <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">
             {tickets.filter(t => t.status === 'Resolved').length}
           </p>
         </div>
-        <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Avg First Response</p>
-          <p className="text-2xl font-black text-purple-600 mt-1">14 min</p>
+        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Avg First Response</p>
+          <p className="text-2xl font-black text-purple-600 dark:text-purple-400 mt-1">14 min</p>
         </div>
       </div>
 
       {/* Filters and Search */}
-      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+      <div className="bg-white dark:bg-[#0D152D] p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         <div className="relative w-full lg:w-80 flex-1 min-w-[200px]">
-          <Search className="w-4 h-4 text-[#8292AD] absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-2.5" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search tickets by subject, ID, company..."
-            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] border border-[#E5EAF2] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033]"
+            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] dark:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500"
           />
         </div>
 
-        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar flex-wrap sm:flex-nowrap">
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar flex-nowrap pb-1">
           {['All', 'Open', 'In Progress', 'Resolved'].map((st) => (
             <button
               key={st}
@@ -145,7 +145,7 @@ export const SupportTickets = () => {
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 statusFilter === st
                   ? 'bg-blue-600 text-white shadow-xs'
-                  : 'bg-[#F7F9FC] text-[#8292AD] hover:text-[#172033] border border-[#E5EAF2]'
+                  : 'bg-[#F7F9FC] dark:bg-[#121D3D] text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white border border-[#E5EAF2] dark:border-[#1E2D54]'
               }`}
             >
               {st}
@@ -155,11 +155,11 @@ export const SupportTickets = () => {
       </div>
 
       {/* Tickets Table */}
-      <div className="bg-white rounded-2xl border border-[#E5EAF2] shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
+      <div className="bg-white dark:bg-[#0D152D] rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
+              <tr className="bg-[#F7F9FC] dark:bg-[#0A1128] border-b border-[#E5EAF2] dark:border-[#1A2548] text-[11px] font-bold text-[#8292AD] dark:text-slate-400 uppercase tracking-wider">
                 <th className="py-3.5 px-3 lg:px-4">Ticket ID</th>
                 <th className="py-3.5 px-3 lg:px-4">Subject & Category</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Company</th>
@@ -169,27 +169,27 @@ export const SupportTickets = () => {
                 <th className="py-3.5 px-3 lg:px-4 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5EAF2] text-xs">
+            <tbody className="divide-y divide-[#E5EAF2] dark:divide-[#1A2548] text-xs">
               {filteredTickets.map((t) => (
                 <tr
                   key={t.id}
-                  className="hover:bg-[#F7F9FC]/80 transition-colors group cursor-pointer"
+                  className="hover:bg-[#F7F9FC]/80 dark:hover:bg-[#121D3D]/60 transition-colors group cursor-pointer"
                   onClick={() => setSelectedTicket(t)}
                 >
-                  <td className="py-3.5 px-3 lg:px-4 font-mono font-bold text-blue-600 whitespace-nowrap">
+                  <td className="py-3.5 px-3 lg:px-4 font-mono font-bold text-blue-600 dark:text-blue-400 whitespace-nowrap">
                     {t.id}
                   </td>
 
                   <td className="py-3.5 px-3 lg:px-4">
-                    <p className="font-bold text-[#172033] group-hover:text-blue-600 transition-colors">
+                    <p className="font-bold text-[#172033] dark:text-white group-hover:text-blue-600 transition-colors">
                       {t.subject}
                     </p>
-                    <span className="text-[11px] text-[#8292AD]">
-                      {t.category} <span className="lg:hidden text-[#64748B] font-medium">• {t.company}</span>
+                    <span className="text-[11px] text-[#8292AD] dark:text-slate-400">
+                      {t.category} <span className="lg:hidden text-[#64748B] dark:text-slate-400 font-medium">• {t.company}</span>
                     </span>
                   </td>
 
-                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap font-medium text-[#172033] hidden lg:table-cell">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap font-medium text-[#172033] dark:text-white hidden lg:table-cell">
                     {t.company}
                   </td>
 

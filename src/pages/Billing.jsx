@@ -133,45 +133,45 @@ Pulse CRM Platform • support@pulsecrm.io
 
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Total Collected (Nov)</p>
-          <p className="text-2xl font-black text-emerald-600 mt-1">₹17.6L</p>
-          <p className="text-[11px] text-[#8292AD] mt-1">94% auto-debited on schedule</p>
+        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Total Collected (Nov)</p>
+          <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">₹17.6L</p>
+          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">94% auto-debited on schedule</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Pending Receivables</p>
-          <p className="text-2xl font-black text-amber-500 mt-1">₹2.4L</p>
-          <p className="text-[11px] text-[#8292AD] mt-1">12 invoices pending review</p>
+        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Pending Receivables</p>
+          <p className="text-2xl font-black text-amber-500 dark:text-amber-400 mt-1">₹2.4L</p>
+          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">12 invoices pending review</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Overdue Collections</p>
-          <p className="text-2xl font-black text-red-500 mt-1">₹23,997</p>
-          <p className="text-[11px] text-[#8292AD] mt-1">1 tenant in grace period</p>
+        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Overdue Collections</p>
+          <p className="text-2xl font-black text-red-500 dark:text-red-400 mt-1">₹23,997</p>
+          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">1 tenant in grace period</p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Payment Success Rate</p>
-          <p className="text-2xl font-black text-blue-600 mt-1">98.2%</p>
-          <p className="text-[11px] text-[#8292AD] mt-1">Stripe & Razorpay integrated</p>
+        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Payment Success Rate</p>
+          <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">98.2%</p>
+          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">Stripe & Razorpay integrated</p>
         </div>
       </div>
 
       {/* Filters and Search */}
-      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+      <div className="bg-white dark:bg-[#0D152D] p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         <div className="relative w-full lg:w-80 flex-1 min-w-[200px]">
-          <Search className="w-4 h-4 text-[#8292AD] absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-2.5" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search invoice #, company..."
-            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] border border-[#E5EAF2] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033]"
+            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] dark:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500"
           />
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar flex-wrap sm:flex-nowrap">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar flex-nowrap pb-1">
           {['All', 'Paid', 'Pending', 'Overdue'].map((status) => (
             <button
               key={status}
@@ -179,7 +179,7 @@ Pulse CRM Platform • support@pulsecrm.io
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 statusFilter === status
                   ? 'bg-blue-600 text-white shadow-xs'
-                  : 'bg-[#F7F9FC] text-[#8292AD] hover:text-[#172033] border border-[#E5EAF2]'
+                  : 'bg-[#F7F9FC] dark:bg-[#121D3D] text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white border border-[#E5EAF2] dark:border-[#1E2D54]'
               }`}
             >
               {status}
@@ -189,11 +189,11 @@ Pulse CRM Platform • support@pulsecrm.io
       </div>
 
       {/* Invoices Table */}
-      <div className="bg-white rounded-2xl border border-[#E5EAF2] shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
+      <div className="bg-white dark:bg-[#0D152D] rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
+              <tr className="bg-[#F7F9FC] dark:bg-[#0A1128] border-b border-[#E5EAF2] dark:border-[#1A2548] text-[11px] font-bold text-[#8292AD] dark:text-slate-400 uppercase tracking-wider">
                 <th className="py-3.5 px-2 sm:px-3 lg:px-4">Invoice #</th>
                 <th className="py-3.5 px-2 sm:px-3 lg:px-4">Company</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">Plan Description</th>
@@ -203,10 +203,10 @@ Pulse CRM Platform • support@pulsecrm.io
                 <th className="py-3.5 px-2 sm:px-3 lg:px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5EAF2] text-xs">
+            <tbody className="divide-y divide-[#E5EAF2] dark:divide-[#1A2548] text-xs">
               {filteredInvoices.map((inv) => (
-                <tr key={inv.id} className="hover:bg-[#F7F9FC]/80 transition-colors group">
-                  <td className="py-3.5 px-2 sm:px-3 lg:px-4 font-mono font-bold text-blue-600 whitespace-nowrap text-[11px] sm:text-xs">
+                <tr key={inv.id} className="hover:bg-[#F7F9FC]/80 dark:hover:bg-[#121D3D]/60 transition-colors group">
+                  <td className="py-3.5 px-2 sm:px-3 lg:px-4 font-mono font-bold text-blue-600 dark:text-blue-400 whitespace-nowrap text-[11px] sm:text-xs">
                     {inv.id}
                   </td>
 
@@ -214,39 +214,39 @@ Pulse CRM Platform • support@pulsecrm.io
                     <div className="flex items-center gap-2">
                       <CompanyAvatar src={inv.companyLogo} name={inv.company} className="w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0" />
                       <div>
-                        <span className="font-bold text-[#172033] block">{inv.company}</span>
-                        <span className="text-[11px] text-[#8292AD] xl:hidden">{inv.plan}</span>
+                        <span className="font-bold text-[#172033] dark:text-white block">{inv.company}</span>
+                        <span className="text-[11px] text-[#8292AD] dark:text-slate-400 xl:hidden">{inv.plan}</span>
                       </div>
                     </div>
                   </td>
 
-                  <td className="py-3.5 px-3 lg:px-4 text-[#8292AD] whitespace-nowrap hidden xl:table-cell">
-                    <span className="text-[#172033] font-medium block">{inv.plan}</span>
-                    <span className="text-[10px] text-[#8292AD]">{inv.method}</span>
+                  <td className="py-3.5 px-3 lg:px-4 text-[#8292AD] dark:text-slate-400 whitespace-nowrap hidden xl:table-cell">
+                    <span className="text-[#172033] dark:text-white font-medium block">{inv.plan}</span>
+                    <span className="text-[10px] text-[#8292AD] dark:text-slate-400">{inv.method}</span>
                   </td>
 
-                  <td className="py-3.5 px-2 sm:px-3 lg:px-4 font-bold text-[#172033] whitespace-nowrap">
+                  <td className="py-3.5 px-2 sm:px-3 lg:px-4 font-bold text-[#172033] dark:text-white whitespace-nowrap">
                     {inv.amount}
                   </td>
 
                   <td className="py-3.5 px-2 sm:px-3 lg:px-4 whitespace-nowrap">
                     {inv.status === 'Paid' ? (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                        <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Paid
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                        <CheckCircle2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> Paid
                       </span>
                     ) : inv.status === 'Pending' ? (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
-                        <Clock className="w-3 h-3 text-amber-600" /> Pending
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
+                        <Clock className="w-3 h-3 text-amber-600 dark:text-amber-400" /> Pending
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200">
-                        <AlertTriangle className="w-3 h-3 text-red-600" /> Overdue
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800">
+                        <AlertTriangle className="w-3 h-3 text-red-600 dark:text-red-400" /> Overdue
                       </span>
                     )}
-                    <span className="block text-[10px] text-[#8292AD] lg:hidden mt-0.5">Due {inv.dueDate}</span>
+                    <span className="block text-[10px] text-[#8292AD] dark:text-slate-400 lg:hidden mt-0.5">Due {inv.dueDate}</span>
                   </td>
 
-                  <td className="py-3.5 px-3 lg:px-4 text-[#8292AD] whitespace-nowrap hidden lg:table-cell">
+                  <td className="py-3.5 px-3 lg:px-4 text-[#8292AD] dark:text-slate-400 whitespace-nowrap hidden lg:table-cell">
                     {inv.dueDate}
                   </td>
 

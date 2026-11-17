@@ -156,51 +156,51 @@ export const Companies = () => {
 
       {/* Metrics Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-semibold text-[#8292AD]">Total Tenants</p>
-          <p className="text-2xl font-black text-[#172033] mt-1">{companies.length}</p>
+        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-semibold text-[#8292AD] dark:text-slate-400">Total Tenants</p>
+          <p className="text-2xl font-black text-[#172033] dark:text-white mt-1">{companies.length}</p>
         </div>
-        <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-semibold text-[#8292AD]">Active Accounts</p>
-          <p className="text-2xl font-black text-emerald-600 mt-1">
+        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-semibold text-[#8292AD] dark:text-slate-400">Active Accounts</p>
+          <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">
             {companies.filter(c => c.status === 'Active').length}
           </p>
         </div>
-        <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-semibold text-[#8292AD]">On Trial</p>
-          <p className="text-2xl font-black text-blue-600 mt-1">
+        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-semibold text-[#8292AD] dark:text-slate-400">On Trial</p>
+          <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">
             {companies.filter(c => c.status === 'Trial').length}
           </p>
         </div>
-        <div className="bg-white p-4 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-semibold text-[#8292AD]">Total User Seats</p>
-          <p className="text-2xl font-black text-purple-600 mt-1">
+        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
+          <p className="text-xs font-semibold text-[#8292AD] dark:text-slate-400">Total User Seats</p>
+          <p className="text-2xl font-black text-purple-600 dark:text-purple-400 mt-1">
             {companies.reduce((sum, c) => sum + (c.users || 0), 0)}
           </p>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+      <div className="bg-white dark:bg-[#0D152D] p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         {/* Search */}
         <div className="relative w-full lg:w-72 xl:w-80 flex-1 min-w-[200px]">
-          <Search className="w-4 h-4 text-[#8292AD] absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-2.5" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by name, industry, contact..."
-            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] border border-[#E5EAF2] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033]"
+            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] dark:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500"
           />
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-2.5">
           {/* Status Filter */}
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="pl-3.5 pr-9 py-2 text-xs bg-[#F7F9FC] border border-[#E5EAF2] rounded-xl text-[#172033] focus:outline-none focus:border-blue-500 font-medium whitespace-nowrap cursor-pointer"
+            className="w-full sm:w-auto pl-3 pr-8 py-2 text-xs bg-[#F7F9FC] dark:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white focus:outline-none focus:border-blue-500 font-medium cursor-pointer"
           >
             <option value="All">All Statuses</option>
             <option value="Active">Active</option>
@@ -213,7 +213,7 @@ export const Companies = () => {
           <select
             value={planFilter}
             onChange={(e) => setPlanFilter(e.target.value)}
-            className="pl-3.5 pr-9 py-2 text-xs bg-[#F7F9FC] border border-[#E5EAF2] rounded-xl text-[#172033] focus:outline-none focus:border-blue-500 font-medium whitespace-nowrap cursor-pointer"
+            className="w-full sm:w-auto pl-3 pr-8 py-2 text-xs bg-[#F7F9FC] dark:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white focus:outline-none focus:border-blue-500 font-medium cursor-pointer"
           >
             <option value="All">All Plans</option>
             <option value="Starter">Starter</option>
@@ -225,35 +225,35 @@ export const Companies = () => {
           <button
             type="button"
             onClick={exportToCSV}
-            className="px-3.5 py-2 text-xs bg-white hover:bg-slate-50 border border-[#E5EAF2] rounded-xl text-[#172033] font-semibold flex items-center gap-1.5 transition-colors shadow-xs whitespace-nowrap cursor-pointer"
+            className="col-span-2 sm:col-span-1 w-full sm:w-auto px-3.5 py-2 text-xs bg-white dark:bg-[#121D3D] hover:bg-slate-50 dark:hover:bg-[#1A2548] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-xs whitespace-nowrap cursor-pointer"
             title="Export filtered companies as CSV"
           >
-            <Download className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" />
+            <Download className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
             <span className="whitespace-nowrap">Export CSV</span>
           </button>
         </div>
       </div>
 
       {/* Companies Data Table */}
-      <div className="bg-white rounded-2xl border border-[#E5EAF2] shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
+      <div className="bg-white dark:bg-[#0D152D] rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
         <div className="overflow-x-auto no-scrollbar">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#F7F9FC] border-b border-[#E5EAF2] text-[11px] font-bold text-[#8292AD] uppercase tracking-wider">
+              <tr className="bg-[#F7F9FC] dark:bg-[#0A1128] border-b border-[#E5EAF2] dark:border-[#1A2548] text-[11px] font-bold text-[#8292AD] dark:text-slate-400 uppercase tracking-wider">
                 <th className="py-3.5 px-2 sm:px-3 lg:px-4">Company</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">Contact</th>
                 <th className="py-3.5 px-2 sm:px-3 lg:px-4">Plan & MRR</th>
                 <th className="py-3.5 px-2 sm:px-3 lg:px-4">Status</th>
                 <th className="py-3.5 px-2 lg:px-4 text-center hidden lg:table-cell">Seats</th>
                 <th className="py-3.5 px-3 lg:px-4 hidden xl:table-cell">Next Billing</th>
-                <th className="py-3.5 px-2 lg:px-4 text-center">Actions</th>
+                <th className="py-3.5 px-1 sm:px-2 text-center">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5EAF2] text-xs">
+            <tbody className="divide-y divide-[#E5EAF2] dark:divide-[#1A2548] text-xs">
               {filtered.map((company) => (
                 <tr
                   key={company.id}
-                  className="hover:bg-[#F7F9FC]/80 transition-colors group cursor-pointer"
+                  className="hover:bg-[#F7F9FC]/80 dark:hover:bg-[#121D3D]/60 transition-colors group cursor-pointer"
                   onClick={() => setSelectedCompany(company)}
                 >
                   {/* Company */}
@@ -262,16 +262,16 @@ export const Companies = () => {
                       <img
                         src={company.logo}
                         alt={company.name}
-                        className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-xl object-cover border border-[#E5EAF2] flex-shrink-0"
+                        className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-xl object-cover border border-[#E5EAF2] dark:border-[#1E2D54] flex-shrink-0"
                       />
                       <div>
-                        <p className="font-bold text-[#172033] group-hover:text-blue-600 transition-colors">
+                        <p className="font-bold text-[#172033] dark:text-white group-hover:text-blue-600 transition-colors">
                           {company.name}
                         </p>
-                        <p className="text-[11px] text-[#8292AD] flex items-center gap-1">
+                        <p className="text-[11px] text-[#8292AD] dark:text-slate-400 flex items-center gap-1">
                           <MapPin className="w-3 h-3 flex-shrink-0" />
                           <span>{company.location || 'India'}</span>
-                          <span className="lg:hidden text-[#64748B] font-medium">• {company.contactPerson}</span>
+                          <span className="lg:hidden text-[#64748B] dark:text-slate-400 font-medium">• {company.contactPerson}</span>
                         </p>
                       </div>
                     </div>
@@ -279,15 +279,15 @@ export const Companies = () => {
 
                   {/* Contact - Desktop */}
                   <td className="py-3.5 px-3 lg:px-4 hidden lg:table-cell">
-                    <p className="font-semibold text-[#172033]">{company.contactPerson}</p>
-                    <p className="text-[11px] text-[#8292AD]">{company.email}</p>
+                    <p className="font-semibold text-[#172033] dark:text-white">{company.contactPerson}</p>
+                    <p className="text-[11px] text-[#8292AD] dark:text-slate-400">{company.email}</p>
                   </td>
 
                   {/* Plan & MRR */}
                   <td className="py-3.5 px-2 sm:px-3 lg:px-4 whitespace-nowrap">
-                    <span className="font-bold text-[#172033]">{company.mrr}</span>
-                    <span className="block text-[11px] text-[#8292AD]">
-                      {company.plan} Tier <span className="lg:hidden text-[#64748B] font-medium">• {company.users} seats</span>
+                    <span className="font-bold text-[#172033] dark:text-white">{company.mrr}</span>
+                    <span className="block text-[11px] text-[#8292AD] dark:text-slate-400">
+                      {company.plan} Tier <span className="lg:hidden text-[#64748B] dark:text-slate-400 font-medium">• {company.users} seats</span>
                     </span>
                   </td>
 
@@ -298,12 +298,12 @@ export const Companies = () => {
 
                   {/* Seats - Desktop */}
                   <td className="py-3.5 px-2 lg:px-4 whitespace-nowrap text-center hidden lg:table-cell">
-                    <span className="font-semibold text-[#172033]">{company.users}</span>
-                    <span className="text-[#8292AD] ml-1 text-[11px]">users</span>
+                    <span className="font-semibold text-[#172033] dark:text-white">{company.users}</span>
+                    <span className="text-[#8292AD] dark:text-slate-400 ml-1 text-[11px]">users</span>
                   </td>
 
                   {/* Next Billing - XL screens */}
-                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap text-[#8292AD] hidden xl:table-cell">
+                  <td className="py-3.5 px-3 lg:px-4 whitespace-nowrap text-[#8292AD] dark:text-slate-400 hidden xl:table-cell">
                     {company.nextBilling}
                   </td>
 
@@ -312,45 +312,45 @@ export const Companies = () => {
                     className="py-2.5 px-1 sm:px-2 text-center whitespace-nowrap"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <div className="flex items-center justify-center gap-1 sm:gap-1.5">
+                    <div className="flex items-center justify-center gap-1 sm:gap-1 lg:gap-1.5">
                       {/* View Details */}
                       <button
                         type="button"
                         onClick={() => setSelectedCompany(company)}
-                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#93C5FD] bg-[#EFF6FF]/70 text-[#2563EB] flex items-center justify-center hover:bg-[#DBEAFE] hover:border-[#3B82F6] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
+                        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border border-[#93C5FD] dark:border-blue-500/40 bg-[#EFF6FF]/70 dark:bg-blue-950/40 text-[#2563EB] dark:text-blue-400 flex items-center justify-center hover:bg-[#DBEAFE] dark:hover:bg-blue-900/60 hover:border-[#3B82F6] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="View Details"
                       >
-                        <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
+                        <Eye className="w-3.5 h-3.5 lg:w-4 lg:h-4 stroke-[1.8]" />
                       </button>
 
                       {/* Edit Company */}
                       <button
                         type="button"
                         onClick={() => setEditingCompany(company)}
-                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#86EFAC] bg-[#F0FDF4]/70 text-[#16A34A] flex items-center justify-center hover:bg-[#DCFCE7] hover:border-[#22C55E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
+                        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border border-[#86EFAC] dark:border-emerald-500/40 bg-[#F0FDF4]/70 dark:bg-emerald-950/40 text-[#16A34A] dark:text-emerald-400 flex items-center justify-center hover:bg-[#DCFCE7] dark:hover:bg-emerald-900/60 hover:border-[#22C55E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="Edit Company"
                       >
-                        <Edit2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
+                        <Edit2 className="w-3.5 h-3.5 lg:w-4 lg:h-4 stroke-[1.8]" />
                       </button>
 
                       {/* Video Call */}
                       <button
                         type="button"
                         onClick={() => handleStartVideoCall(company)}
-                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#C7D2FE] bg-[#EEF2FF]/70 text-[#4F46E5] flex items-center justify-center hover:bg-[#E0E7FF] hover:border-[#6366F1] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
+                        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border border-[#C7D2FE] dark:border-indigo-500/40 bg-[#EEF2FF]/70 dark:bg-indigo-950/40 text-[#4F46E5] dark:text-indigo-400 flex items-center justify-center hover:bg-[#E0E7FF] dark:hover:bg-indigo-900/60 hover:border-[#6366F1] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="Start Video Meeting"
                       >
-                        <Video className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
+                        <Video className="w-3.5 h-3.5 lg:w-4 lg:h-4 stroke-[1.8]" />
                       </button>
 
                       {/* Delete Company */}
                       <button
                         type="button"
                         onClick={() => setDeletingCompany(company)}
-                        className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#FECDD3] bg-[#FFF1F2]/70 text-[#E11D48] flex items-center justify-center hover:bg-[#FFE4E6] hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
+                        className="w-7 h-7 lg:w-8 lg:h-8 rounded-full border border-[#FECDD3] dark:border-rose-500/40 bg-[#FFF1F2]/70 dark:bg-rose-950/40 text-[#E11D48] dark:text-rose-400 flex items-center justify-center hover:bg-[#FFE4E6] dark:hover:bg-rose-900/60 hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="Delete Company"
                       >
-                        <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
+                        <Trash2 className="w-3.5 h-3.5 lg:w-4 lg:h-4 stroke-[1.8]" />
                       </button>
                     </div>
                   </td>
@@ -361,7 +361,7 @@ export const Companies = () => {
         </div>
 
         {/* Footer info */}
-        <div className="p-4 bg-[#F7F9FC] border-t border-[#E5EAF2] flex items-center justify-between text-xs text-[#8292AD]">
+        <div className="p-4 bg-[#F7F9FC] dark:bg-[#0A1128] border-t border-[#E5EAF2] dark:border-[#1A2548] flex items-center justify-between text-xs text-[#8292AD] dark:text-slate-400">
           <span>Showing {filtered.length} of {companies.length} companies</span>
           <span>Data synced live</span>
         </div>

@@ -86,7 +86,7 @@ export const Settings = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-1.5 border-b border-[#E5EAF2] pb-3 overflow-x-auto no-scrollbar flex-wrap">
+      <div className="flex items-center gap-1.5 border-b border-[#E5EAF2] dark:border-[#1A2548] pb-3 overflow-x-auto no-scrollbar flex-nowrap">
         {[
           { id: 'general', name: 'General Platform', icon: Globe },
           { id: 'profile', name: 'Profile & Security', icon: User },
@@ -101,7 +101,7 @@ export const Settings = () => {
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
                 activeTab === tab.id
                   ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-[#8292AD] hover:text-[#172033] hover:bg-slate-100'
+                  : 'text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#121D3D]'
               }`}
             >
               <Icon className="w-3.5 h-3.5" />

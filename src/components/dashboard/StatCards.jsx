@@ -109,7 +109,7 @@ export const StatCards = () => {
         <div
           key={idx}
           onClick={card.onClick}
-          className={`rounded-2xl p-4 sm:p-5 border ${card.bgClass} shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden relative`}
+          className={`rounded-2xl p-4 sm:p-5 border ${card.bgClass} shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden relative min-h-[160px]`}
         >
           {/* Top Row: Icon on left, Sparkline on right */}
           <div className="flex items-center justify-between">
@@ -119,9 +119,9 @@ export const StatCards = () => {
             </div>
           </div>
 
-          {/* Middle: Title & Value */}
-          <div className="mt-3 flex-1 flex flex-col justify-end">
-            <p className="text-xs font-medium text-[#475569] dark:text-slate-400 leading-snug min-h-[2rem] flex items-center">
+          {/* Middle: Title & Value - Uniform height so metric numbers align perfectly across all 4 cards */}
+          <div className="mt-3 flex-1 flex flex-col justify-between">
+            <p className="text-xs font-medium text-[#475569] dark:text-slate-400 leading-snug min-h-[2.5rem] flex items-start">
               {card.title}
             </p>
             <h3 className="text-2xl font-bold text-[#172033] dark:text-white mt-1 tracking-tight">
@@ -130,7 +130,7 @@ export const StatCards = () => {
           </div>
 
           {/* Bottom Row: Percentage & Subtitle */}
-          <div className="mt-3 pt-1 flex items-center text-xs">
+          <div className="mt-3 pt-1 flex items-center text-xs min-h-[1.5rem]">
             {card.growth ? (
               <>
                 <span className={`${card.trendColor} font-semibold flex items-center gap-0.5 flex-shrink-0`}>
