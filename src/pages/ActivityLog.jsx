@@ -115,7 +115,7 @@ export const ActivityLog = () => {
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="pl-9 pr-8 py-2 text-xs font-semibold bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 rounded-xl text-blue-600 dark:text-blue-400 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
+              className="select-primary-blue pl-9 pr-8 py-2 text-xs font-semibold bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 rounded-xl text-blue-600 dark:text-blue-400 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
             >
               <option value="All">All Audit Events ({activityLogs.length})</option>
               <option value="Admin">Admin ({adminCount})</option>
@@ -123,7 +123,6 @@ export const ActivityLog = () => {
               <option value="Company">Company ({compCount})</option>
               <option value="User">User ({userCount})</option>
             </select>
-            <ChevronDown className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 absolute right-2.5 pointer-events-none" />
           </div>
 
           {/* 2. Search Input */}
@@ -144,13 +143,12 @@ export const ActivityLog = () => {
             <select
               value={resultFilter}
               onChange={(e) => setResultFilter(e.target.value)}
-              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white appearance-none cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
+              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
             >
               <option value="All">All Results</option>
               <option value="Success">Success Only</option>
               <option value="Failed">Failed / Warning</option>
             </select>
-            <ChevronDown className="w-3.5 h-3.5 text-[#8292AD] dark:text-slate-400 absolute right-2.5 pointer-events-none" />
           </div>
 
           {/* 4. Third Dropdown: Date / Period */}
@@ -159,35 +157,17 @@ export const ActivityLog = () => {
             <select
               value={timeFilter}
               onChange={(e) => setTimeFilter(e.target.value)}
-              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white appearance-none cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
+              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
             >
               <option value="All">All Dates</option>
               <option value="Today">Today Only</option>
               <option value="Last 7 Days">Last 7 Days</option>
             </select>
-            <ChevronDown className="w-3.5 h-3.5 text-[#8292AD] dark:text-slate-400 absolute right-2.5 pointer-events-none" />
           </div>
         </div>
 
-        {/* Right: Clear, Count, Refresh, and Export */}
+        {/* Right: Count, Refresh, and Export */}
         <div className="flex items-center justify-between sm:justify-end gap-2.5 sm:gap-3 flex-shrink-0 pt-2 xl:pt-0 border-t xl:border-t-0 border-[#E5EAF2] dark:border-[#1A2548]">
-          {/* Clear button */}
-          <button
-            type="button"
-            onClick={handleClearFilters}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border ${
-              searchTerm || categoryFilter !== 'All' || resultFilter !== 'All' || timeFilter !== 'All'
-                ? 'text-rose-500 dark:text-rose-400 bg-rose-50/80 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 border-rose-200 dark:border-rose-900/60 shadow-2xs'
-                : 'text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800'
-            }`}
-            title="Reset all filters"
-          >
-            <X className="w-3.5 h-3.5" />
-            <span>Clear</span>
-          </button>
-
-          <div className="h-4 w-px bg-[#E5EAF2] dark:bg-[#1E2D54] hidden sm:block" />
-
           {/* Filter count text */}
           <span className="text-xs text-[#8292AD] dark:text-slate-400 whitespace-nowrap">
             Filtered: {filteredLogs.length} Shown of {activityLogs.length}
