@@ -78,9 +78,9 @@ export const CommandPalette = () => {
   };
 
   return (
-    <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-start justify-center pt-4 sm:pt-6 px-2 sm:px-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-8 sm:pt-16 px-2 sm:px-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
       <div
-        className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]"
+        className="fixed inset-0"
         onClick={() => setIsCommandPaletteOpen(false)}
       />
 

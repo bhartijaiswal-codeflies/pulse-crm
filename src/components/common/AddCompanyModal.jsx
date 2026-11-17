@@ -60,27 +60,27 @@ export const AddCompanyModal = () => {
   };
 
   return (
-    <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
       <div
-        className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]"
+        className="fixed inset-0"
         onClick={() => setIsAddCompanyOpen(false)}
       />
 
-      <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150">
+      <div className="relative w-full max-w-lg bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] overflow-hidden z-10 animate-in zoom-in-95 duration-150">
         {/* Header */}
-        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-[#F7F9FC]">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-[#E5EAF2] dark:border-[#1A2548] flex items-center justify-between bg-[#F7F9FC] dark:bg-[#0A1128]">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">
+            <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900/60 flex items-center justify-center text-blue-600 dark:text-blue-400">
               <Building2 className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#172033]">Add New Company</h3>
-              <p className="text-xs text-[#8292AD]">Register a new client company account</p>
+              <h3 className="text-base font-bold text-[#172033] dark:text-white">Add New Company</h3>
+              <p className="text-xs text-[#8292AD] dark:text-slate-400">Register a new client company account</p>
             </div>
           </div>
           <button
             onClick={() => setIsAddCompanyOpen(false)}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -99,19 +99,19 @@ export const AddCompanyModal = () => {
 
           {/* Company Name */}
           <div>
-            <label className="block text-xs font-semibold text-[#172033] mb-1">
+            <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">
               Company Name *
             </label>
             <div className="relative">
-              <Building2 className="w-4 h-4 absolute left-3 top-3 text-[#8292AD]" />
+              <Building2 className="w-4 h-4 absolute left-3 top-3 text-[#8292AD] dark:text-slate-400" />
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="e.g. Apex Innovations Ltd"
                 className={`w-full pl-9 pr-3 py-2 text-xs rounded-xl border ${
-                  errors.name ? 'border-red-500' : 'border-[#E5EAF2]'
-                } focus:outline-none focus:border-blue-500`}
+                  errors.name ? 'border-red-500' : 'border-[#E5EAF2] dark:border-[#1E2D54]'
+                } focus:outline-none focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500`}
               />
             </div>
             {errors.name && <p className="text-[11px] text-red-500 mt-1">{errors.name}</p>}
@@ -120,13 +120,13 @@ export const AddCompanyModal = () => {
           {/* Industry & Location */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-[#172033] mb-1">
+              <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">
                 Industry Sector
               </label>
               <select
                 value={formData.industry}
                 onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
-                className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:outline-none focus:border-blue-500 bg-white"
+                className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] focus:outline-none focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white"
               >
                 <option value="Enterprise Software">Enterprise Software</option>
                 <option value="Cloud Infrastructure">Cloud Infrastructure</option>
@@ -139,17 +139,17 @@ export const AddCompanyModal = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#172033] mb-1">
+              <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">
                 Headquarters
               </label>
               <div className="relative">
-                <MapPin className="w-4 h-4 absolute left-3 top-3 text-[#8292AD]" />
+                <MapPin className="w-4 h-4 absolute left-3 top-3 text-[#8292AD] dark:text-slate-400" />
                 <input
                   type="text"
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                   placeholder="City, Country"
-                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:outline-none focus:border-blue-500"
+                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] focus:outline-none focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500"
                 />
               </div>
             </div>
@@ -158,7 +158,7 @@ export const AddCompanyModal = () => {
           {/* Primary Contact Person & Email */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-[#172033] mb-1">
+              <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">
                 Primary Contact *
               </label>
               <input
@@ -167,8 +167,8 @@ export const AddCompanyModal = () => {
                 onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
                 placeholder="Full Name"
                 className={`w-full px-3 py-2 text-xs rounded-xl border ${
-                  errors.contactPerson ? 'border-red-500' : 'border-[#E5EAF2]'
-                } focus:outline-none focus:border-blue-500`}
+                  errors.contactPerson ? 'border-red-500' : 'border-[#E5EAF2] dark:border-[#1E2D54]'
+                } focus:outline-none focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500`}
               />
               {errors.contactPerson && (
                 <p className="text-[11px] text-red-500 mt-1">{errors.contactPerson}</p>
@@ -176,19 +176,19 @@ export const AddCompanyModal = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#172033] mb-1">
+              <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">
                 Official Email *
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 absolute left-3 top-3 text-[#8292AD]" />
+                <Mail className="w-4 h-4 absolute left-3 top-3 text-[#8292AD] dark:text-slate-400" />
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="admin@company.com"
                   className={`w-full pl-9 pr-3 py-2 text-xs rounded-xl border ${
-                    errors.email ? 'border-red-500' : 'border-[#E5EAF2]'
-                  } focus:outline-none focus:border-blue-500`}
+                    errors.email ? 'border-red-500' : 'border-[#E5EAF2] dark:border-[#1E2D54]'
+                  } focus:outline-none focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500`}
                 />
               </div>
               {errors.email && <p className="text-[11px] text-red-500 mt-1">{errors.email}</p>}
@@ -197,17 +197,17 @@ export const AddCompanyModal = () => {
 
           {/* Phone */}
           <div>
-            <label className="block text-xs font-semibold text-[#172033] mb-1">
+            <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">
               Contact Phone
             </label>
             <div className="relative">
-              <Phone className="w-4 h-4 absolute left-3 top-3 text-[#8292AD]" />
+              <Phone className="w-4 h-4 absolute left-3 top-3 text-[#8292AD] dark:text-slate-400" />
               <input
                 type="text"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 placeholder="+91 98765 43210"
-                className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:outline-none focus:border-blue-500"
+                className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] focus:outline-none focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500"
               />
             </div>
           </div>
@@ -215,7 +215,7 @@ export const AddCompanyModal = () => {
           {/* Plan & User Seats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-[#172033] mb-1">
+              <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">
                 Subscription Plan
               </label>
               <select
@@ -228,7 +228,7 @@ export const AddCompanyModal = () => {
                   if (p === 'Custom') m = '₹89,999';
                   setFormData({ ...formData, plan: p, mrr: m });
                 }}
-                className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:outline-none focus:border-blue-500 bg-white"
+                className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] focus:outline-none focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white"
               >
                 <option value="Starter">Starter (₹7,999/mo)</option>
                 <option value="Growth">Growth (₹19,999/mo)</option>
@@ -238,30 +238,30 @@ export const AddCompanyModal = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#172033] mb-1">
+              <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">
                 User Seats
               </label>
               <div className="relative">
-                <Users className="w-4 h-4 absolute left-3 top-3 text-[#8292AD]" />
+                <Users className="w-4 h-4 absolute left-3 top-3 text-[#8292AD] dark:text-slate-400" />
                 <input
                   type="number"
                   min="1"
                   max="1000"
                   value={formData.users}
                   onChange={(e) => setFormData({ ...formData, users: e.target.value })}
-                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:outline-none focus:border-blue-500"
+                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] focus:outline-none focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#172033] mb-1">
+              <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">
                 Initial Status
               </label>
               <select
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:outline-none focus:border-blue-500 bg-white"
+                className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] focus:outline-none focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white"
               >
                 <option value="Active">Active</option>
                 <option value="Trial">14-Day Trial</option>
@@ -271,11 +271,11 @@ export const AddCompanyModal = () => {
           </div>
 
           {/* Footer buttons */}
-          <div className="pt-4 border-t border-[#E5EAF2] flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-2.5">
+          <div className="pt-4 border-t border-[#E5EAF2] dark:border-[#1A2548] flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-2.5">
             <button
               type="button"
               onClick={() => setIsAddCompanyOpen(false)}
-              className="px-4 py-2 text-xs font-semibold text-[#8292AD] hover:text-[#172033] rounded-xl hover:bg-slate-100 transition-colors cursor-pointer text-center"
+              className="px-4 py-2 text-xs font-semibold text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer text-center"
             >
               Cancel
             </button>
