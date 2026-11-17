@@ -96,14 +96,34 @@ export const CommandPalette = () => {
             placeholder="Type a command or search companies, invoices, users..."
             className="w-full bg-transparent dark:!bg-transparent text-sm text-[#172033] dark:text-white placeholder-[#8292AD] dark:placeholder-slate-400 border-none outline-none focus:outline-none focus:ring-0 p-0"
           />
-          {query && (
-            <button onClick={() => setQuery('')} className="p-1 text-[#8292AD] hover:text-[#172033] dark:hover:text-white cursor-pointer">
-              <X className="w-4 h-4" />
+          <div className="flex items-center gap-1.5 ml-2 flex-shrink-0">
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery('')}
+                className="p-1 text-[#8292AD] hover:text-[#172033] dark:hover:text-white cursor-pointer rounded-md transition-colors"
+                title="Clear input"
+                aria-label="Clear input"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+            <kbd className="hidden sm:inline-block text-[10px] font-mono bg-white dark:bg-[#141E3C] px-2 py-0.5 rounded border border-[#E5EAF2] dark:border-[#22325C] text-[#8292AD] dark:text-slate-400">
+              ESC
+            </kbd>
+            <button
+              type="button"
+              onClick={() => {
+                setIsCommandPaletteOpen(false);
+                setQuery('');
+              }}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-[#1A2548] transition-colors cursor-pointer"
+              title="Close search popup"
+              aria-label="Close search popup"
+            >
+              <X className="w-5 h-5" />
             </button>
-          )}
-          <kbd className="hidden sm:inline-block text-[10px] font-mono bg-white dark:bg-[#141E3C] px-2 py-0.5 rounded border border-[#E5EAF2] dark:border-[#22325C] text-[#8292AD] dark:text-slate-400 ml-2">
-            ESC
-          </kbd>
+          </div>
         </div>
 
         {/* Results Container */}
@@ -111,13 +131,13 @@ export const CommandPalette = () => {
           {/* Quick Actions */}
           {query === '' && (
             <div>
-              <p className="px-3 text-[11px] font-bold text-[#8292AD] uppercase tracking-wider mb-1">
+              <p className="px-3 text-[11px] font-bold text-[#8292AD] dark:text-slate-400 uppercase tracking-wider mb-1">
                 Quick Actions
               </p>
               <div className="space-y-1">
                 <button
                   onClick={() => handleSelect(() => setIsAddCompanyOpen(true))}
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-[#172033] hover:bg-blue-50/60 hover:text-blue-600 transition-colors"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-[#172033] dark:text-white hover:bg-blue-50/60 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
                 >
                   <div className="flex items-center gap-2.5">
                     <PlusCircle className="w-4 h-4 text-emerald-500" />
@@ -127,7 +147,7 @@ export const CommandPalette = () => {
                 </button>
                 <button
                   onClick={() => handleSelect(() => navigate('/billing'))}
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-[#172033] hover:bg-blue-50/60 hover:text-blue-600 transition-colors"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-[#172033] dark:text-white hover:bg-blue-50/60 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
                 >
                   <div className="flex items-center gap-2.5">
                     <CreditCard className="w-4 h-4 text-amber-500" />
@@ -142,7 +162,7 @@ export const CommandPalette = () => {
           {/* Navigation Pages */}
           {pages.length > 0 && (
             <div>
-              <p className="px-3 text-[11px] font-bold text-[#8292AD] uppercase tracking-wider mb-1">
+              <p className="px-3 text-[11px] font-bold text-[#8292AD] dark:text-slate-400 uppercase tracking-wider mb-1">
                 Pages
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
@@ -152,9 +172,9 @@ export const CommandPalette = () => {
                     <button
                       key={p.path}
                       onClick={() => handleSelect(() => navigate(p.path))}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-[#172033] hover:bg-slate-100 transition-colors text-left"
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-[#172033] dark:text-white hover:bg-slate-100 dark:hover:bg-[#121D3D] transition-colors text-left cursor-pointer"
                     >
-                      <Icon className="w-4 h-4 text-blue-600" />
+                      <Icon className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                       <span>{p.title}</span>
                     </button>
                   );
@@ -166,7 +186,7 @@ export const CommandPalette = () => {
           {/* Companies match */}
           {filteredCompanies.length > 0 && (
             <div>
-              <p className="px-3 text-[11px] font-bold text-[#8292AD] uppercase tracking-wider mb-1">
+              <p className="px-3 text-[11px] font-bold text-[#8292AD] dark:text-slate-400 uppercase tracking-wider mb-1">
                 Companies ({filteredCompanies.length})
               </p>
               <div className="space-y-1">
@@ -174,16 +194,16 @@ export const CommandPalette = () => {
                   <button
                     key={comp.id}
                     onClick={() => handleSelect(() => navigate('/companies'))}
-                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs hover:bg-[#F7F9FC] transition-colors text-left"
+                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs hover:bg-[#F7F9FC] dark:hover:bg-[#121D3D] transition-colors text-left cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5">
                       <img src={comp.logo} alt={comp.name} className="w-6 h-6 rounded-md object-cover" />
                       <div>
-                        <p className="font-semibold text-[#172033]">{comp.name}</p>
-                        <p className="text-[11px] text-[#8292AD]">{comp.industry} • {comp.plan} Plan</p>
+                        <p className="font-semibold text-[#172033] dark:text-white">{comp.name}</p>
+                        <p className="text-[11px] text-[#8292AD] dark:text-slate-400">{comp.industry} • {comp.plan} Plan</p>
                       </div>
                     </div>
-                    <span className="text-[11px] font-semibold text-emerald-600">{comp.mrr}</span>
+                    <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">{comp.mrr}</span>
                   </button>
                 ))}
               </div>
@@ -193,7 +213,7 @@ export const CommandPalette = () => {
           {/* Users match */}
           {filteredUsers.length > 0 && (
             <div>
-              <p className="px-3 text-[11px] font-bold text-[#8292AD] uppercase tracking-wider mb-1">
+              <p className="px-3 text-[11px] font-bold text-[#8292AD] dark:text-slate-400 uppercase tracking-wider mb-1">
                 Users ({filteredUsers.length})
               </p>
               <div className="space-y-1">
@@ -201,16 +221,16 @@ export const CommandPalette = () => {
                   <button
                     key={u.id}
                     onClick={() => handleSelect(() => navigate('/users'))}
-                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs hover:bg-[#F7F9FC] transition-colors text-left"
+                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs hover:bg-[#F7F9FC] dark:hover:bg-[#121D3D] transition-colors text-left cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5">
                       <img src={u.avatar} alt={u.name} className="w-6 h-6 rounded-full object-cover" />
                       <div>
-                        <p className="font-semibold text-[#172033]">{u.name}</p>
-                        <p className="text-[11px] text-[#8292AD]">{u.email} • {u.role}</p>
+                        <p className="font-semibold text-[#172033] dark:text-white">{u.name}</p>
+                        <p className="text-[11px] text-[#8292AD] dark:text-slate-400">{u.email} • {u.role}</p>
                       </div>
                     </div>
-                    <span className="text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full font-medium">
+                    <span className="text-[10px] bg-slate-100 dark:bg-[#1A2548] text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded-full font-medium">
                       {u.company}
                     </span>
                   </button>
@@ -222,7 +242,7 @@ export const CommandPalette = () => {
           {/* Invoices match */}
           {filteredInvoices.length > 0 && (
             <div>
-              <p className="px-3 text-[11px] font-bold text-[#8292AD] uppercase tracking-wider mb-1">
+              <p className="px-3 text-[11px] font-bold text-[#8292AD] dark:text-slate-400 uppercase tracking-wider mb-1">
                 Invoices ({filteredInvoices.length})
               </p>
               <div className="space-y-1">
@@ -230,16 +250,16 @@ export const CommandPalette = () => {
                   <button
                     key={inv.id}
                     onClick={() => handleSelect(() => navigate('/billing'))}
-                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs hover:bg-[#F7F9FC] transition-colors text-left"
+                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs hover:bg-[#F7F9FC] dark:hover:bg-[#121D3D] transition-colors text-left cursor-pointer"
                   >
                     <div>
-                      <span className="font-mono font-semibold text-blue-600">{inv.id}</span>
-                      <p className="text-[11px] text-[#8292AD]">{inv.company} • {inv.plan}</p>
+                      <span className="font-mono font-semibold text-blue-600 dark:text-blue-400">{inv.id}</span>
+                      <p className="text-[11px] text-[#8292AD] dark:text-slate-400">{inv.company} • {inv.plan}</p>
                     </div>
                     <div className="text-right">
-                      <span className="font-bold text-[#172033]">{inv.amount}</span>
+                      <span className="font-bold text-[#172033] dark:text-white">{inv.amount}</span>
                       <span className={`block text-[10px] font-semibold ${
-                        inv.status === 'Paid' ? 'text-emerald-600' : 'text-amber-600'
+                        inv.status === 'Paid' ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'
                       }`}>{inv.status}</span>
                     </div>
                   </button>
@@ -250,7 +270,7 @@ export const CommandPalette = () => {
         </div>
 
         {/* Footer info */}
-        <div className="px-4 py-2.5 bg-[#F7F9FC] border-t border-[#E5EAF2] flex items-center justify-between text-[11px] text-[#8292AD]">
+        <div className="px-4 py-2.5 bg-[#F7F9FC] dark:bg-[#0A1128] border-t border-[#E5EAF2] dark:border-[#1A2548] flex items-center justify-between text-[11px] text-[#8292AD] dark:text-slate-400">
           <span>Tip: Use ↑ ↓ arrows to navigate, Enter to select</span>
           <span>Pulse CRM v2.4</span>
         </div>
