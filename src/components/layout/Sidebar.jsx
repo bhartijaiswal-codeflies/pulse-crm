@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -40,6 +40,35 @@ export const Sidebar = () => {
   const { setIsAddCompanyOpen, showToast } = useApp();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [isQuickOpen, setIsQuickOpen] = useState(false);
+  const quickRef = useRef(null);
+
+  // Close Quick Actions menu on click outside or Escape key
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (quickRef.current && !quickRef.current.contains(event.target)) {
+        setIsQuickOpen(false);
+      }
+    };
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setIsQuickOpen(false);
+    };
+
+    if (isQuickOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isQuickOpen]);
+
+  // Close Quick Actions menu when route changes
+  useEffect(() => {
+    setIsQuickOpen(false);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     showToast('Signed out of Pulse CRM session', 'info');
@@ -110,41 +139,82 @@ export const Sidebar = () => {
             );
           })}
 
-          {/* Quick Actions ⚡ Card */}
-          <div className="group relative w-[60px] h-[43px] 2xl:h-[48px] flex-shrink-0 flex flex-col items-center justify-center rounded-xl transition-all duration-150 text-[#76849D] hover:text-white hover:bg-[#0D152D]/80 border border-transparent cursor-pointer">
-            <Zap className="w-[17px] h-[17px] mb-0.5 transition-transform group-hover:scale-105 stroke-[1.8] text-amber-400 fill-amber-400" />
-            <span className="text-[10px] tracking-tight leading-none text-center truncate max-w-[56px] font-medium text-amber-300">
-              Quick ⚡
-            </span>
+          {/* Quick Actions ⚡ Card (Click to open) */}
+          <div ref={quickRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setIsQuickOpen((prev) => !prev)}
+              aria-expanded={isQuickOpen}
+              aria-haspopup="true"
+              title="Quick Actions (Click to open)"
+              className={`group relative w-[60px] h-[43px] 2xl:h-[48px] flex-shrink-0 flex flex-col items-center justify-center rounded-xl transition-all duration-150 cursor-pointer ${
+                isQuickOpen
+                  ? 'bg-[#0D1938] border border-amber-500/60 text-white shadow-[0_0_14px_rgba(245,158,11,0.35)]'
+                  : 'text-[#76849D] hover:text-white hover:bg-[#0D152D]/80 border border-transparent'
+              }`}
+            >
+              <Zap
+                className={`w-[17px] h-[17px] mb-0.5 transition-transform group-hover:scale-105 stroke-[1.8] ${
+                  isQuickOpen ? 'text-amber-400 fill-amber-400 scale-105' : 'text-amber-400 fill-amber-400'
+                }`}
+              />
+              <span className="text-[10px] tracking-tight leading-none text-center truncate max-w-[56px] font-medium text-amber-300">
+                Quick ⚡
+              </span>
 
-            {/* Quick Actions Flyout Popover */}
-            <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 w-56 bg-[#0D152D] border border-[#1A2544] rounded-2xl shadow-2xl p-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all z-50">
-              <div className="flex items-center gap-2 px-2.5 py-1.5 text-xs font-bold text-white border-b border-[#1A2544] mb-1">
-                <Zap className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                <span>Quick Actions ⚡</span>
+              {/* Tooltip on hover only when menu is closed */}
+              {!isQuickOpen && (
+                <div className="absolute left-full ml-3 px-2.5 py-1 text-[11px] font-semibold rounded-md shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap bg-[#0D152D] text-white border border-[#1A2544]">
+                  Quick Actions (Click)
+                </div>
+              )}
+            </button>
+
+            {/* Quick Actions Flyout Popover (Opens on click and stays open) */}
+            {isQuickOpen && (
+              <div className="absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 w-56 bg-[#0D152D] border border-[#1A2544] rounded-2xl shadow-2xl p-2 z-[60] animate-in fade-in zoom-in-95 duration-150">
+                <div className="flex items-center justify-between px-2.5 py-1.5 text-xs font-bold text-white border-b border-[#1A2544] mb-1">
+                  <div className="flex items-center gap-2">
+                    <Zap className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                    <span>Quick Actions ⚡</span>
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-normal">Esc</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsAddCompanyOpen(true);
+                    setIsQuickOpen(false);
+                  }}
+                  className="w-full flex items-center gap-2.5 px-2.5 py-2 text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-xl transition-colors text-left cursor-pointer"
+                >
+                  <PlusCircle className="w-4 h-4 text-[#3B82F6]" />
+                  <span>Add Company</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate('/billing');
+                    setIsQuickOpen(false);
+                  }}
+                  className="w-full flex items-center gap-2.5 px-2.5 py-2 text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-xl transition-colors text-left cursor-pointer"
+                >
+                  <CreditCard className="w-4 h-4 text-amber-400" />
+                  <span>View Pending Payments</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate('/plans');
+                    setIsQuickOpen(false);
+                  }}
+                  className="w-full flex items-center gap-2.5 px-2.5 py-2 text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-xl transition-colors text-left cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-purple-400" />
+                  <span>Upgrade Plan</span>
+                </button>
               </div>
-              <button
-                onClick={() => setIsAddCompanyOpen(true)}
-                className="w-full flex items-center gap-2.5 px-2.5 py-2 text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-xl transition-colors text-left"
-              >
-                <PlusCircle className="w-4 h-4 text-[#3B82F6]" />
-                <span>Add Company</span>
-              </button>
-              <button
-                onClick={() => navigate('/billing')}
-                className="w-full flex items-center gap-2.5 px-2.5 py-2 text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-xl transition-colors text-left"
-              >
-                <CreditCard className="w-4 h-4 text-amber-400" />
-                <span>View Pending Payments</span>
-              </button>
-              <button
-                onClick={() => navigate('/plans')}
-                className="w-full flex items-center gap-2.5 px-2.5 py-2 text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-xl transition-colors text-left"
-              >
-                <Sparkles className="w-4 h-4 text-purple-400" />
-                <span>Upgrade Plan</span>
-              </button>
-            </div>
+            )}
           </div>
 
           <div className="w-[46px] h-[1px] my-[0.5px] flex-shrink-0 transition-colors bg-[#141E38]" />
