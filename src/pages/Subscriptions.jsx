@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ImageUploadOption } from '../components/common/ImageUploadOption';
+import { DeleteConfirmModal } from '../components/common/DeleteConfirmModal';
 
 export const Subscriptions = () => {
   const { companies, updateCompany, deleteCompany, setIsAddCompanyOpen, showToast } = useApp();
@@ -37,6 +38,7 @@ export const Subscriptions = () => {
   const [selectedSub, setSelectedSub] = useState(null);
   const [editingSub, setEditingSub] = useState(null);
   const [videoCallCompany, setVideoCallCompany] = useState(null);
+  const [deletingSub, setDeletingSub] = useState(null);
   const [copiedLink, setCopiedLink] = useState(false);
 
   const handleStartVideoCall = (company) => {
@@ -297,10 +299,7 @@ export const Subscriptions = () => {
                       {/* Cancel / Delete Subscription */}
                       <button
                         type="button"
-                        onClick={() => {
-                          deleteCompany(company.id);
-                          showToast(`Subscription for ${company.name} cancelled`, 'info');
-                        }}
+                        onClick={() => setDeletingSub(company)}
                         className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#FECDD3] bg-[#FFF1F2]/70 text-[#E11D48] flex items-center justify-center hover:bg-[#FFE4E6] hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="Cancel / Delete Subscription"
                       >
@@ -618,6 +617,23 @@ export const Subscriptions = () => {
           </div>
         </div>
       )}
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmModal
+        isOpen={!!deletingSub}
+        title="Cancel & Delete Subscription"
+        itemName={deletingSub?.name}
+        itemSubtitle={`${deletingSub?.plan} Plan • ${deletingSub?.mrr} / mo`}
+        itemImage={deletingSub?.logo}
+        warningMessage="Are you sure you want to cancel and delete this subscription? The recurring billing cycle will be terminated immediately."
+        confirmText="Yes, Delete Subscription"
+        onConfirm={() => {
+          if (deletingSub) {
+            deleteCompany(deletingSub.id);
+            setDeletingSub(null);
+          }
+        }}
+        onClose={() => setDeletingSub(null)}
+      />
     </div>
   );
 };

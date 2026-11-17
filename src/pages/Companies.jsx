@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ImageUploadOption } from '../components/common/ImageUploadOption';
+import { DeleteConfirmModal } from '../components/common/DeleteConfirmModal';
 
 export const Companies = () => {
   const {
@@ -43,6 +44,7 @@ export const Companies = () => {
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [editingCompany, setEditingCompany] = useState(null);
   const [videoCallCompany, setVideoCallCompany] = useState(null);
+  const [deletingCompany, setDeletingCompany] = useState(null);
   const [copiedLink, setCopiedLink] = useState(false);
   const [actionMenuId, setActionMenuId] = useState(null);
 
@@ -344,10 +346,7 @@ export const Companies = () => {
                       {/* Delete Company */}
                       <button
                         type="button"
-                        onClick={() => {
-                          deleteCompany(company.id);
-                          showToast(`${company.name} deleted successfully`, 'info');
-                        }}
+                        onClick={() => setDeletingCompany(company)}
                         className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#FECDD3] bg-[#FFF1F2]/70 text-[#E11D48] flex items-center justify-center hover:bg-[#FFE4E6] hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="Delete Company"
                       >
@@ -677,6 +676,23 @@ export const Companies = () => {
           </div>
         </div>
       )}
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmModal
+        isOpen={!!deletingCompany}
+        title="Delete Company Account"
+        itemName={deletingCompany?.name}
+        itemSubtitle={`${deletingCompany?.industry || 'Enterprise SaaS'} • ${deletingCompany?.plan || 'Pro'} Plan`}
+        itemImage={deletingCompany?.logo}
+        warningMessage="Are you sure you want to delete this company? All company subscriptions, tenant settings, and associated data will be permanently removed."
+        confirmText="Yes, Delete Company"
+        onConfirm={() => {
+          if (deletingCompany) {
+            deleteCompany(deletingCompany.id);
+            setDeletingCompany(null);
+          }
+        }}
+        onClose={() => setDeletingCompany(null)}
+      />
     </div>
   );
 };

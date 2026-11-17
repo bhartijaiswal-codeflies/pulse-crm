@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ImageUploadOption } from '../components/common/ImageUploadOption';
+import { DeleteConfirmModal } from '../components/common/DeleteConfirmModal';
 
 export const Users = () => {
   const { users, addUser, updateUser, deleteUser, showToast } = useApp();
@@ -32,6 +33,7 @@ export const Users = () => {
   const [editingUser, setEditingUser] = useState(null);
   const [permissionsUser, setPermissionsUser] = useState(null);
   const [videoCallUser, setVideoCallUser] = useState(null);
+  const [deletingUser, setDeletingUser] = useState(null);
   const [copiedLink, setCopiedLink] = useState(false);
   const [permissions, setPermissions] = useState({
     viewAnalytics: true,
@@ -282,10 +284,7 @@ export const Users = () => {
                       {/* Delete User (Trash - Red) */}
                       <button
                         type="button"
-                        onClick={() => {
-                          deleteUser(user.id);
-                          showToast(`${user.name} removed from team`, 'info');
-                        }}
+                        onClick={() => setDeletingUser(user)}
                         className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#FECDD3] bg-[#FFF1F2]/70 text-[#E11D48] flex items-center justify-center hover:bg-[#FFE4E6] hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
                         title="Delete User"
                       >
@@ -504,10 +503,7 @@ export const Users = () => {
               <div className="pt-4 border-t border-[#E5EAF2] dark:border-[#1A2548] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                 <button
                   type="button"
-                  onClick={() => {
-                    deleteUser(editingUser.id);
-                    setEditingUser(null);
-                  }}
+                  onClick={() => setDeletingUser(editingUser)}
                   className="px-3 py-2 text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl transition-colors flex items-center justify-center gap-1 cursor-pointer"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
@@ -699,6 +695,26 @@ export const Users = () => {
           </div>
         </div>
       )}
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmModal
+        isOpen={!!deletingUser}
+        title="Delete Team Member"
+        itemName={deletingUser?.name}
+        itemSubtitle={`${deletingUser?.role} • ${deletingUser?.company}`}
+        itemImage={deletingUser?.avatar}
+        warningMessage="Are you sure you want to remove this user? Their account access, permissions, and session tokens will be permanently revoked."
+        confirmText="Yes, Delete User"
+        onConfirm={() => {
+          if (deletingUser) {
+            deleteUser(deletingUser.id);
+            setDeletingUser(null);
+            if (editingUser?.id === deletingUser.id) {
+              setEditingUser(null);
+            }
+          }
+        }}
+        onClose={() => setDeletingUser(null)}
+      />
     </div>
   );
 };
