@@ -120,8 +120,8 @@ export const StatCards = () => {
           </div>
 
           {/* Middle: Title & Value */}
-          <div className="mt-3">
-            <p className="text-xs font-medium text-[#475569] dark:text-slate-400 leading-tight">
+          <div className="mt-3 flex-1 flex flex-col justify-end">
+            <p className="text-xs font-medium text-[#475569] dark:text-slate-400 leading-snug min-h-[2rem] flex items-center">
               {card.title}
             </p>
             <h3 className="text-2xl font-bold text-[#172033] dark:text-white mt-1 tracking-tight">
