@@ -433,9 +433,9 @@ export const Companies = () => {
 
       {/* Company Details Modal / Drawer */}
       {selectedCompany && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+        <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px] z-40 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div
-            className="fixed inset-0"
+            className="absolute inset-0"
             onClick={() => setSelectedCompany(null)}
           />
           <div className="relative w-full max-w-xl bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[90vh] sm:max-h-[85vh] flex flex-col">
@@ -539,9 +539,9 @@ export const Companies = () => {
 
       {/* Edit Company Modal */}
       {editingCompany && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+        <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px] z-40 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div
-            className="fixed inset-0"
+            className="absolute inset-0"
             onClick={() => setEditingCompany(null)}
           />
           <div className="relative w-full max-w-lg bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[90vh] flex flex-col">
@@ -644,9 +644,9 @@ export const Companies = () => {
 
       {/* Instant Video Meeting Modal */}
       {videoCallCompany && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+        <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px] z-40 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div
-            className="fixed inset-0"
+            className="absolute inset-0"
             onClick={() => setVideoCallCompany(null)}
           />
           <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] z-10 animate-in zoom-in-95 duration-150">

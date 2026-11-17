@@ -346,8 +346,8 @@ export const SupportTickets = () => {
 
       {/* Ticket Details & Thread Modal */}
       {selectedTicket && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="fixed inset-0" onClick={() => setSelectedTicket(null)} />
+        <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px] z-40 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="absolute inset-0" onClick={() => setSelectedTicket(null)} />
           <div className="relative w-full max-w-xl bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] overflow-hidden z-10 animate-in zoom-in-95 max-h-[90vh] sm:max-h-[85vh] flex flex-col">
             <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-[#E5EAF2] dark:border-[#1A2548] flex items-center justify-between bg-[#F7F9FC] dark:bg-[#0A1128]">
               <div>
@@ -436,8 +436,8 @@ export const SupportTickets = () => {
 
       {/* New Ticket Modal */}
       {isNewTicketOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="fixed inset-0" onClick={() => setIsNewTicketOpen(false)} />
+        <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px] z-40 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="absolute inset-0" onClick={() => setIsNewTicketOpen(false)} />
           <div className="relative w-full max-w-lg bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] p-4 sm:p-6 space-y-4 z-10 animate-in zoom-in-95 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2] dark:border-[#1A2548]">
               <h3 className="text-base font-bold text-[#172033] dark:text-white">Create Support Incident</h3>

@@ -186,8 +186,8 @@ export const Plans = () => {
 
       {/* Edit Plan Modal */}
       {editingPlan && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="fixed inset-0" onClick={() => setEditingPlan(null)} />
+        <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px] z-40 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="absolute inset-0" onClick={() => setEditingPlan(null)} />
           <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] p-4 sm:p-6 space-y-4 z-10 animate-in zoom-in-95 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
               <h3 className="text-base font-bold text-[#172033]">Edit {editingPlan.name}</h3>
@@ -260,8 +260,8 @@ export const Plans = () => {
 
       {/* Create New Plan Modal */}
       {isAddPlanOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="fixed inset-0" onClick={() => setIsAddPlanOpen(false)} />
+        <div className="fixed top-16 bottom-0 right-0 left-0 md:left-[76px] z-40 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="absolute inset-0" onClick={() => setIsAddPlanOpen(false)} />
           <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] p-4 sm:p-6 space-y-4 z-10 animate-in zoom-in-95 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
               <h3 className="text-base font-bold text-[#172033]">Create New Pricing Tier</h3>
