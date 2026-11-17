@@ -304,13 +304,13 @@ export const Users = () => {
       {isAddUserOpen && (
         <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setIsAddUserOpen(false)} />
-          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-4 sm:p-6 space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
+          <div className="relative w-full max-w-lg bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] overflow-hidden z-10 animate-in zoom-in-95 p-4 sm:p-6 space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2] dark:border-[#1A2548]">
               <div className="flex items-center gap-2">
-                <UsersIcon className="w-5 h-5 text-blue-600" />
-                <h3 className="text-base font-bold text-[#172033]">Invite New User</h3>
+                <UsersIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                <h3 className="text-base font-bold text-[#172033] dark:text-white">Invite New User</h3>
               </div>
-              <button onClick={() => setIsAddUserOpen(false)} className="p-1.5 text-slate-400 hover:text-slate-700">
+              <button onClick={() => setIsAddUserOpen(false)} className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -326,36 +326,36 @@ export const Users = () => {
               />
 
               <div>
-                <label className="block text-xs font-semibold text-[#172033] mb-1">Full Name *</label>
+                <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Full Name *</label>
                 <input
                   type="text"
                   required
                   value={newUser.name}
                   onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
                   placeholder="e.g. Rachel Zane"
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white focus:border-blue-500 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#172033] mb-1">Work Email *</label>
+                <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Work Email *</label>
                 <input
                   type="email"
                   required
                   value={newUser.email}
                   onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
                   placeholder="rachel@tenant.com"
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white focus:border-blue-500 focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Access Role</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Access Role</label>
                   <select
                     value={newUser.role}
                     onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 bg-white"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white"
                   >
                     <option value="Company Admin">Company Admin</option>
                     <option value="Billing Manager">Billing Manager</option>
@@ -366,21 +366,21 @@ export const Users = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Organization</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Organization</label>
                   <input
                     type="text"
                     value={newUser.company}
                     onChange={(e) => setNewUser({ ...newUser, company: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white focus:border-blue-500"
                   />
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#E5EAF2] flex flex-col sm:flex-row justify-end gap-2.5">
+              <div className="pt-4 border-t border-[#E5EAF2] dark:border-[#1A2548] flex flex-col sm:flex-row justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setIsAddUserOpen(false)}
-                  className="px-4 py-2 text-xs font-semibold text-[#8292AD] cursor-pointer"
+                  className="px-4 py-2 text-xs font-semibold text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -400,13 +400,13 @@ export const Users = () => {
       {editingUser && (
         <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setEditingUser(null)} />
-          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-4 sm:p-6 space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
+          <div className="relative w-full max-w-lg bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] overflow-hidden z-10 animate-in zoom-in-95 p-4 sm:p-6 space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2] dark:border-[#1A2548]">
               <div className="flex items-center gap-2">
-                <Edit2 className="w-5 h-5 text-blue-600" />
-                <h3 className="text-base font-bold text-[#172033]">Edit User Profile</h3>
+                <Edit2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                <h3 className="text-base font-bold text-[#172033] dark:text-white">Edit User Profile</h3>
               </div>
-              <button onClick={() => setEditingUser(null)} className="p-1.5 text-slate-400 hover:text-slate-700">
+              <button onClick={() => setEditingUser(null)} className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -429,34 +429,34 @@ export const Users = () => {
               />
 
               <div>
-                <label className="block text-xs font-semibold text-[#172033] mb-1">Full Name</label>
+                <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Full Name</label>
                 <input
                   type="text"
                   required
                   value={editingUser.name}
                   onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white focus:border-blue-500 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#172033] mb-1">Work Email</label>
+                <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Work Email</label>
                 <input
                   type="email"
                   required
                   value={editingUser.email}
                   onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white focus:border-blue-500 focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Access Role</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Access Role</label>
                   <select
                     value={editingUser.role}
                     onChange={(e) => setEditingUser({ ...editingUser, role: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 bg-white"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white"
                   >
                     <option value="Super Admin">Super Admin</option>
                     <option value="Company Admin">Company Admin</option>
@@ -468,11 +468,11 @@ export const Users = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Status</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Status</label>
                   <select
                     value={editingUser.status}
                     onChange={(e) => setEditingUser({ ...editingUser, status: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 bg-white"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white"
                   >
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
@@ -482,33 +482,33 @@ export const Users = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Organization</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Organization</label>
                   <input
                     type="text"
                     value={editingUser.company}
                     onChange={(e) => setEditingUser({ ...editingUser, company: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white focus:border-blue-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Department</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Department</label>
                   <input
                     type="text"
                     value={editingUser.department}
                     onChange={(e) => setEditingUser({ ...editingUser, department: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white focus:border-blue-500"
                   />
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#E5EAF2] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <div className="pt-4 border-t border-[#E5EAF2] dark:border-[#1A2548] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                 <button
                   type="button"
                   onClick={() => {
                     deleteUser(editingUser.id);
                     setEditingUser(null);
                   }}
-                  className="px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 rounded-xl transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                  className="px-3 py-2 text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl transition-colors flex items-center justify-center gap-1 cursor-pointer"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   <span>Delete User</span>
@@ -517,7 +517,7 @@ export const Users = () => {
                   <button
                     type="button"
                     onClick={() => setEditingUser(null)}
-                    className="flex-1 sm:flex-initial px-4 py-2 text-xs font-semibold text-[#8292AD] cursor-pointer"
+                    className="flex-1 sm:flex-initial px-4 py-2 text-xs font-semibold text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white cursor-pointer"
                   >
                     Cancel
                   </button>
@@ -538,16 +538,16 @@ export const Users = () => {
       {permissionsUser && (
         <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setPermissionsUser(null)} />
-          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-4 sm:p-6 space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
+          <div className="relative w-full max-w-md bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] overflow-hidden z-10 animate-in zoom-in-95 p-4 sm:p-6 space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2] dark:border-[#1A2548]">
               <div className="flex items-center gap-2">
-                <Shield className="w-5 h-5 text-blue-600" />
+                <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                 <div>
-                  <h3 className="text-base font-bold text-[#172033]">Access Permissions</h3>
-                  <p className="text-xs text-[#8292AD]">{permissionsUser.name} • {permissionsUser.role}</p>
+                  <h3 className="text-base font-bold text-[#172033] dark:text-white">Access Permissions</h3>
+                  <p className="text-xs text-[#8292AD] dark:text-slate-400">{permissionsUser.name} • {permissionsUser.role}</p>
                 </div>
               </div>
-              <button onClick={() => setPermissionsUser(null)} className="p-1.5 text-slate-400 hover:text-slate-700">
+              <button onClick={() => setPermissionsUser(null)} className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -563,27 +563,27 @@ export const Users = () => {
               ].map(perm => (
                 <label
                   key={perm.key}
-                  className="flex items-start gap-3 p-2.5 rounded-xl border border-[#E5EAF2] hover:bg-slate-50 cursor-pointer transition-colors"
+                  className="flex items-start gap-3 p-2.5 rounded-xl border border-[#E5EAF2] dark:border-[#1A2548] hover:bg-slate-50 dark:hover:bg-[#121D3D] cursor-pointer transition-colors"
                 >
                   <input
                     type="checkbox"
                     checked={permissions[perm.key]}
                     onChange={(e) => setPermissions({ ...permissions, [perm.key]: e.target.checked })}
-                    className="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300"
+                    className="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0D1938]"
                   />
                   <div className="min-w-0">
-                    <p className="text-xs font-bold text-[#172033]">{perm.title}</p>
-                    <p className="text-[11px] text-[#8292AD] mt-0.5">{perm.desc}</p>
+                    <p className="text-xs font-bold text-[#172033] dark:text-white">{perm.title}</p>
+                    <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-0.5">{perm.desc}</p>
                   </div>
                 </label>
               ))}
             </div>
 
-            <div className="pt-3 border-t border-[#E5EAF2] flex flex-col sm:flex-row justify-end gap-2">
+            <div className="pt-3 border-t border-[#E5EAF2] dark:border-[#1A2548] flex flex-col sm:flex-row justify-end gap-2">
               <button
                 type="button"
                 onClick={() => setPermissionsUser(null)}
-                className="px-4 py-2 text-xs font-semibold text-[#8292AD] hover:text-[#172033] cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white cursor-pointer"
               >
                 Cancel
               </button>
@@ -609,21 +609,21 @@ export const Users = () => {
             className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]"
             onClick={() => setVideoCallUser(null)}
           />
-          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
+          <div className="relative w-full max-w-md bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
             {/* Header */}
-            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-gradient-to-r from-indigo-50/60 to-purple-50/60">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-[#E5EAF2] dark:border-[#1A2548] flex items-center justify-between bg-gradient-to-r from-indigo-50/60 to-purple-50/60 dark:from-indigo-950/60 dark:to-purple-950/60">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-md flex-shrink-0">
                   <Video className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold text-[#172033]">Direct Video Call</h3>
-                  <p className="text-xs text-[#8292AD]">{videoCallUser.name}</p>
+                  <h3 className="text-sm sm:text-base font-bold text-[#172033] dark:text-white">Direct Video Call</h3>
+                  <p className="text-xs text-[#8292AD] dark:text-slate-400">{videoCallUser.name}</p>
                 </div>
               </div>
               <button
                 onClick={() => setVideoCallUser(null)}
-                className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+                className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -631,25 +631,25 @@ export const Users = () => {
 
             {/* Body */}
             <div className="p-4 sm:p-6 space-y-4">
-              <div className="flex items-center gap-3 p-3 bg-[#F8FAFC] border border-[#E5EAF2] rounded-xl">
-                <img src={videoCallUser.avatar} alt={videoCallUser.name} className="w-10 h-10 rounded-full object-cover border flex-shrink-0" />
+              <div className="flex items-center gap-3 p-3 bg-[#F8FAFC] dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1A2548] rounded-xl">
+                <img src={videoCallUser.avatar} alt={videoCallUser.name} className="w-10 h-10 rounded-full object-cover border border-[#E5EAF2] dark:border-[#1E2D54] flex-shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-[#172033] truncate">{videoCallUser.name}</p>
-                  <p className="text-xs text-[#8292AD] truncate">{videoCallUser.role} • {videoCallUser.email}</p>
+                  <p className="text-sm font-bold text-[#172033] dark:text-white truncate">{videoCallUser.name}</p>
+                  <p className="text-xs text-[#8292AD] dark:text-slate-400 truncate">{videoCallUser.role} • {videoCallUser.email}</p>
                 </div>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200 flex-shrink-0">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 flex-shrink-0">
                   Online
                 </span>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#172033] mb-1.5">Personal Meeting Room</label>
+                <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1.5">Personal Meeting Room</label>
                 <div className="flex items-center gap-2">
                   <input
                     type="text"
                     readOnly
                     value={`https://meet.pulsecrm.io/call/${videoCallUser.id || 'live'}`}
-                    className="flex-1 min-w-0 px-3 py-2 text-xs bg-[#F8FAFC] rounded-xl border border-[#E5EAF2] text-[#475569] font-mono select-all"
+                    className="flex-1 min-w-0 px-3 py-2 text-xs bg-[#F8FAFC] dark:bg-[#0A1128] rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] text-[#475569] dark:text-slate-200 font-mono select-all"
                   />
                   <button
                     onClick={() => {
@@ -658,7 +658,7 @@ export const Users = () => {
                       showToast('Call link copied to clipboard!', 'info');
                       setTimeout(() => setCopiedLink(false), 2000);
                     }}
-                    className="px-3 py-2 text-xs font-semibold text-indigo-600 hover:bg-indigo-50 border border-indigo-200 rounded-xl transition-colors flex items-center gap-1.5 flex-shrink-0 cursor-pointer"
+                    className="px-3 py-2 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800/60 rounded-xl transition-colors flex items-center gap-1.5 flex-shrink-0 cursor-pointer"
                   >
                     {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copiedLink ? 'Copied' : 'Copy'}</span>
@@ -666,9 +666,9 @@ export const Users = () => {
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-indigo-50/60 border border-indigo-100 flex items-start gap-2.5">
-                <Sparkles className="w-4 h-4 text-indigo-600 mt-0.5 flex-shrink-0" />
-                <p className="text-xs text-indigo-900 leading-relaxed">
+              <div className="p-3 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/60 flex items-start gap-2.5">
+                <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-400 mt-0.5 flex-shrink-0" />
+                <p className="text-xs text-indigo-900 dark:text-indigo-200 leading-relaxed">
                   Initiate 1-on-1 team discussion or invite guests with end-to-end encrypted video.
                 </p>
               </div>
@@ -690,7 +690,7 @@ export const Users = () => {
                 <button
                   type="button"
                   onClick={() => setVideoCallUser(null)}
-                  className="py-2.5 px-4 text-xs font-semibold text-[#8292AD] hover:text-[#172033] hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+                  className="py-2.5 px-4 text-xs font-semibold text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>

@@ -190,12 +190,11 @@ export const RecentCompanies = () => {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-[#F1F5F9] dark:border-[#17203F] text-xs font-semibold text-[#64748B] dark:text-slate-400">
-              <th className="py-2.5 px-2 font-medium">Company</th>
-              <th className="py-2.5 px-1.5 font-medium">Plan</th>
-              <th className="py-2.5 px-1.5 font-medium">Status</th>
-              <th className="py-2.5 px-1 text-center font-medium">Users</th>
-              <th className="py-2.5 px-1.5 font-medium whitespace-nowrap hidden 2xl:table-cell">Next Billing</th>
-              <th className="py-2.5 px-1.5 text-center font-bold text-[11px] text-[#8292AD] uppercase tracking-wider whitespace-nowrap">Actions</th>
+              <th className="py-2.5 px-3 font-medium">Company</th>
+              <th className="py-2.5 px-3 font-medium">Plan</th>
+              <th className="py-2.5 px-3 font-medium">Status</th>
+              <th className="py-2.5 px-2 text-center font-medium">Users</th>
+              <th className="py-2.5 px-3 font-medium whitespace-nowrap text-right">Next Billing</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[#F1F5F9] dark:divide-[#17203F] text-xs">
@@ -205,13 +204,13 @@ export const RecentCompanies = () => {
                 className="hover:bg-[#F8FAFC] dark:hover:bg-[#121D3D] transition-colors group cursor-pointer"
                 onClick={() => setSelectedCompany(c)}
               >
-                <td className="py-2.5 px-2">
-                  <div className="flex items-center gap-2 min-w-0 max-w-[130px] sm:max-w-[160px]">
+                <td className="py-2.5 px-3">
+                  <div className="flex items-center gap-2.5 min-w-0 max-w-[140px] sm:max-w-[180px]">
                     {c.logo ? (
                       <img
                         src={c.logo}
                         alt={c.name}
-                        className="w-7 h-7 rounded-lg object-cover border border-[#E5EAF2] flex-shrink-0"
+                        className="w-7 h-7 rounded-lg object-cover border border-[#E5EAF2] dark:border-[#1E2D54] flex-shrink-0"
                       />
                     ) : (
                       <div
@@ -225,56 +224,10 @@ export const RecentCompanies = () => {
                     </span>
                   </div>
                 </td>
-                <td className="py-2.5 px-1.5 text-[#475569] dark:text-slate-400 whitespace-nowrap">{c.plan}</td>
-                <td className="py-2.5 px-1.5 whitespace-nowrap">{renderStatus(c.status)}</td>
-                <td className="py-2.5 px-1 text-center font-medium text-[#172033] dark:text-white">{c.users}</td>
-                <td className="py-2.5 px-1.5 text-[#475569] dark:text-slate-400 whitespace-nowrap hidden 2xl:table-cell">{c.nextBilling}</td>
-                <td
-                  className="py-2 px-1.5 text-center whitespace-nowrap"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="flex items-center justify-center gap-1 sm:gap-1.5">
-                    {/* View Details (Eye - Blue) */}
-                    <button
-                      type="button"
-                      onClick={() => setSelectedCompany(c)}
-                      className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#93C5FD] bg-[#EFF6FF]/70 text-[#2563EB] flex items-center justify-center hover:bg-[#DBEAFE] hover:border-[#3B82F6] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
-                      title="View Details"
-                    >
-                      <Eye className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
-                    </button>
-
-                    {/* Edit Company (Pencil - Green) */}
-                    <button
-                      type="button"
-                      onClick={() => setEditingCompany({ ...c, index: idx })}
-                      className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#86EFAC] bg-[#F0FDF4]/70 text-[#16A34A] flex items-center justify-center hover:bg-[#DCFCE7] hover:border-[#22C55E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
-                      title="Edit Company"
-                    >
-                      <Edit2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
-                    </button>
-
-                    {/* Video Call (Video - Purple) */}
-                    <button
-                      type="button"
-                      onClick={() => handleStartVideoCall(c)}
-                      className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#C7D2FE] bg-[#EEF2FF]/70 text-[#4F46E5] flex items-center justify-center hover:bg-[#E0E7FF] hover:border-[#6366F1] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
-                      title="Start Video Meeting"
-                    >
-                      <Video className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
-                    </button>
-
-                    {/* Delete Company (Trash - Red) */}
-                    <button
-                      type="button"
-                      onClick={() => handleDelete(c.id)}
-                      className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full border border-[#FECDD3] bg-[#FFF1F2]/70 text-[#E11D48] flex items-center justify-center hover:bg-[#FFE4E6] hover:border-[#F43F5E] hover:scale-105 transition-all shadow-xs cursor-pointer flex-shrink-0"
-                      title="Delete Company"
-                    >
-                      <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[1.8]" />
-                    </button>
-                  </div>
-                </td>
+                <td className="py-2.5 px-3 text-[#475569] dark:text-slate-400 whitespace-nowrap">{c.plan}</td>
+                <td className="py-2.5 px-3 whitespace-nowrap">{renderStatus(c.status)}</td>
+                <td className="py-2.5 px-2 text-center font-medium text-[#172033] dark:text-white">{c.users}</td>
+                <td className="py-2.5 px-3 text-right text-[#475569] dark:text-slate-400 whitespace-nowrap">{c.nextBilling}</td>
               </tr>
             ))}
           </tbody>
@@ -288,23 +241,23 @@ export const RecentCompanies = () => {
             className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]"
             onClick={() => setSelectedCompany(null)}
           />
-          <div className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[90vh] sm:max-h-[85vh] flex flex-col text-left">
-            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-[#F7F9FC]">
+          <div className="relative w-full max-w-xl bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[90vh] sm:max-h-[85vh] flex flex-col text-left">
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#E5EAF2] dark:border-[#1A2548] flex items-center justify-between bg-[#F7F9FC] dark:bg-[#0A1128]">
               <div className="flex items-center gap-3">
                 <img
                   src={selectedCompany.logo}
                   alt={selectedCompany.name}
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-cover border border-[#E5EAF2]"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-cover border border-[#E5EAF2] dark:border-[#1E2D54]"
                 />
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold text-[#172033]">{selectedCompany.name}</h3>
-                  <p className="text-[11px] sm:text-xs text-[#8292AD]">{selectedCompany.industry} • ID: {selectedCompany.id}</p>
+                  <h3 className="text-sm sm:text-base font-bold text-[#172033] dark:text-white">{selectedCompany.name}</h3>
+                  <p className="text-[11px] sm:text-xs text-[#8292AD] dark:text-slate-400">{selectedCompany.industry} • ID: {selectedCompany.id}</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setSelectedCompany(null)}
-                className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-200/50"
+                className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg hover:bg-slate-200/50 dark:hover:bg-slate-800"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -313,65 +266,65 @@ export const RecentCompanies = () => {
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto">
               {/* Snapshot Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
-                <div className="bg-[#F8FAFC] border border-[#E5EAF2] rounded-xl p-3">
-                  <span className="text-[10px] text-[#8292AD] font-semibold uppercase tracking-wider block">Current Plan</span>
-                  <span className="text-sm font-bold text-[#172033] mt-0.5 block">{selectedCompany.plan}</span>
+                <div className="bg-[#F8FAFC] dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1A2548] rounded-xl p-3">
+                  <span className="text-[10px] text-[#8292AD] dark:text-slate-400 font-semibold uppercase tracking-wider block">Current Plan</span>
+                  <span className="text-sm font-bold text-[#172033] dark:text-white mt-0.5 block">{selectedCompany.plan}</span>
                 </div>
-                <div className="bg-[#F8FAFC] border border-[#E5EAF2] rounded-xl p-3">
-                  <span className="text-[10px] text-[#8292AD] font-semibold uppercase tracking-wider block">Monthly Value</span>
-                  <span className="text-sm font-bold text-emerald-600 mt-0.5 block">{selectedCompany.mrr || '₹19,999'}</span>
+                <div className="bg-[#F8FAFC] dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1A2548] rounded-xl p-3">
+                  <span className="text-[10px] text-[#8292AD] dark:text-slate-400 font-semibold uppercase tracking-wider block">Monthly Value</span>
+                  <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 block">{selectedCompany.mrr || '₹19,999'}</span>
                 </div>
-                <div className="bg-[#F8FAFC] border border-[#E5EAF2] rounded-xl p-3">
-                  <span className="text-[10px] text-[#8292AD] font-semibold uppercase tracking-wider block">Status</span>
+                <div className="bg-[#F8FAFC] dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1A2548] rounded-xl p-3">
+                  <span className="text-[10px] text-[#8292AD] dark:text-slate-400 font-semibold uppercase tracking-wider block">Status</span>
                   <span className="mt-1 block">{renderStatus(selectedCompany.status)}</span>
                 </div>
               </div>
 
               {/* Organization Info */}
               <div>
-                <h4 className="text-xs font-bold text-[#172033] uppercase tracking-wider mb-3">Contact & Organization Info</h4>
-                <div className="space-y-2.5 text-xs text-[#475569]">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between py-1.5 border-b border-[#F1F5F9] gap-0.5 sm:gap-2">
-                    <span className="flex items-center gap-2 text-[#8292AD]">
+                <h4 className="text-xs font-bold text-[#172033] dark:text-white uppercase tracking-wider mb-3">Contact & Organization Info</h4>
+                <div className="space-y-2.5 text-xs text-[#475569] dark:text-slate-300">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between py-1.5 border-b border-[#F1F5F9] dark:border-[#17203F] gap-0.5 sm:gap-2">
+                    <span className="flex items-center gap-2 text-[#8292AD] dark:text-slate-400">
                       <Sparkles className="w-3.5 h-3.5" /> Primary Contact
                     </span>
-                    <span className="font-semibold text-[#172033]">{selectedCompany.contactPerson}</span>
+                    <span className="font-semibold text-[#172033] dark:text-white">{selectedCompany.contactPerson}</span>
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between py-1.5 border-b border-[#F1F5F9] gap-0.5 sm:gap-2">
-                    <span className="flex items-center gap-2 text-[#8292AD]">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between py-1.5 border-b border-[#F1F5F9] dark:border-[#17203F] gap-0.5 sm:gap-2">
+                    <span className="flex items-center gap-2 text-[#8292AD] dark:text-slate-400">
                       <Mail className="w-3.5 h-3.5" /> Work Email
                     </span>
-                    <a href={`mailto:${selectedCompany.email}`} className="text-blue-600 hover:underline break-all">
+                    <a href={`mailto:${selectedCompany.email}`} className="text-blue-600 dark:text-blue-400 hover:underline break-all">
                       {selectedCompany.email}
                     </a>
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between py-1.5 border-b border-[#F1F5F9] gap-0.5 sm:gap-2">
-                    <span className="flex items-center gap-2 text-[#8292AD]">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between py-1.5 border-b border-[#F1F5F9] dark:border-[#17203F] gap-0.5 sm:gap-2">
+                    <span className="flex items-center gap-2 text-[#8292AD] dark:text-slate-400">
                       <Phone className="w-3.5 h-3.5" /> Phone Number
                     </span>
                     <span>{selectedCompany.phone}</span>
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between py-1.5 border-b border-[#F1F5F9] gap-0.5 sm:gap-2">
-                    <span className="flex items-center gap-2 text-[#8292AD]">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between py-1.5 border-b border-[#F1F5F9] dark:border-[#17203F] gap-0.5 sm:gap-2">
+                    <span className="flex items-center gap-2 text-[#8292AD] dark:text-slate-400">
                       <MapPin className="w-3.5 h-3.5" /> Headquarters
                     </span>
                     <span>{selectedCompany.location}</span>
                   </div>
                   <div className="flex items-center justify-between py-1.5">
-                    <span className="flex items-center gap-2 text-[#8292AD]">
+                    <span className="flex items-center gap-2 text-[#8292AD] dark:text-slate-400">
                       <Calendar className="w-3.5 h-3.5" /> Next Billing Date
                     </span>
-                    <span className="font-medium text-[#172033]">{selectedCompany.nextBilling}</span>
+                    <span className="font-medium text-[#172033] dark:text-white">{selectedCompany.nextBilling}</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="px-6 py-3.5 border-t border-[#E5EAF2] bg-[#F8FAFC] flex justify-end gap-2.5">
+            <div className="px-6 py-3.5 border-t border-[#E5EAF2] dark:border-[#1A2548] bg-[#F8FAFC] dark:bg-[#0A1128] flex justify-end gap-2.5">
               <button
                 type="button"
                 onClick={() => setSelectedCompany(null)}
-                className="px-4 py-2 text-xs font-semibold text-[#8292AD] hover:text-[#172033]"
+                className="px-4 py-2 text-xs font-semibold text-[#8292AD] hover:text-[#172033] dark:hover:text-white"
               >
                 Close
               </button>
@@ -395,13 +348,13 @@ export const RecentCompanies = () => {
       {editingCompany && (
         <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setEditingCompany(null)} />
-          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[90vh] sm:max-h-[85vh] flex flex-col text-left">
-            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-[#F7F9FC]">
-              <h3 className="text-sm sm:text-base font-bold text-[#172033]">Edit Company Details</h3>
+          <div className="relative w-full max-w-lg bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] overflow-hidden z-10 animate-in zoom-in-95 duration-150 max-h-[90vh] sm:max-h-[85vh] flex flex-col text-left">
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#E5EAF2] dark:border-[#1A2548] flex items-center justify-between bg-[#F7F9FC] dark:bg-[#0A1128]">
+              <h3 className="text-sm sm:text-base font-bold text-[#172033] dark:text-white">Edit Company Details</h3>
               <button
                 type="button"
                 onClick={() => setEditingCompany(null)}
-                className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-200/50"
+                className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg hover:bg-slate-200/50 dark:hover:bg-slate-800"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -431,23 +384,23 @@ export const RecentCompanies = () => {
               />
 
               <div>
-                <label className="block text-xs font-semibold text-[#172033] mb-1">Company Name</label>
+                <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Company Name</label>
                 <input
                   type="text"
                   value={editingCompany.name}
                   onChange={(e) => setEditingCompany({ ...editingCompany, name: e.target.value })}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0A1128] text-[#172033] dark:text-white focus:border-blue-500 focus:outline-none"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Plan</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Plan</label>
                   <select
                     value={editingCompany.plan}
                     onChange={(e) => setEditingCompany({ ...editingCompany, plan: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 bg-white"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0A1128] text-[#172033] dark:text-white focus:border-blue-500"
                   >
                     <option value="Starter Plan">Starter Plan</option>
                     <option value="Pro Plan">Pro Plan</option>
@@ -456,11 +409,11 @@ export const RecentCompanies = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Status</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Status</label>
                   <select
                     value={editingCompany.status}
                     onChange={(e) => setEditingCompany({ ...editingCompany, status: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 bg-white"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0A1128] text-[#172033] dark:text-white focus:border-blue-500"
                   >
                     <option value="Active">Active</option>
                     <option value="Trial">Trial</option>
@@ -471,30 +424,30 @@ export const RecentCompanies = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Users / Seats</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Users / Seats</label>
                   <input
                     type="number"
                     value={editingCompany.users || 0}
                     onChange={(e) => setEditingCompany({ ...editingCompany, users: parseInt(e.target.value) || 0 })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 focus:outline-none"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0A1128] text-[#172033] dark:text-white focus:border-blue-500 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Next Billing</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Next Billing</label>
                   <input
                     type="text"
                     value={editingCompany.nextBilling || ''}
                     onChange={(e) => setEditingCompany({ ...editingCompany, nextBilling: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 focus:outline-none"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0A1128] text-[#172033] dark:text-white focus:border-blue-500 focus:outline-none"
                   />
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#E5EAF2] flex justify-end gap-2.5">
+              <div className="pt-4 border-t border-[#E5EAF2] dark:border-[#1A2548] flex justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setEditingCompany(null)}
-                  className="px-4 py-2 text-xs font-semibold text-[#8292AD] hover:text-[#172033]"
+                  className="px-4 py-2 text-xs font-semibold text-[#8292AD] hover:text-[#172033] dark:hover:text-white"
                 >
                   Cancel
                 </button>
@@ -517,21 +470,21 @@ export const RecentCompanies = () => {
             className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]"
             onClick={() => setVideoCallCompany(null)}
           />
-          <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] z-10 animate-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] z-10 animate-in zoom-in-95 duration-150">
             {/* Header */}
-            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-gradient-to-r from-indigo-50/60 to-purple-50/60">
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#E5EAF2] dark:border-[#1A2548] flex items-center justify-between bg-gradient-to-r from-indigo-50/60 to-purple-50/60 dark:from-indigo-950/60 dark:to-purple-950/60">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-md">
                   <Video className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold text-[#172033]">Instant Video Meeting</h3>
-                  <p className="text-[11px] sm:text-xs text-[#8292AD]">{videoCallCompany.name}</p>
+                  <h3 className="text-sm sm:text-base font-bold text-[#172033] dark:text-white">Instant Video Meeting</h3>
+                  <p className="text-[11px] sm:text-xs text-[#8292AD] dark:text-slate-400">{videoCallCompany.name}</p>
                 </div>
               </div>
               <button
                 onClick={() => setVideoCallCompany(null)}
-                className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+                className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -539,35 +492,35 @@ export const RecentCompanies = () => {
 
             {/* Body */}
             <div className="p-4 sm:p-6 space-y-4">
-              <div className="flex items-center gap-3 p-3 bg-[#F8FAFC] border border-[#E5EAF2] rounded-xl">
+              <div className="flex items-center gap-3 p-3 bg-[#F8FAFC] dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1A2548] rounded-xl">
                 {videoCallCompany.logo ? (
-                  <img src={videoCallCompany.logo} alt={videoCallCompany.name} className="w-10 h-10 rounded-xl object-cover border" />
+                  <img src={videoCallCompany.logo} alt={videoCallCompany.name} className="w-10 h-10 rounded-xl object-cover border border-[#E5EAF2] dark:border-[#1E2D54]" />
                 ) : (
                   <div className="w-10 h-10 rounded-xl bg-indigo-500 text-white font-bold flex items-center justify-center">
                     {videoCallCompany.letter || videoCallCompany.name.charAt(0)}
                   </div>
                 )}
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-[#172033] truncate">{videoCallCompany.name}</p>
-                  <p className="text-xs text-[#8292AD] truncate">{videoCallCompany.contactPerson || 'Lead Contact'} • {videoCallCompany.email || 'contact@client.io'}</p>
+                  <p className="text-sm font-bold text-[#172033] dark:text-white truncate">{videoCallCompany.name}</p>
+                  <p className="text-xs text-[#8292AD] dark:text-slate-400 truncate">{videoCallCompany.contactPerson || 'Lead Contact'} • {videoCallCompany.email || 'contact@client.io'}</p>
                 </div>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
                   Ready
                 </span>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#172033] mb-1.5">Meeting Invite Link</label>
+                <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1.5">Meeting Invite Link</label>
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   <input
                     type="text"
                     readOnly
                     value={`https://meet.pulsecrm.io/room/${videoCallCompany.id || 'live'}`}
-                    className="flex-1 px-3 py-2 text-xs bg-[#F8FAFC] rounded-xl border border-[#E5EAF2] text-[#475569] font-mono select-all"
+                    className="flex-1 px-3 py-2 text-xs bg-[#F8FAFC] dark:bg-[#0A1128] rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] text-[#475569] dark:text-slate-200 font-mono select-all"
                   />
                   <button
                     onClick={() => handleCopyMeetingLink(`https://meet.pulsecrm.io/room/${videoCallCompany.id || 'live'}`)}
-                    className="px-3 py-2 text-xs font-semibold text-indigo-600 hover:bg-indigo-50 border border-indigo-200 rounded-xl transition-colors flex items-center justify-center gap-1.5"
+                    className="px-3 py-2 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800/60 rounded-xl transition-colors flex items-center justify-center gap-1.5"
                   >
                     {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copiedLink ? 'Copied' : 'Copy'}</span>
@@ -575,9 +528,9 @@ export const RecentCompanies = () => {
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-indigo-50/60 border border-indigo-100 flex items-start gap-2.5">
-                <Sparkles className="w-4 h-4 text-indigo-600 mt-0.5 flex-shrink-0" />
-                <p className="text-xs text-indigo-900 leading-relaxed">
+              <div className="p-3 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/60 flex items-start gap-2.5">
+                <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-400 mt-0.5 flex-shrink-0" />
+                <p className="text-xs text-indigo-900 dark:text-indigo-200 leading-relaxed">
                   Secure HD video session with automatic CRM notes logging and screen sharing capabilities.
                 </p>
               </div>

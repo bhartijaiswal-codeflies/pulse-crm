@@ -87,6 +87,13 @@ html.dark .bg-\[\#F7F9FC\] {
   background-color: #060A16 !important;
 }
 
+/* Sub-containers, inner cards & boxes */
+html.dark .bg-\[\#F8FAFC\],
+html.dark .bg-slate-50 {
+  background-color: #0A1128 !important;
+  border-color: #1A2548 !important;
+}
+
 html.dark main {
   color: #F8FAFC;
 }
@@ -266,6 +273,52 @@ html.dark .bg-slate-100 {
   background-color: #17203F !important;
   color: #94A3B8 !important;
   border-color: #22325C !important;
+}
+
+html.dark .bg-slate-200 {
+  background-color: #1A2548 !important;
+  border-color: #22325C !important;
+}
+
+/* Gradients for modals & banners */
+html.dark .from-indigo-50\/60 {
+  --tw-gradient-from: #141B3B var(--tw-gradient-from-position) !important;
+}
+html.dark .to-purple-50\/60 {
+  --tw-gradient-to: #221544 var(--tw-gradient-to-position) !important;
+}
+html.dark .from-blue-50\/60 {
+  --tw-gradient-from: #121F42 var(--tw-gradient-from-position) !important;
+}
+
+/* Subtle accent info blocks in dark mode */
+html.dark .bg-indigo-50\/60,
+html.dark .bg-indigo-50 {
+  background-color: rgba(67, 56, 202, 0.22) !important;
+  border-color: rgba(99, 102, 241, 0.35) !important;
+}
+html.dark .text-indigo-900,
+html.dark .text-indigo-800,
+html.dark .text-indigo-700 {
+  color: #C7D2FE !important;
+}
+
+html.dark .bg-blue-50\/60,
+html.dark .bg-blue-50 {
+  background-color: rgba(30, 58, 138, 0.28) !important;
+  border-color: rgba(59, 130, 246, 0.35) !important;
+}
+html.dark .text-blue-900,
+html.dark .text-blue-800,
+html.dark .text-blue-700 {
+  color: #93C5FD !important;
+}
+
+html.dark .border-blue-100,
+html.dark .border-blue-200,
+html.dark .border-indigo-100,
+html.dark .border-indigo-200 {
+  border-color: rgba(99, 102, 241, 0.3) !important;
 }
 
 /* Modals & Dialog Boxes */

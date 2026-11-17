@@ -60,19 +60,19 @@ export const ImageUploadOption = ({
 
   return (
     <div className="space-y-2">
-      <label className="block text-xs font-semibold text-[#172033] flex items-center justify-between">
+      <label className="block text-xs font-semibold text-[#172033] dark:text-white flex items-center justify-between">
         <span>{label}</span>
-        <span className="text-[10px] text-[#8292AD] font-normal">PNG, JPG, WebP or presets</span>
+        <span className="text-[10px] text-[#8292AD] dark:text-slate-400 font-normal">PNG, JPG, WebP or presets</span>
       </label>
 
-      <div className="bg-[#F8FAFC] border border-[#E5EAF2] rounded-xl p-3 flex flex-col gap-3">
+      <div className="bg-[#F8FAFC] dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1A2548] rounded-xl p-3 flex flex-col gap-3">
         {/* Top: Current Image Preview & Action Buttons */}
         <div className="flex items-center gap-3">
           <div className="relative flex-shrink-0 group">
             <img
               src={displayImage}
               alt="Logo Preview"
-              className={`w-14 h-14 ${shape} object-cover border border-[#E5EAF2] bg-white shadow-xs transition-transform group-hover:scale-105`}
+              className={`w-14 h-14 ${shape} object-cover border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0D152D] shadow-xs transition-transform group-hover:scale-105`}
               onError={(e) => {
                 e.target.src = fallbackImage;
               }}
@@ -101,26 +101,26 @@ export const ImageUploadOption = ({
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-white hover:bg-slate-50 text-[#172033] border border-[#E5EAF2] rounded-lg shadow-2xs hover:border-blue-400 transition-all"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-white dark:bg-[#0D1938] hover:bg-slate-50 dark:hover:bg-[#14234b] text-[#172033] dark:text-white border border-[#E5EAF2] dark:border-[#1E2D54] rounded-lg shadow-2xs hover:border-blue-400 transition-all cursor-pointer"
               >
-                <Upload className="w-3.5 h-3.5 text-blue-600" />
+                <Upload className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                 <span>Upload File</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setShowUrlInput(!showUrlInput)}
-                className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-lg border transition-all ${
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-lg border transition-all cursor-pointer ${
                   showUrlInput
-                    ? 'bg-blue-50 text-blue-700 border-blue-300 font-semibold'
-                    : 'bg-white text-slate-600 border-[#E5EAF2] hover:text-[#172033]'
+                    ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border-blue-300 dark:border-blue-700 font-semibold'
+                    : 'bg-white dark:bg-[#0D1938] text-slate-600 dark:text-slate-300 border-[#E5EAF2] dark:border-[#1E2D54] hover:text-[#172033] dark:hover:text-white'
                 }`}
               >
                 <LinkIcon className="w-3.5 h-3.5" />
                 <span>URL</span>
               </button>
             </div>
-            <p className="text-[11px] text-[#8292AD] truncate">
+            <p className="text-[11px] text-[#8292AD] dark:text-slate-400 truncate">
               {value && value.startsWith('data:') ? 'Custom local image uploaded' : 'Select an image or pick a preset'}
             </p>
           </div>
@@ -134,12 +134,12 @@ export const ImageUploadOption = ({
               placeholder="https://example.com/logo.png"
               value={customUrl}
               onChange={(e) => setCustomUrl(e.target.value)}
-              className="flex-1 px-3 py-1.5 text-xs bg-white rounded-lg border border-[#E5EAF2] focus:border-blue-500 focus:outline-none"
+              className="flex-1 px-3 py-1.5 text-xs bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white rounded-lg border border-[#E5EAF2] dark:border-[#1E2D54] focus:border-blue-500 focus:outline-none"
             />
             <button
               type="button"
               onClick={handleApplyUrl}
-              className="px-3 py-1.5 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+              className="px-3 py-1.5 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors cursor-pointer"
             >
               Apply
             </button>
@@ -147,8 +147,8 @@ export const ImageUploadOption = ({
         )}
 
         {/* Presets Grid */}
-        <div className="pt-2 border-t border-[#E5EAF2]/60">
-          <p className="text-[10px] font-bold text-[#8292AD] uppercase tracking-wider mb-1.5">
+        <div className="pt-2 border-t border-[#E5EAF2]/60 dark:border-[#1A2548]">
+          <p className="text-[10px] font-bold text-[#8292AD] dark:text-slate-400 uppercase tracking-wider mb-1.5">
             Quick Presets
           </p>
           <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
@@ -163,10 +163,10 @@ export const ImageUploadOption = ({
                     setCustomUrl(preset.url);
                   }}
                   title={preset.name}
-                  className={`relative flex-shrink-0 w-8 h-8 ${shape} overflow-hidden border transition-all ${
+                  className={`relative flex-shrink-0 w-8 h-8 ${shape} overflow-hidden border transition-all cursor-pointer ${
                     isSelected
-                      ? 'ring-2 ring-blue-600 border-white scale-105'
-                      : 'border-[#E5EAF2] hover:border-blue-400 opacity-80 hover:opacity-100'
+                      ? 'ring-2 ring-blue-600 border-white dark:border-blue-400 scale-105'
+                      : 'border-[#E5EAF2] dark:border-[#1E2D54] hover:border-blue-400 opacity-80 hover:opacity-100'
                   }`}
                 >
                   <img

@@ -240,39 +240,39 @@ export const SupportTickets = () => {
       {selectedTicket && (
         <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setSelectedTicket(null)} />
-          <div className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 max-h-[90vh] sm:max-h-[85vh] flex flex-col">
-            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-[#F7F9FC]">
+          <div className="relative w-full max-w-xl bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] overflow-hidden z-10 animate-in zoom-in-95 max-h-[90vh] sm:max-h-[85vh] flex flex-col">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-[#E5EAF2] dark:border-[#1A2548] flex items-center justify-between bg-[#F7F9FC] dark:bg-[#0A1128]">
               <div>
-                <span className="font-mono text-xs font-bold text-blue-600">{selectedTicket.id}</span>
-                <h3 className="text-sm sm:text-base font-bold text-[#172033] mt-0.5">{selectedTicket.subject}</h3>
+                <span className="font-mono text-xs font-bold text-blue-600 dark:text-blue-400">{selectedTicket.id}</span>
+                <h3 className="text-sm sm:text-base font-bold text-[#172033] dark:text-white mt-0.5">{selectedTicket.subject}</h3>
               </div>
-              <button onClick={() => setSelectedTicket(null)} className="p-1.5 text-slate-400 hover:text-slate-700">
+              <button onClick={() => setSelectedTicket(null)} className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
               {/* Meta bar */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 bg-[#F7F9FC] p-3 rounded-xl border border-[#E5EAF2] text-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 bg-[#F7F9FC] dark:bg-[#0A1128] p-3 rounded-xl border border-[#E5EAF2] dark:border-[#1A2548] text-xs">
                 <div>
-                  <span className="text-[#8292AD]">Company:</span>{' '}
-                  <span className="font-bold text-[#172033]">{selectedTicket.company}</span>
+                  <span className="text-[#8292AD] dark:text-slate-400">Company:</span>{' '}
+                  <span className="font-bold text-[#172033] dark:text-white">{selectedTicket.company}</span>
                 </div>
                 <div>
-                  <span className="text-[#8292AD]">Priority:</span>{' '}
+                  <span className="text-[#8292AD] dark:text-slate-400">Priority:</span>{' '}
                   <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${getPriorityBadge(selectedTicket.priority)}`}>
                     {selectedTicket.priority}
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[#8292AD]">Status:</span>
+                  <span className="text-[#8292AD] dark:text-slate-400">Status:</span>
                   <select
                     value={selectedTicket.status}
                     onChange={(e) => {
                       updateTicketStatus(selectedTicket.id, e.target.value);
                       setSelectedTicket({ ...selectedTicket, status: e.target.value });
                     }}
-                    className="px-2 py-0.5 rounded-lg border border-[#E5EAF2] font-semibold text-xs bg-white"
+                    className="px-2 py-0.5 rounded-lg border border-[#E5EAF2] dark:border-[#1E2D54] font-semibold text-xs bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white"
                   >
                     <option value="Open">Open</option>
                     <option value="In Progress">In Progress</option>
@@ -283,22 +283,22 @@ export const SupportTickets = () => {
 
               {/* Message thread */}
               <div className="space-y-3">
-                <div className="p-4 rounded-xl bg-slate-50 border border-[#E5EAF2] text-xs space-y-1">
-                  <div className="flex items-center justify-between font-semibold text-[#172033]">
+                <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1A2548] text-xs space-y-1">
+                  <div className="flex items-center justify-between font-semibold text-[#172033] dark:text-white">
                     <span>{selectedTicket.author} (Tenant Admin)</span>
-                    <span className="text-[10px] text-[#8292AD]">{selectedTicket.createdAt}</span>
+                    <span className="text-[10px] text-[#8292AD] dark:text-slate-400">{selectedTicket.createdAt}</span>
                   </div>
-                  <p className="text-[#172033] leading-relaxed">
+                  <p className="text-[#172033] dark:text-slate-200 leading-relaxed">
                     Hello support, we encountered an unexpected behavior while deploying the custom integration in our production cluster. Could someone verify the webhook dispatch logs?
                   </p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-blue-50/60 border border-blue-100 text-xs space-y-1 ml-4">
-                  <div className="flex items-center justify-between font-semibold text-blue-900">
+                <div className="p-4 rounded-xl bg-blue-50/60 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/60 text-xs space-y-1 ml-4">
+                  <div className="flex items-center justify-between font-semibold text-blue-900 dark:text-blue-300">
                     <span>Saurabh H. (Pulse CRM Super Admin)</span>
-                    <span className="text-[10px] text-blue-500">15m ago</span>
+                    <span className="text-[10px] text-blue-500 dark:text-blue-400">15m ago</span>
                   </div>
-                  <p className="text-[#172033] leading-relaxed">
+                  <p className="text-[#172033] dark:text-slate-200 leading-relaxed">
                     We've inspected the gateway headers. The HMAC secret signature format has been validated. Please check the updated certificate.
                   </p>
                 </div>
@@ -306,13 +306,13 @@ export const SupportTickets = () => {
             </div>
 
             {/* Quick Reply Form */}
-            <form onSubmit={handleSendReply} className="p-3 sm:p-4 border-t border-[#E5EAF2] bg-[#F7F9FC] flex items-center gap-2">
+            <form onSubmit={handleSendReply} className="p-3 sm:p-4 border-t border-[#E5EAF2] dark:border-[#1A2548] bg-[#F7F9FC] dark:bg-[#0A1128] flex items-center gap-2">
               <input
                 type="text"
                 placeholder="Type your official response..."
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
-                className="flex-1 px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] bg-white focus:outline-none focus:border-blue-500"
+                className="flex-1 px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white placeholder-[#8292AD] focus:outline-none focus:border-blue-500"
               />
               <button
                 type="submit"
@@ -330,45 +330,45 @@ export const SupportTickets = () => {
       {isNewTicketOpen && (
         <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setIsNewTicketOpen(false)} />
-          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] p-4 sm:p-6 space-y-4 z-10 animate-in zoom-in-95 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
-              <h3 className="text-base font-bold text-[#172033]">Create Support Incident</h3>
-              <button onClick={() => setIsNewTicketOpen(false)} className="p-1.5 text-slate-400 hover:text-slate-700">
+          <div className="relative w-full max-w-lg bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] p-4 sm:p-6 space-y-4 z-10 animate-in zoom-in-95 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2] dark:border-[#1A2548]">
+              <h3 className="text-base font-bold text-[#172033] dark:text-white">Create Support Incident</h3>
+              <button onClick={() => setIsNewTicketOpen(false)} className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <form onSubmit={handleCreate} className="space-y-3">
               <div>
-                <label className="block text-xs font-semibold text-[#172033] mb-1">Subject *</label>
+                <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Subject *</label>
                 <input
                   type="text"
                   required
                   placeholder="Summary of inquiry or incident"
                   value={newTkt.subject}
                   onChange={(e) => setNewTkt({ ...newTkt, subject: e.target.value })}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white focus:border-blue-500 focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Company</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Company</label>
                   <select
                     value={newTkt.company}
                     onChange={(e) => setNewTkt({ ...newTkt, company: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 bg-white"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white"
                   >
                     {companies.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Priority</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Priority</label>
                   <select
                     value={newTkt.priority}
                     onChange={(e) => setNewTkt({ ...newTkt, priority: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 bg-white"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white"
                   >
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
@@ -379,11 +379,11 @@ export const SupportTickets = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#172033] mb-1">Category</label>
+                <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Category</label>
                 <select
                   value={newTkt.category}
                   onChange={(e) => setNewTkt({ ...newTkt, category: e.target.value })}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 bg-white"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white"
                 >
                   <option value="API & Integrations">API & Integrations</option>
                   <option value="Billing & Invoicing">Billing & Invoicing</option>
@@ -392,11 +392,11 @@ export const SupportTickets = () => {
                 </select>
               </div>
 
-              <div className="pt-3 border-t border-[#E5EAF2] flex flex-col sm:flex-row justify-end gap-2.5">
+              <div className="pt-3 border-t border-[#E5EAF2] dark:border-[#1A2548] flex flex-col sm:flex-row justify-end gap-2.5">
                 <button
                   type="button"
                   onClick={() => setIsNewTicketOpen(false)}
-                  className="px-4 py-2 text-xs font-semibold text-[#8292AD] cursor-pointer"
+                  className="px-4 py-2 text-xs font-semibold text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white cursor-pointer"
                 >
                   Cancel
                 </button>

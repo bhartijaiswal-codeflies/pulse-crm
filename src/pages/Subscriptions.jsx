@@ -319,40 +319,40 @@ export const Subscriptions = () => {
       {selectedSub && (
         <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setSelectedSub(null)} />
-          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-4 sm:p-6 space-y-4 sm:space-y-5 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
+          <div className="relative w-full max-w-lg bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] overflow-hidden z-10 animate-in zoom-in-95 p-4 sm:p-6 space-y-4 sm:space-y-5 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2] dark:border-[#1A2548]">
               <div className="flex items-center gap-3">
-                <img src={selectedSub.logo} alt={selectedSub.name} className="w-10 h-10 rounded-xl object-cover" />
+                <img src={selectedSub.logo} alt={selectedSub.name} className="w-10 h-10 rounded-xl object-cover border border-[#E5EAF2] dark:border-[#1E2D54]" />
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold text-[#172033]">{selectedSub.name}</h3>
-                  <p className="text-[11px] sm:text-xs text-[#8292AD]">Subscription #{selectedSub.id}</p>
+                  <h3 className="text-sm sm:text-base font-bold text-[#172033] dark:text-white">{selectedSub.name}</h3>
+                  <p className="text-[11px] sm:text-xs text-[#8292AD] dark:text-slate-400">Subscription #{selectedSub.id}</p>
                 </div>
               </div>
-              <button onClick={() => setSelectedSub(null)} className="p-1.5 text-slate-400 hover:text-slate-700">
+              <button onClick={() => setSelectedSub(null)} className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="bg-[#F7F9FC] p-3.5 sm:p-4 rounded-xl border border-[#E5EAF2] space-y-2.5 text-xs">
+            <div className="bg-[#F7F9FC] dark:bg-[#0A1128] p-3.5 sm:p-4 rounded-xl border border-[#E5EAF2] dark:border-[#1A2548] space-y-2.5 text-xs">
               <div className="flex justify-between">
-                <span className="text-[#8292AD]">Plan Tier:</span>
-                <span className="font-bold text-blue-600">{selectedSub.plan} Plan</span>
+                <span className="text-[#8292AD] dark:text-slate-400">Plan Tier:</span>
+                <span className="font-bold text-blue-600 dark:text-blue-400">{selectedSub.plan} Plan</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#8292AD]">MRR Amount:</span>
-                <span className="font-bold text-[#172033]">{selectedSub.mrr}</span>
+                <span className="text-[#8292AD] dark:text-slate-400">MRR Amount:</span>
+                <span className="font-bold text-[#172033] dark:text-white">{selectedSub.mrr}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#8292AD]">Next Billing Date:</span>
-                <span className="font-bold text-[#172033]">{selectedSub.nextBilling}</span>
+                <span className="text-[#8292AD] dark:text-slate-400">Next Billing Date:</span>
+                <span className="font-bold text-[#172033] dark:text-white">{selectedSub.nextBilling}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#8292AD]">Allocated Seats:</span>
-                <span className="font-bold text-[#172033]">{selectedSub.users} Active Users</span>
+                <span className="text-[#8292AD] dark:text-slate-400">Allocated Seats:</span>
+                <span className="font-bold text-[#172033] dark:text-white">{selectedSub.users} Active Users</span>
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 pt-3 border-t border-[#E5EAF2]">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 pt-3 border-t border-[#E5EAF2] dark:border-[#1A2548]">
               <div className="flex items-center gap-2 w-full sm:w-auto">
                 <button
                   type="button"
@@ -360,7 +360,7 @@ export const Subscriptions = () => {
                     setEditingSub(selectedSub);
                     setSelectedSub(null);
                   }}
-                  className="px-3 py-2 text-xs font-semibold text-blue-600 hover:bg-blue-50 rounded-xl transition-colors flex items-center gap-1.5 border border-blue-200"
+                  className="px-3 py-2 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/40 rounded-xl transition-colors flex items-center gap-1.5 border border-blue-200 dark:border-blue-800"
                 >
                   <Edit2 className="w-3.5 h-3.5" />
                   <span>Edit Plan</span>
@@ -375,8 +375,8 @@ export const Subscriptions = () => {
                   }}
                   className={`px-3 py-2 text-xs font-semibold rounded-xl transition-colors flex items-center gap-1.5 border ${
                     selectedSub.status === 'Cancelled'
-                      ? 'text-emerald-700 bg-emerald-50 border-emerald-200 hover:bg-emerald-100'
-                      : 'text-red-600 bg-red-50 border-red-200 hover:bg-red-100'
+                      ? 'text-emerald-700 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100'
+                      : 'text-red-600 bg-red-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 border-red-200 dark:border-rose-800 hover:bg-red-100'
                   }`}
                 >
                   <Power className="w-3.5 h-3.5" />
@@ -388,7 +388,7 @@ export const Subscriptions = () => {
                 <button
                   type="button"
                   onClick={() => setSelectedSub(null)}
-                  className="px-4 py-2 text-xs font-semibold text-[#8292AD] hover:text-[#172033]"
+                  className="px-4 py-2 text-xs font-semibold text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white"
                 >
                   Close
                 </button>
@@ -412,13 +412,13 @@ export const Subscriptions = () => {
       {editingSub && (
         <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px] z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]" onClick={() => setEditingSub(null)} />
-          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] overflow-hidden z-10 animate-in zoom-in-95 p-4 sm:p-6 space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2]">
+          <div className="relative w-full max-w-lg bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] overflow-hidden z-10 animate-in zoom-in-95 p-4 sm:p-6 space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E5EAF2] dark:border-[#1A2548]">
               <div className="flex items-center gap-2">
-                <Edit2 className="w-5 h-5 text-blue-600" />
-                <h3 className="text-sm sm:text-base font-bold text-[#172033]">Edit Subscription: {editingSub.name}</h3>
+                <Edit2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                <h3 className="text-sm sm:text-base font-bold text-[#172033] dark:text-white">Edit Subscription: {editingSub.name}</h3>
               </div>
-              <button onClick={() => setEditingSub(null)} className="p-1.5 text-slate-400 hover:text-slate-700">
+              <button onClick={() => setEditingSub(null)} className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -441,22 +441,22 @@ export const Subscriptions = () => {
               />
 
               <div>
-                <label className="block text-xs font-semibold text-[#172033] mb-1">Company Name</label>
+                <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Company Name</label>
                 <input
                   type="text"
                   value={editingSub.name}
                   onChange={(e) => setEditingSub({ ...editingSub, name: e.target.value })}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 focus:outline-none"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white focus:border-blue-500 focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Plan Tier</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Plan Tier</label>
                   <select
                     value={editingSub.plan}
                     onChange={(e) => setEditingSub({ ...editingSub, plan: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 bg-white"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white"
                   >
                     <option value="Starter">Starter</option>
                     <option value="Growth">Growth</option>
@@ -465,11 +465,11 @@ export const Subscriptions = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Status</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Status</label>
                   <select
                     value={editingSub.status}
                     onChange={(e) => setEditingSub({ ...editingSub, status: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 bg-white"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] focus:border-blue-500 bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white"
                   >
                     <option value="Active">Active</option>
                     <option value="Trial">Trial</option>
@@ -481,30 +481,30 @@ export const Subscriptions = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">User Seats</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">User Seats</label>
                   <input
                     type="number"
                     value={editingSub.users}
                     onChange={(e) => setEditingSub({ ...editingSub, users: parseInt(e.target.value) || 1 })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 focus:outline-none"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white focus:border-blue-500 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#172033] mb-1">Monthly Billing</label>
+                  <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1">Monthly Billing</label>
                   <input
                     type="text"
                     value={editingSub.mrr}
                     onChange={(e) => setEditingSub({ ...editingSub, mrr: e.target.value })}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] focus:border-blue-500 focus:outline-none"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] bg-white dark:bg-[#0D1938] text-[#172033] dark:text-white focus:border-blue-500 focus:outline-none"
                   />
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#E5EAF2] flex justify-end gap-2">
+              <div className="pt-4 border-t border-[#E5EAF2] dark:border-[#1A2548] flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setEditingSub(null)}
-                  className="px-4 py-2 text-xs font-semibold text-[#8292AD]"
+                  className="px-4 py-2 text-xs font-semibold text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white"
                 >
                   Cancel
                 </button>
@@ -527,21 +527,21 @@ export const Subscriptions = () => {
             className="fixed top-10 bottom-0 right-0 left-0 md:left-[76px]"
             onClick={() => setVideoCallCompany(null)}
           />
-          <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl border border-[#E5EAF2] z-10 animate-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-white dark:bg-[#0D152D] rounded-2xl shadow-2xl border border-[#E5EAF2] dark:border-[#1A2548] z-10 animate-in zoom-in-95 duration-150">
             {/* Header */}
-            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#E5EAF2] flex items-center justify-between bg-gradient-to-r from-indigo-50/60 to-purple-50/60">
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#E5EAF2] dark:border-[#1A2548] flex items-center justify-between bg-gradient-to-r from-indigo-50/60 to-purple-50/60 dark:from-indigo-950/60 dark:to-purple-950/60">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-md">
                   <Video className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold text-[#172033]">Instant Video Meeting</h3>
-                  <p className="text-[11px] sm:text-xs text-[#8292AD]">{videoCallCompany.name}</p>
+                  <h3 className="text-sm sm:text-base font-bold text-[#172033] dark:text-white">Instant Video Meeting</h3>
+                  <p className="text-[11px] sm:text-xs text-[#8292AD] dark:text-slate-400">{videoCallCompany.name}</p>
                 </div>
               </div>
               <button
                 onClick={() => setVideoCallCompany(null)}
-                className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+                className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -549,35 +549,35 @@ export const Subscriptions = () => {
 
             {/* Body */}
             <div className="p-4 sm:p-6 space-y-4">
-              <div className="flex items-center gap-3 p-3 bg-[#F8FAFC] border border-[#E5EAF2] rounded-xl">
+              <div className="flex items-center gap-3 p-3 bg-[#F8FAFC] dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1A2548] rounded-xl">
                 {videoCallCompany.logo ? (
-                  <img src={videoCallCompany.logo} alt={videoCallCompany.name} className="w-10 h-10 rounded-xl object-cover border" />
+                  <img src={videoCallCompany.logo} alt={videoCallCompany.name} className="w-10 h-10 rounded-xl object-cover border border-[#E5EAF2] dark:border-[#1E2D54]" />
                 ) : (
                   <div className="w-10 h-10 rounded-xl bg-indigo-500 text-white font-bold flex items-center justify-center">
                     {videoCallCompany.name.charAt(0)}
                   </div>
                 )}
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-[#172033] truncate">{videoCallCompany.name}</p>
-                  <p className="text-xs text-[#8292AD] truncate">{videoCallCompany.contactPerson || 'Account Lead'} • {videoCallCompany.plan} Plan</p>
+                  <p className="text-sm font-bold text-[#172033] dark:text-white truncate">{videoCallCompany.name}</p>
+                  <p className="text-xs text-[#8292AD] dark:text-slate-400 truncate">{videoCallCompany.contactPerson || 'Account Lead'} • {videoCallCompany.plan} Plan</p>
                 </div>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
                   Ready
                 </span>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#172033] mb-1.5">Meeting Invite Link</label>
+                <label className="block text-xs font-semibold text-[#172033] dark:text-white mb-1.5">Meeting Invite Link</label>
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   <input
                     type="text"
                     readOnly
                     value={`https://meet.pulsecrm.io/room/${videoCallCompany.id || 'live'}`}
-                    className="flex-1 px-3 py-2 text-xs bg-[#F8FAFC] rounded-xl border border-[#E5EAF2] text-[#475569] font-mono select-all"
+                    className="flex-1 px-3 py-2 text-xs bg-[#F8FAFC] dark:bg-[#0A1128] rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54] text-[#475569] dark:text-slate-200 font-mono select-all"
                   />
                   <button
                     onClick={() => handleCopyMeetingLink(`https://meet.pulsecrm.io/room/${videoCallCompany.id || 'live'}`)}
-                    className="px-3 py-2 text-xs font-semibold text-indigo-600 hover:bg-indigo-50 border border-indigo-200 rounded-xl transition-colors flex items-center justify-center gap-1.5"
+                    className="px-3 py-2 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800/60 rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copiedLink ? 'Copied' : 'Copy'}</span>
@@ -585,9 +585,9 @@ export const Subscriptions = () => {
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-indigo-50/60 border border-indigo-100 flex items-start gap-2.5">
-                <Sparkles className="w-4 h-4 text-indigo-600 mt-0.5 flex-shrink-0" />
-                <p className="text-xs text-indigo-900 leading-relaxed">
+              <div className="p-3 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/60 flex items-start gap-2.5">
+                <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-400 mt-0.5 flex-shrink-0" />
+                <p className="text-xs text-indigo-900 dark:text-indigo-200 leading-relaxed">
                   HD video room for account renewals, tier upgrades, and feature consultations.
                 </p>
               </div>
@@ -609,7 +609,7 @@ export const Subscriptions = () => {
                 <button
                   type="button"
                   onClick={() => setVideoCallCompany(null)}
-                  className="w-full sm:w-auto py-2.5 px-4 text-xs font-semibold text-[#8292AD] hover:text-[#172033] hover:bg-slate-100 rounded-xl transition-colors cursor-pointer text-center"
+                  className="w-full sm:w-auto py-2.5 px-4 text-xs font-semibold text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors cursor-pointer text-center"
                 >
                   Cancel
                 </button>
