@@ -23,7 +23,11 @@ import {
   Video,
   Copy,
   Check,
-  Sparkles
+  Sparkles,
+  ChevronDown,
+  RotateCw,
+  Layers,
+  Briefcase
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ImageUploadOption } from '../components/common/ImageUploadOption';
@@ -41,12 +45,29 @@ export const Companies = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [planFilter, setPlanFilter] = useState('All');
+  const [industryFilter, setIndustryFilter] = useState('All');
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [editingCompany, setEditingCompany] = useState(null);
   const [videoCallCompany, setVideoCallCompany] = useState(null);
   const [deletingCompany, setDeletingCompany] = useState(null);
   const [copiedLink, setCopiedLink] = useState(false);
   const [actionMenuId, setActionMenuId] = useState(null);
+
+  const activeCount = companies.filter(c => c.status === 'Active').length;
+  const trialCount = companies.filter(c => c.status === 'Trial').length;
+  const pendingCount = companies.filter(c => c.status === 'Pending Payment').length;
+  const cancelledCount = companies.filter(c => c.status === 'Cancelled').length;
+
+  const handleClearFilters = () => {
+    setSearchTerm('');
+    setStatusFilter('All');
+    setPlanFilter('All');
+    setIndustryFilter('All');
+  };
+
+  const handleRefresh = () => {
+    showToast('Company records refreshed', 'info');
+  };
 
   const handleStartVideoCall = (company) => {
     setVideoCallCompany(company);
@@ -63,10 +84,11 @@ export const Companies = () => {
   const filtered = companies.filter(c => {
     const matchesSearch = c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       c.industry.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      c.contactPerson.toLowerCase().includes(searchTerm.toLowerCase());
+      (c.contactPerson && c.contactPerson.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesStatus = statusFilter === 'All' || c.status === statusFilter;
     const matchesPlan = planFilter === 'All' || c.plan === planFilter;
-    return matchesSearch && matchesStatus && matchesPlan;
+    const matchesIndustry = industryFilter === 'All' || c.industry.toLowerCase().includes(industryFilter.toLowerCase());
+    return matchesSearch && matchesStatus && matchesPlan && matchesIndustry;
   });
 
   const getStatusBadge = (status) => {
@@ -181,55 +203,117 @@ export const Companies = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white dark:bg-[#0D152D] p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
-        {/* Search */}
-        <div className="relative w-full lg:w-72 xl:w-80 flex-1 min-w-[200px]">
-          <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-2.5" />
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search by name, industry, contact..."
-            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] dark:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500"
-          />
+      <div className="bg-white dark:bg-[#0D152D] p-3 sm:p-3.5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
+        {/* Left: Filters group */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 flex-1 min-w-0">
+          {/* 1. Primary Dropdown Pill: Status with count */}
+          <div className="relative inline-flex items-center">
+            <Building2 className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-semibold bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 rounded-xl text-blue-600 dark:text-blue-400 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
+            >
+              <option value="All">All Companies ({companies.length})</option>
+              <option value="Active">Active ({activeCount})</option>
+              <option value="Trial">Trial ({trialCount})</option>
+              <option value="Pending Payment">Pending ({pendingCount})</option>
+              <option value="Cancelled">Cancelled ({cancelledCount})</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 absolute right-2.5 pointer-events-none" />
+          </div>
+
+          {/* 2. Search Input */}
+          <div className="relative flex-1 min-w-[180px] sm:min-w-[220px] max-w-xs">
+            <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search companies, industry, contact..."
+              className="w-full pl-9 pr-3 py-2 text-xs bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500 transition-colors"
+            />
+          </div>
+
+          {/* 3. Second Dropdown: Plan Tier */}
+          <div className="relative inline-flex items-center">
+            <Layers className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={planFilter}
+              onChange={(e) => setPlanFilter(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white appearance-none cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
+            >
+              <option value="All">All Plans</option>
+              <option value="Starter">Starter</option>
+              <option value="Growth">Growth</option>
+              <option value="Enterprise">Enterprise</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-[#8292AD] dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+          </div>
+
+          {/* 4. Third Dropdown: Industry */}
+          <div className="relative inline-flex items-center">
+            <Briefcase className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={industryFilter}
+              onChange={(e) => setIndustryFilter(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white appearance-none cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
+            >
+              <option value="All">All Industries</option>
+              <option value="Enterprise Software">Enterprise Software</option>
+              <option value="Fintech">Fintech</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Cybersecurity">Cybersecurity</option>
+              <option value="Cloud Infrastructure">Cloud Infrastructure</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-[#8292AD] dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+          </div>
         </div>
 
-        {/* Filters */}
-        <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-2.5">
-          {/* Status Filter */}
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full sm:w-auto pl-3 pr-8 py-2 text-xs bg-[#F7F9FC] dark:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white focus:outline-none focus:border-blue-500 font-medium cursor-pointer"
+        {/* Right: Clear, Count, Refresh, and Export */}
+        <div className="flex items-center justify-between sm:justify-end gap-2.5 sm:gap-3 flex-shrink-0 pt-2 xl:pt-0 border-t xl:border-t-0 border-[#E5EAF2] dark:border-[#1A2548]">
+          {/* Clear button (active if any filter applied) */}
+          <button
+            type="button"
+            onClick={handleClearFilters}
+            className={`px-3 py-1.5 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border ${
+              searchTerm || statusFilter !== 'All' || planFilter !== 'All' || industryFilter !== 'All'
+                ? 'text-rose-500 dark:text-rose-400 bg-rose-50/80 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 border-rose-200 dark:border-rose-900/60 shadow-2xs'
+                : 'text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800'
+            }`}
+            title="Reset all filters"
           >
-            <option value="All">All Statuses</option>
-            <option value="Active">Active</option>
-            <option value="Trial">Trial</option>
-            <option value="Pending Payment">Pending Payment</option>
-            <option value="Cancelled">Cancelled</option>
-          </select>
+            <X className="w-3.5 h-3.5" />
+            <span>Clear</span>
+          </button>
 
-          {/* Plan Filter */}
-          <select
-            value={planFilter}
-            onChange={(e) => setPlanFilter(e.target.value)}
-            className="w-full sm:w-auto pl-3 pr-8 py-2 text-xs bg-[#F7F9FC] dark:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white focus:outline-none focus:border-blue-500 font-medium cursor-pointer"
+          <div className="h-4 w-px bg-[#E5EAF2] dark:bg-[#1E2D54] hidden sm:block" />
+
+          {/* Filter count text */}
+          <span className="text-xs text-[#8292AD] dark:text-slate-400 whitespace-nowrap">
+            Filtered: {filtered.length} Shown of {companies.length}
+          </span>
+
+          {/* Refresh icon */}
+          <button
+            type="button"
+            onClick={handleRefresh}
+            className="p-1.5 rounded-lg text-[#8292AD] hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#1E2D54] transition-colors cursor-pointer"
+            title="Refresh list"
+            aria-label="Refresh"
           >
-            <option value="All">All Plans</option>
-            <option value="Starter">Starter</option>
-            <option value="Growth">Growth</option>
-            <option value="Enterprise">Enterprise</option>
-          </select>
+            <RotateCw className="w-3.5 h-3.5" />
+          </button>
 
-          {/* Export CSV Button */}
+          {/* Export CSV */}
           <button
             type="button"
             onClick={exportToCSV}
-            className="col-span-2 sm:col-span-1 w-full sm:w-auto px-3.5 py-2 text-xs bg-white dark:bg-[#121D3D] hover:bg-slate-50 dark:hover:bg-[#1A2548] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-xs whitespace-nowrap cursor-pointer"
+            className="px-3 py-1.5 text-xs bg-white dark:bg-[#121D3D] hover:bg-slate-50 dark:hover:bg-[#1A2548] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white font-semibold flex items-center gap-1.5 transition-colors shadow-2xs cursor-pointer whitespace-nowrap"
             title="Export filtered companies as CSV"
           >
             <Download className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
-            <span className="whitespace-nowrap">Export CSV</span>
+            <span className="hidden sm:inline">Export CSV</span>
           </button>
         </div>
       </div>

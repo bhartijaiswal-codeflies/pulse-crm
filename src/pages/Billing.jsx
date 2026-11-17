@@ -11,7 +11,11 @@ import {
   FileText,
   X,
   ExternalLink,
-  DollarSign
+  DollarSign,
+  ChevronDown,
+  RotateCw,
+  Layers,
+  Calendar
 } from 'lucide-react';
 import { CompanyAvatar } from '../components/common/Avatar';
 import { useApp } from '../context/AppContext';
@@ -21,7 +25,46 @@ export const Billing = () => {
   const { invoices, markInvoicePaid, addInvoice, showToast, companies } = useApp();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
+  const [planFilter, setPlanFilter] = useState('All');
+  const [dateFilter, setDateFilter] = useState('All');
   const [isCreateInvoiceOpen, setIsCreateInvoiceOpen] = useState(false);
+
+  const paidCount = invoices.filter(i => i.status === 'Paid').length;
+  const pendingCount = invoices.filter(i => i.status === 'Pending').length;
+  const overdueCount = invoices.filter(i => i.status === 'Overdue').length;
+
+  const handleClearFilters = () => {
+    setSearchTerm('');
+    setStatusFilter('All');
+    setPlanFilter('All');
+    setDateFilter('All');
+  };
+
+  const handleRefresh = () => {
+    showToast('Invoices data refreshed', 'info');
+  };
+
+  const exportAllInvoicesCSV = () => {
+    const headers = ['InvoiceID', 'Company', 'Plan', 'Amount', 'DueDate', 'Status', 'Method'];
+    const rows = filteredInvoices.map(i => [
+      `"${i.id}"`,
+      `"${i.company}"`,
+      `"${i.plan}"`,
+      `"${i.amount}"`,
+      `"${i.dueDate}"`,
+      `"${i.status}"`,
+      `"${i.method}"`
+    ]);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `pulse_invoices_${Date.now()}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Invoices exported successfully!', 'success');
+  };
 
   // New Invoice form state
   const [newInv, setNewInv] = useState({
@@ -38,7 +81,9 @@ export const Billing = () => {
       inv.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
       inv.plan.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'All' || inv.status === statusFilter;
-    return matchesSearch && matchesStatus;
+    const matchesPlan = planFilter === 'All' || inv.plan.toLowerCase().includes(planFilter.toLowerCase());
+    const matchesDate = dateFilter === 'All' || (dateFilter === 'Nov 2026' ? inv.dueDate.includes('Nov') : true);
+    return matchesSearch && matchesStatus && matchesPlan && matchesDate;
   });
 
   const handleCreateInvoice = (e) => {
@@ -158,33 +203,115 @@ Pulse CRM Platform • support@pulsecrm.io
         </div>
       </div>
 
-      {/* Filters and Search */}
-      <div className="bg-white dark:bg-[#0D152D] p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
-        <div className="relative w-full lg:w-80 flex-1 min-w-[200px]">
-          <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-2.5" />
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search invoice #, company..."
-            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] dark:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500"
-          />
+      {/* Filter and Search Bar */}
+      <div className="bg-white dark:bg-[#0D152D] p-3 sm:p-3.5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
+        {/* Left: Filters group */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 flex-1 min-w-0">
+          {/* 1. Primary Dropdown Pill: Status with count */}
+          <div className="relative inline-flex items-center">
+            <CreditCard className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-semibold bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 rounded-xl text-blue-600 dark:text-blue-400 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
+            >
+              <option value="All">All Invoices ({invoices.length})</option>
+              <option value="Paid">Paid ({paidCount})</option>
+              <option value="Pending">Pending ({pendingCount})</option>
+              <option value="Overdue">Overdue ({overdueCount})</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 absolute right-2.5 pointer-events-none" />
+          </div>
+
+          {/* 2. Search Input */}
+          <div className="relative flex-1 min-w-[180px] sm:min-w-[220px] max-w-xs">
+            <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search invoice #, company..."
+              className="w-full pl-9 pr-3 py-2 text-xs bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500 transition-colors"
+            />
+          </div>
+
+          {/* 3. Second Dropdown: Plan */}
+          <div className="relative inline-flex items-center">
+            <Layers className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={planFilter}
+              onChange={(e) => setPlanFilter(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white appearance-none cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
+            >
+              <option value="All">All Plans</option>
+              <option value="Starter">Starter Plan</option>
+              <option value="Growth">Growth Plan</option>
+              <option value="Enterprise">Enterprise Plan</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-[#8292AD] dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+          </div>
+
+          {/* 4. Third Dropdown: Date / Period */}
+          <div className="relative inline-flex items-center">
+            <Calendar className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white appearance-none cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
+            >
+              <option value="All">All Dates</option>
+              <option value="Nov 2026">November 2026</option>
+              <option value="Dec 2026">December 2026</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-[#8292AD] dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+          </div>
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar flex-nowrap pb-1">
-          {['All', 'Paid', 'Pending', 'Overdue'].map((status) => (
-            <button
-              key={status}
-              onClick={() => setStatusFilter(status)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-                statusFilter === status
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'bg-[#F7F9FC] dark:bg-[#121D3D] text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white border border-[#E5EAF2] dark:border-[#1E2D54]'
-              }`}
-            >
-              {status}
-            </button>
-          ))}
+        {/* Right: Clear, Count, Refresh, and Export */}
+        <div className="flex items-center justify-between sm:justify-end gap-2.5 sm:gap-3 flex-shrink-0 pt-2 xl:pt-0 border-t xl:border-t-0 border-[#E5EAF2] dark:border-[#1A2548]">
+          {/* Clear button */}
+          <button
+            type="button"
+            onClick={handleClearFilters}
+            className={`px-3 py-1.5 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border ${
+              searchTerm || statusFilter !== 'All' || planFilter !== 'All' || dateFilter !== 'All'
+                ? 'text-rose-500 dark:text-rose-400 bg-rose-50/80 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 border-rose-200 dark:border-rose-900/60 shadow-2xs'
+                : 'text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800'
+            }`}
+            title="Reset all filters"
+          >
+            <X className="w-3.5 h-3.5" />
+            <span>Clear</span>
+          </button>
+
+          <div className="h-4 w-px bg-[#E5EAF2] dark:bg-[#1E2D54] hidden sm:block" />
+
+          {/* Filter count text */}
+          <span className="text-xs text-[#8292AD] dark:text-slate-400 whitespace-nowrap">
+            Filtered: {filteredInvoices.length} Shown of {invoices.length}
+          </span>
+
+          {/* Refresh icon */}
+          <button
+            type="button"
+            onClick={handleRefresh}
+            className="p-1.5 rounded-lg text-[#8292AD] hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#1E2D54] transition-colors cursor-pointer"
+            title="Refresh list"
+            aria-label="Refresh"
+          >
+            <RotateCw className="w-3.5 h-3.5" />
+          </button>
+
+          {/* Export CSV */}
+          <button
+            type="button"
+            onClick={exportAllInvoicesCSV}
+            className="px-3 py-1.5 text-xs bg-white dark:bg-[#121D3D] hover:bg-slate-50 dark:hover:bg-[#1A2548] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white font-semibold flex items-center gap-1.5 transition-colors shadow-2xs cursor-pointer whitespace-nowrap"
+            title="Export filtered invoices as CSV"
+          >
+            <Download className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+            <span className="hidden sm:inline">Export CSV</span>
+          </button>
         </div>
       </div>
 

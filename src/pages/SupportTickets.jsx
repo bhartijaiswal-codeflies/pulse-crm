@@ -11,7 +11,11 @@ import {
   Send,
   X,
   User,
-  Building2
+  Building2,
+  ChevronDown,
+  RotateCw,
+  Download,
+  Calendar
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
@@ -19,9 +23,47 @@ export const SupportTickets = () => {
   const { tickets, addTicket, updateTicketStatus, showToast, companies } = useApp();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
+  const [priorityFilter, setPriorityFilter] = useState('All');
+  const [categoryFilter, setCategoryFilter] = useState('All');
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [isNewTicketOpen, setIsNewTicketOpen] = useState(false);
   const [replyText, setReplyText] = useState('');
+
+  const openCount = tickets.filter(t => t.status === 'Open').length;
+  const inProgCount = tickets.filter(t => t.status === 'In Progress').length;
+  const resCount = tickets.filter(t => t.status === 'Resolved').length;
+
+  const handleClearFilters = () => {
+    setSearchTerm('');
+    setStatusFilter('All');
+    setPriorityFilter('All');
+    setCategoryFilter('All');
+  };
+
+  const handleRefresh = () => {
+    showToast('Support incidents refreshed', 'info');
+  };
+
+  const exportTicketsCSV = () => {
+    const headers = ['TicketID', 'Subject', 'Company', 'Priority', 'Status', 'Author'];
+    const rows = filteredTickets.map(t => [
+      `"${t.id}"`,
+      `"${t.subject}"`,
+      `"${t.company}"`,
+      `"${t.priority}"`,
+      `"${t.status}"`,
+      `"${t.author}"`
+    ]);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `pulse_tickets_${Date.now()}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Tickets exported successfully!', 'success');
+  };
 
   const [newTkt, setNewTkt] = useState({
     subject: '',
@@ -36,7 +78,9 @@ export const SupportTickets = () => {
       t.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
       t.id.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'All' || t.status === statusFilter;
-    return matchesSearch && matchesStatus;
+    const matchesPriority = priorityFilter === 'All' || t.priority === priorityFilter;
+    const matchesCategory = categoryFilter === 'All' || (t.category && t.category.includes(categoryFilter));
+    return matchesSearch && matchesStatus && matchesPriority && matchesCategory;
   });
 
   const handleCreate = (e) => {
@@ -124,33 +168,117 @@ export const SupportTickets = () => {
         </div>
       </div>
 
-      {/* Filters and Search */}
-      <div className="bg-white dark:bg-[#0D152D] p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
-        <div className="relative w-full lg:w-80 flex-1 min-w-[200px]">
-          <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-2.5" />
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search tickets by subject, ID, company..."
-            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] dark:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500"
-          />
+      {/* Filter and Search Bar */}
+      <div className="bg-white dark:bg-[#0D152D] p-3 sm:p-3.5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
+        {/* Left: Filters group */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 flex-1 min-w-0">
+          {/* 1. Primary Dropdown Pill: Status with count */}
+          <div className="relative inline-flex items-center">
+            <LifeBuoy className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-semibold bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 rounded-xl text-blue-600 dark:text-blue-400 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
+            >
+              <option value="All">All Incidents ({tickets.length})</option>
+              <option value="Open">Open ({openCount})</option>
+              <option value="In Progress">In Progress ({inProgCount})</option>
+              <option value="Resolved">Resolved ({resCount})</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 absolute right-2.5 pointer-events-none" />
+          </div>
+
+          {/* 2. Search Input */}
+          <div className="relative flex-1 min-w-[180px] sm:min-w-[220px] max-w-xs">
+            <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search ticket, ID, company..."
+              className="w-full pl-9 pr-3 py-2 text-xs bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500 transition-colors"
+            />
+          </div>
+
+          {/* 3. Second Dropdown: Priority */}
+          <div className="relative inline-flex items-center">
+            <AlertCircle className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={priorityFilter}
+              onChange={(e) => setPriorityFilter(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white appearance-none cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
+            >
+              <option value="All">All Priorities</option>
+              <option value="Urgent">Urgent</option>
+              <option value="High">High Priority</option>
+              <option value="Medium">Medium Priority</option>
+              <option value="Low">Low Priority</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-[#8292AD] dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+          </div>
+
+          {/* 4. Third Dropdown: Category */}
+          <div className="relative inline-flex items-center">
+            <Calendar className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white appearance-none cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
+            >
+              <option value="All">All Categories</option>
+              <option value="API">API & Integrations</option>
+              <option value="Billing">Billing & Plans</option>
+              <option value="Security">Security & Auth</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-[#8292AD] dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+          </div>
         </div>
 
-        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar flex-nowrap pb-1">
-          {['All', 'Open', 'In Progress', 'Resolved'].map((st) => (
-            <button
-              key={st}
-              onClick={() => setStatusFilter(st)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-                statusFilter === st
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'bg-[#F7F9FC] dark:bg-[#121D3D] text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white border border-[#E5EAF2] dark:border-[#1E2D54]'
-              }`}
-            >
-              {st}
-            </button>
-          ))}
+        {/* Right: Clear, Count, Refresh, and Export */}
+        <div className="flex items-center justify-between sm:justify-end gap-2.5 sm:gap-3 flex-shrink-0 pt-2 xl:pt-0 border-t xl:border-t-0 border-[#E5EAF2] dark:border-[#1A2548]">
+          {/* Clear button */}
+          <button
+            type="button"
+            onClick={handleClearFilters}
+            className={`px-3 py-1.5 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border ${
+              searchTerm || statusFilter !== 'All' || priorityFilter !== 'All' || categoryFilter !== 'All'
+                ? 'text-rose-500 dark:text-rose-400 bg-rose-50/80 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 border-rose-200 dark:border-rose-900/60 shadow-2xs'
+                : 'text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800'
+            }`}
+            title="Reset all filters"
+          >
+            <X className="w-3.5 h-3.5" />
+            <span>Clear</span>
+          </button>
+
+          <div className="h-4 w-px bg-[#E5EAF2] dark:bg-[#1E2D54] hidden sm:block" />
+
+          {/* Filter count text */}
+          <span className="text-xs text-[#8292AD] dark:text-slate-400 whitespace-nowrap">
+            Filtered: {filteredTickets.length} Shown of {tickets.length}
+          </span>
+
+          {/* Refresh icon */}
+          <button
+            type="button"
+            onClick={handleRefresh}
+            className="p-1.5 rounded-lg text-[#8292AD] hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#1E2D54] transition-colors cursor-pointer"
+            title="Refresh incidents"
+            aria-label="Refresh"
+          >
+            <RotateCw className="w-3.5 h-3.5" />
+          </button>
+
+          {/* Export CSV */}
+          <button
+            type="button"
+            onClick={exportTicketsCSV}
+            className="px-3 py-1.5 text-xs bg-white dark:bg-[#121D3D] hover:bg-slate-50 dark:hover:bg-[#1A2548] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white font-semibold flex items-center gap-1.5 transition-colors shadow-2xs cursor-pointer whitespace-nowrap"
+            title="Export filtered tickets as CSV"
+          >
+            <Download className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+            <span className="hidden sm:inline">Export CSV</span>
+          </button>
         </div>
       </div>
 

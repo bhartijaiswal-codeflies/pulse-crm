@@ -19,7 +19,12 @@ import {
   Video,
   Copy,
   Check,
-  Sparkles
+  Sparkles,
+  ChevronDown,
+  RotateCw,
+  Download,
+  Briefcase,
+  CheckCircle2
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ImageUploadOption } from '../components/common/ImageUploadOption';
@@ -29,12 +34,52 @@ export const Users = () => {
   const { users, addUser, updateUser, deleteUser, showToast } = useApp();
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('All');
+  const [statusFilter, setStatusFilter] = useState('All');
+  const [deptFilter, setDeptFilter] = useState('All');
   const [isAddUserOpen, setIsAddUserOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [permissionsUser, setPermissionsUser] = useState(null);
   const [videoCallUser, setVideoCallUser] = useState(null);
   const [deletingUser, setDeletingUser] = useState(null);
   const [copiedLink, setCopiedLink] = useState(false);
+
+  const adminCount = users.filter(u => u.role === 'Super Administrator' || u.role === 'Super Admin').length;
+  const companyAdminCount = users.filter(u => u.role === 'Company Admin').length;
+  const billingCount = users.filter(u => u.role === 'Billing Manager').length;
+  const devCount = users.filter(u => u.role === 'Developer').length;
+
+  const handleClearFilters = () => {
+    setSearchTerm('');
+    setRoleFilter('All');
+    setStatusFilter('All');
+    setDeptFilter('All');
+  };
+
+  const handleRefresh = () => {
+    showToast('User roster refreshed', 'info');
+  };
+
+  const exportUsersCSV = () => {
+    const headers = ['Name', 'Email', 'Role', 'Company', 'Department', 'Status'];
+    const rows = filteredUsers.map(u => [
+      `"${u.name}"`,
+      `"${u.email}"`,
+      `"${u.role}"`,
+      `"${u.company}"`,
+      `"${u.department || 'Operations'}"`,
+      `"${u.status || 'Active'}"`
+    ]);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `pulse_users_${Date.now()}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Users exported successfully!', 'success');
+  };
+
   const [permissions, setPermissions] = useState({
     viewAnalytics: true,
     manageBilling: true,
@@ -58,8 +103,10 @@ export const Users = () => {
     const matchesSearch = u.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       u.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       u.company.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = roleFilter === 'All' || u.role === roleFilter;
-    return matchesSearch && matchesRole;
+    const matchesRole = roleFilter === 'All' || u.role === roleFilter || (roleFilter === 'Super Admin' && u.role.includes('Super'));
+    const matchesStatus = statusFilter === 'All' || (u.status || 'Active') === statusFilter;
+    const matchesDept = deptFilter === 'All' || (u.department || 'Operations') === deptFilter;
+    return matchesSearch && matchesRole && matchesStatus && matchesDept;
   });
 
   const handleAddSubmit = (e) => {
@@ -139,33 +186,119 @@ export const Users = () => {
         </div>
       </div>
 
-      {/* Search & Filters */}
-      <div className="bg-white dark:bg-[#0D152D] p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
-        <div className="relative w-full lg:w-80 flex-1 min-w-[200px]">
-          <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-2.5" />
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search users by name, email..."
-            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] dark:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500"
-          />
+      {/* Filter and Search Bar */}
+      <div className="bg-white dark:bg-[#0D152D] p-3 sm:p-3.5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
+        {/* Left: Filters group */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 flex-1 min-w-0">
+          {/* 1. Primary Dropdown Pill: Role with count */}
+          <div className="relative inline-flex items-center">
+            <UsersIcon className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={roleFilter}
+              onChange={(e) => setRoleFilter(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-semibold bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 rounded-xl text-blue-600 dark:text-blue-400 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
+            >
+              <option value="All">All Users ({users.length})</option>
+              <option value="Super Admin">Super Admin ({adminCount})</option>
+              <option value="Company Admin">Company Admin ({companyAdminCount})</option>
+              <option value="Billing Manager">Billing Manager ({billingCount})</option>
+              <option value="Developer">Developer ({devCount})</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 absolute right-2.5 pointer-events-none" />
+          </div>
+
+          {/* 2. Search Input */}
+          <div className="relative flex-1 min-w-[180px] sm:min-w-[220px] max-w-xs">
+            <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search employee, ID, email..."
+              className="w-full pl-9 pr-3 py-2 text-xs bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500 transition-colors"
+            />
+          </div>
+
+          {/* 3. Second Dropdown: Status */}
+          <div className="relative inline-flex items-center">
+            <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white appearance-none cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
+            >
+              <option value="All">All Statuses</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-[#8292AD] dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+          </div>
+
+          {/* 4. Third Dropdown: Department */}
+          <div className="relative inline-flex items-center">
+            <Briefcase className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={deptFilter}
+              onChange={(e) => setDeptFilter(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white appearance-none cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
+            >
+              <option value="All">All Departments</option>
+              <option value="Executive">Executive</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Finance">Finance</option>
+              <option value="Operations">Operations</option>
+              <option value="Product">Product</option>
+              <option value="Security">Security</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-[#8292AD] dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+          </div>
         </div>
 
-        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar flex-nowrap pb-1">
-          {['All', 'Super Administrator', 'Company Admin', 'Billing Manager', 'Developer'].map((role) => (
-            <button
-              key={role}
-              onClick={() => setRoleFilter(role)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-                roleFilter === role
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'bg-[#F7F9FC] dark:bg-[#121D3D] text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white border border-[#E5EAF2] dark:border-[#1E2D54]'
-              }`}
-            >
-              {role === 'Super Administrator' ? 'Super Admin' : role}
-            </button>
-          ))}
+        {/* Right: Clear, Count, Refresh, and Export */}
+        <div className="flex items-center justify-between sm:justify-end gap-2.5 sm:gap-3 flex-shrink-0 pt-2 xl:pt-0 border-t xl:border-t-0 border-[#E5EAF2] dark:border-[#1A2548]">
+          {/* Clear button */}
+          <button
+            type="button"
+            onClick={handleClearFilters}
+            className={`px-3 py-1.5 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border ${
+              searchTerm || roleFilter !== 'All' || statusFilter !== 'All' || deptFilter !== 'All'
+                ? 'text-rose-500 dark:text-rose-400 bg-rose-50/80 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 border-rose-200 dark:border-rose-900/60 shadow-2xs'
+                : 'text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800'
+            }`}
+            title="Reset all filters"
+          >
+            <X className="w-3.5 h-3.5" />
+            <span>Clear</span>
+          </button>
+
+          <div className="h-4 w-px bg-[#E5EAF2] dark:bg-[#1E2D54] hidden sm:block" />
+
+          {/* Filter count text */}
+          <span className="text-xs text-[#8292AD] dark:text-slate-400 whitespace-nowrap">
+            Filtered: {filteredUsers.length} Shown of {users.length}
+          </span>
+
+          {/* Refresh icon */}
+          <button
+            type="button"
+            onClick={handleRefresh}
+            className="p-1.5 rounded-lg text-[#8292AD] hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#1E2D54] transition-colors cursor-pointer"
+            title="Refresh list"
+            aria-label="Refresh"
+          >
+            <RotateCw className="w-3.5 h-3.5" />
+          </button>
+
+          {/* Export CSV */}
+          <button
+            type="button"
+            onClick={exportUsersCSV}
+            className="px-3 py-1.5 text-xs bg-white dark:bg-[#121D3D] hover:bg-slate-50 dark:hover:bg-[#1A2548] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white font-semibold flex items-center gap-1.5 transition-colors shadow-2xs cursor-pointer whitespace-nowrap"
+            title="Export filtered users as CSV"
+          >
+            <Download className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+            <span className="hidden sm:inline">Export CSV</span>
+          </button>
         </div>
       </div>
 

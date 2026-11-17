@@ -22,7 +22,11 @@ import {
   Trash2,
   Copy,
   Check,
-  Sparkles
+  Sparkles,
+  ChevronDown,
+  RotateCw,
+  Layers,
+  Download
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ImageUploadOption } from '../components/common/ImageUploadOption';
@@ -35,11 +39,49 @@ export const Subscriptions = () => {
 
   const [activeTab, setActiveTab] = useState(statusParam || 'All');
   const [searchTerm, setSearchTerm] = useState('');
+  const [planFilter, setPlanFilter] = useState('All');
+  const [cycleFilter, setCycleFilter] = useState('All');
   const [selectedSub, setSelectedSub] = useState(null);
   const [editingSub, setEditingSub] = useState(null);
   const [videoCallCompany, setVideoCallCompany] = useState(null);
   const [deletingSub, setDeletingSub] = useState(null);
   const [copiedLink, setCopiedLink] = useState(false);
+
+  const activeCount = companies.filter(c => c.status === 'Active').length;
+  const trialCount = companies.filter(c => c.status === 'Trial').length;
+  const pendingCount = companies.filter(c => c.status === 'Pending Payment').length;
+  const cancelledCount = companies.filter(c => c.status === 'Cancelled').length;
+
+  const handleClearFilters = () => {
+    setSearchTerm('');
+    setActiveTab('All');
+    setPlanFilter('All');
+    setCycleFilter('All');
+  };
+
+  const handleRefresh = () => {
+    showToast('Subscription data refreshed', 'info');
+  };
+
+  const exportToCSV = () => {
+    const headers = ['Company', 'Plan', 'MRR', 'Status', 'NextRenewal'];
+    const rows = filtered.map(c => [
+      `"${c.name}"`,
+      `"${c.plan}"`,
+      `"${c.mrr}"`,
+      `"${c.status}"`,
+      `"${c.nextBilling || ''}"`
+    ]);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `pulse_subscriptions_${Date.now()}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Subscriptions exported successfully!', 'success');
+  };
 
   const handleStartVideoCall = (company) => {
     setVideoCallCompany(company);
@@ -60,17 +102,19 @@ export const Subscriptions = () => {
 
   const tabs = [
     { name: 'All', count: companies.length },
-    { name: 'Active', count: companies.filter(c => c.status === 'Active').length },
-    { name: 'Trial', count: companies.filter(c => c.status === 'Trial').length },
-    { name: 'Pending Payment', count: companies.filter(c => c.status === 'Pending Payment').length },
-    { name: 'Cancelled', count: companies.filter(c => c.status === 'Cancelled').length },
+    { name: 'Active', count: activeCount },
+    { name: 'Trial', count: trialCount },
+    { name: 'Pending Payment', count: pendingCount },
+    { name: 'Cancelled', count: cancelledCount },
   ];
 
   const filtered = companies.filter(c => {
     const matchesTab = activeTab === 'All' || c.status === activeTab;
     const matchesSearch = c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       c.plan.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesTab && matchesSearch;
+    const matchesPlan = planFilter === 'All' || c.plan.toLowerCase().includes(planFilter.toLowerCase());
+    const matchesCycle = cycleFilter === 'All' || (cycleFilter === 'Annual' ? c.plan.includes('Enterprise') : !c.plan.includes('Enterprise'));
+    return matchesTab && matchesSearch && matchesPlan && matchesCycle;
   });
 
   const toggleAutoRenew = (company) => {
@@ -144,40 +188,116 @@ export const Subscriptions = () => {
         </div>
       </div>
 
-      {/* Tabs and Search */}
-      <div className="bg-white dark:bg-[#0D152D] p-3.5 sm:p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
-        {/* Navigation Tabs */}
-        <div className="flex items-center gap-1.5 bg-[#F7F9FC] dark:bg-[#0A1128] p-1 rounded-xl border border-[#E5EAF2] dark:border-[#1A2548] w-full lg:w-auto overflow-x-auto no-scrollbar flex-nowrap">
-          {tabs.map((tab) => (
-            <button
-              key={tab.name}
-              onClick={() => setActiveTab(tab.name)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 ${
-                activeTab === tab.name
-                  ? 'bg-white dark:bg-[#121D3D] text-blue-600 dark:text-blue-400 shadow-xs'
-                  : 'text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white'
-              }`}
+      {/* Filter and Search Bar */}
+      <div className="bg-white dark:bg-[#0D152D] p-3 sm:p-3.5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
+        {/* Left: Filters group */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 flex-1 min-w-0">
+          {/* 1. Primary Dropdown Pill: Status with count */}
+          <div className="relative inline-flex items-center">
+            <Layers className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={activeTab}
+              onChange={(e) => setActiveTab(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-semibold bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 rounded-xl text-blue-600 dark:text-blue-400 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
             >
-              <span>{tab.name}</span>
-              <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                activeTab === tab.name ? 'bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-              }`}>
-                {tab.count}
-              </span>
-            </button>
-          ))}
+              <option value="All">All Subscriptions ({companies.length})</option>
+              <option value="Active">Active ({activeCount})</option>
+              <option value="Trial">Trial ({trialCount})</option>
+              <option value="Pending Payment">Pending ({pendingCount})</option>
+              <option value="Cancelled">Cancelled ({cancelledCount})</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 absolute right-2.5 pointer-events-none" />
+          </div>
+
+          {/* 2. Search Input */}
+          <div className="relative flex-1 min-w-[180px] sm:min-w-[220px] max-w-xs">
+            <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search subscription, company..."
+              className="w-full pl-9 pr-3 py-2 text-xs bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500 transition-colors"
+            />
+          </div>
+
+          {/* 3. Second Dropdown: Plan Tier */}
+          <div className="relative inline-flex items-center">
+            <CreditCard className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={planFilter}
+              onChange={(e) => setPlanFilter(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white appearance-none cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
+            >
+              <option value="All">All Plans</option>
+              <option value="Starter">Starter Plan</option>
+              <option value="Growth">Growth Plan</option>
+              <option value="Enterprise">Enterprise Plan</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-[#8292AD] dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+          </div>
+
+          {/* 4. Third Dropdown: Billing Cycle */}
+          <div className="relative inline-flex items-center">
+            <Calendar className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+            <select
+              value={cycleFilter}
+              onChange={(e) => setCycleFilter(e.target.value)}
+              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white appearance-none cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
+            >
+              <option value="All">All Cycles</option>
+              <option value="Monthly">Monthly Cycle</option>
+              <option value="Annual">Annual Cycle</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-[#8292AD] dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+          </div>
         </div>
 
-        {/* Search */}
-        <div className="relative w-full lg:w-72 flex-shrink-0">
-          <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-2.5" />
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search subscription..."
-            className="w-full pl-9 pr-3 py-2 text-xs bg-[#F7F9FC] dark:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500"
-          />
+        {/* Right: Clear, Count, Refresh, and Export */}
+        <div className="flex items-center justify-between sm:justify-end gap-2.5 sm:gap-3 flex-shrink-0 pt-2 xl:pt-0 border-t xl:border-t-0 border-[#E5EAF2] dark:border-[#1A2548]">
+          {/* Clear button */}
+          <button
+            type="button"
+            onClick={handleClearFilters}
+            className={`px-3 py-1.5 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border ${
+              searchTerm || activeTab !== 'All' || planFilter !== 'All' || cycleFilter !== 'All'
+                ? 'text-rose-500 dark:text-rose-400 bg-rose-50/80 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 border-rose-200 dark:border-rose-900/60 shadow-2xs'
+                : 'text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800'
+            }`}
+            title="Reset all filters"
+          >
+            <X className="w-3.5 h-3.5" />
+            <span>Clear</span>
+          </button>
+
+          <div className="h-4 w-px bg-[#E5EAF2] dark:bg-[#1E2D54] hidden sm:block" />
+
+          {/* Filter count text */}
+          <span className="text-xs text-[#8292AD] dark:text-slate-400 whitespace-nowrap">
+            Filtered: {filtered.length} Shown of {companies.length}
+          </span>
+
+          {/* Refresh icon */}
+          <button
+            type="button"
+            onClick={handleRefresh}
+            className="p-1.5 rounded-lg text-[#8292AD] hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#1E2D54] transition-colors cursor-pointer"
+            title="Refresh list"
+            aria-label="Refresh"
+          >
+            <RotateCw className="w-3.5 h-3.5" />
+          </button>
+
+          {/* Export CSV */}
+          <button
+            type="button"
+            onClick={exportToCSV}
+            className="px-3 py-1.5 text-xs bg-white dark:bg-[#121D3D] hover:bg-slate-50 dark:hover:bg-[#1A2548] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white font-semibold flex items-center gap-1.5 transition-colors shadow-2xs cursor-pointer whitespace-nowrap"
+            title="Export filtered subscriptions as CSV"
+          >
+            <Download className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+            <span className="hidden sm:inline">Export CSV</span>
+          </button>
         </div>
       </div>
 
