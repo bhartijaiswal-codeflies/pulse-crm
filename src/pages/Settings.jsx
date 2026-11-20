@@ -75,14 +75,21 @@ export const Settings = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl md:text-3xl font-extrabold text-[#172033] tracking-tight">
-          System Settings & Platform Governance
-        </h1>
-        <p className="text-xs md:text-sm text-[#8292AD] mt-1 font-medium">
-          Configure multi-tenant portal parameters, security keys, notification routing, and admin profile
-        </p>
+      {/* Title & Actions */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h1 className="text-2xl font-bold text-[#172033] dark:text-white tracking-tight">
+              Settings & Governance
+            </h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EFF6FF] text-[#2563EB] dark:bg-blue-950/60 dark:text-blue-400 border border-blue-100 dark:border-blue-900/40">
+              System v2.4.0 Production
+            </span>
+          </div>
+          <p className="text-xs text-[#8292AD] dark:text-slate-400 mt-1 font-normal">
+            Configure multi-tenant portal parameters, security keys, notification routing, and admin profile.
+          </p>
+        </div>
       </div>
 
       {/* Tabs */}

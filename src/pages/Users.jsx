@@ -147,42 +147,99 @@ export const Users = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#172033] tracking-tight">
-            Users & Team Access
-          </h1>
-          <p className="text-xs md:text-sm text-[#8292AD] mt-1 font-medium">
-            Manage admin privileges, tenant administrators, and role-based access control
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h1 className="text-2xl font-bold text-[#172033] dark:text-white tracking-tight">
+              Users & Team Access
+            </h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EFF6FF] text-[#2563EB] dark:bg-blue-950/60 dark:text-blue-400 border border-blue-100 dark:border-blue-900/40">
+              {users.length} Total Users
+            </span>
+          </div>
+          <p className="text-xs text-[#8292AD] dark:text-slate-400 mt-1 font-normal">
+            Manage admin privileges, tenant administrators, and role-based access control.
           </p>
         </div>
 
-        <button
-          onClick={() => setIsAddUserOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 transition-all self-start sm:self-auto"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Invite User</span>
-        </button>
+        <div className="flex items-center gap-2.5 self-start sm:self-auto">
+          <button
+            type="button"
+            onClick={exportUsersCSV}
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] dark:text-white bg-white dark:bg-[#0D152D] hover:bg-slate-50 dark:hover:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl shadow-2xs transition-colors cursor-pointer"
+          >
+            <Download className="w-3.5 h-3.5 text-[#64748B] dark:text-slate-400" />
+            <span>Export CSV</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsAddUserOpen(true)}
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Invite User</span>
+          </button>
+        </div>
       </div>
 
       {/* Metrics Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Total Users</p>
-          <p className="text-2xl font-black text-[#172033] dark:text-white mt-1">{users.length}</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        {/* Card 1: Total Users */}
+        <div className="bg-[#F8FAFF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E2EDFF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <UsersIcon className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {users.length}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Total Team Members
+            </p>
+          </div>
         </div>
-        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Active Now</p>
-          <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">
-            {users.filter(u => u.status === 'Active').length}
-          </p>
+
+        {/* Card 2: Active Accounts */}
+        <div className="bg-[#F6FDF9] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#DCFCE7] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#10B981] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <CheckCircle className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {users.filter(u => (u.status || 'Active') === 'Active').length}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Active Accounts
+            </p>
+          </div>
         </div>
-        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Super Admins</p>
-          <p className="text-2xl font-black text-purple-600 dark:text-purple-400 mt-1">1</p>
+
+        {/* Card 3: Super Administrators */}
+        <div className="bg-[#FAF7FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#F3E8FF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#7C3AED] text-white flex items-center justify-center flex-shrink-0 font-bold shadow-xs">
+            <Shield className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {adminCount}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Super Administrators
+            </p>
+          </div>
         </div>
-        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">2FA Enforced</p>
-          <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">100%</p>
+
+        {/* Card 4: Tenant Admins */}
+        <div className="bg-[#F0F9FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#BAE6FD]/80 dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#0284C7] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Briefcase className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {companyAdminCount}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Company Admins
+            </p>
+          </div>
         </div>
       </div>
 

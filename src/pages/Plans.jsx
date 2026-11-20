@@ -186,100 +186,101 @@ export const Plans = () => {
       {/* 1. Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#172033] dark:text-white tracking-tight">
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h1 className="text-2xl font-bold text-[#172033] dark:text-white tracking-tight">
               Plans & Pricing Tiers
             </h1>
-            <span className="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-900/60">
-              {plans.length} Active Tiers • {totalTenants} Subscribed
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EFF6FF] text-[#2563EB] dark:bg-blue-950/60 dark:text-blue-400 border border-blue-100 dark:border-blue-900/40">
+              {plans.length} Active Tiers
             </span>
           </div>
-          <p className="text-xs md:text-sm text-[#8292AD] dark:text-slate-400 mt-1 font-medium">
+          <p className="text-xs text-[#8292AD] dark:text-slate-400 mt-1 font-normal">
             Configure subscription packages, multi-tenant quotas, feature entitlements, and billing cycles.
           </p>
         </div>
 
         <div className="flex items-center gap-2.5 self-start sm:self-auto flex-wrap">
           <button
+            type="button"
             onClick={exportSpecsCSV}
             className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] dark:text-slate-200 bg-white dark:bg-[#0D152D] hover:bg-slate-50 dark:hover:bg-[#14234b] border border-[#E5EAF2] dark:border-[#1A2548] rounded-xl shadow-2xs transition-colors cursor-pointer"
             title="Export CSV specifications"
           >
-            <Download className="w-3.5 h-3.5 text-[#8292AD] dark:text-slate-400" />
+            <Download className="w-3.5 h-3.5 text-[#64748B] dark:text-slate-400" />
             <span>Export CSV</span>
           </button>
 
           <button
+            type="button"
             onClick={() => setIsAddPlanOpen(true)}
-            className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 active:scale-[0.98] rounded-xl shadow-md shadow-blue-500/20 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
           >
-            <Plus className="w-4 h-4 stroke-[2.5]" />
+            <Plus className="w-4 h-4" />
             <span>Create New Tier</span>
           </button>
         </div>
       </div>
 
       {/* 2. Executive KPI Summary Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#0D152D] border border-[#E5EAF2] dark:border-[#1A2548] shadow-2xs relative overflow-hidden">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#8292AD] dark:text-slate-400">Total Subscribed Tenants</span>
-            <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-              <Users className="w-4 h-4" />
-            </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        {/* Card 1: Active Plan Tiers */}
+        <div className="bg-[#F8FAFF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E2EDFF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Layers className="w-5 h-5" />
           </div>
-          <div className="mt-2.5 flex items-baseline gap-2">
-            <span className="text-2xl sm:text-3xl font-black text-[#172033] dark:text-white tracking-tight">{totalTenants}</span>
-            <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
-              <TrendingUp className="w-3 h-3" /> +14%
-            </span>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {plans.length}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Active Plan Tiers
+            </p>
           </div>
-          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">Active client organizations</p>
         </div>
 
-        <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#0D152D] border border-[#E5EAF2] dark:border-[#1A2548] shadow-2xs relative overflow-hidden">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#8292AD] dark:text-slate-400">Monthly Tier MRR</span>
-            <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-              <Zap className="w-4 h-4" />
-            </div>
+        {/* Card 2: Subscribed Tenants */}
+        <div className="bg-[#F6FDF9] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#DCFCE7] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#10B981] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Users className="w-5 h-5" />
           </div>
-          <div className="mt-2.5 flex items-baseline gap-2">
-            <span className="text-2xl sm:text-3xl font-black text-[#172033] dark:text-white tracking-tight">₹17.6L</span>
-            <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">+15% vs last mo</span>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {totalTenants}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Subscribed Tenants
+            </p>
           </div>
-          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">Recurring subscription volume</p>
         </div>
 
-        <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#0D152D] border border-[#E5EAF2] dark:border-[#1A2548] shadow-2xs relative overflow-hidden">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#8292AD] dark:text-slate-400">Annual Run Rate (ARR)</span>
-            <div className="w-8 h-8 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center">
-              <Activity className="w-4 h-4" />
-            </div>
+        {/* Card 3: Monthly Tier MRR */}
+        <div className="bg-[#F0F9FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#BAE6FD]/80 dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#0284C7] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Zap className="w-5 h-5" />
           </div>
-          <div className="mt-2.5 flex items-baseline gap-2">
-            <span className="text-2xl sm:text-3xl font-black text-[#172033] dark:text-white tracking-tight">₹2.11 Cr</span>
-            <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400">Projected</span>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              ₹17.6L
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Monthly Tier MRR
+            </p>
           </div>
-          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">Full-year contract pipeline</p>
         </div>
 
-        <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#0D152D] border border-[#E5EAF2] dark:border-[#1A2548] shadow-2xs relative overflow-hidden">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-[#8292AD] dark:text-slate-400">Highest Adoption Tier</span>
-            <div className="w-8 h-8 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center">
-              <Sparkles className="w-4 h-4" />
-            </div>
+        {/* Card 4: Most Popular Tier */}
+        <div className="bg-[#FAF7FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#F3E8FF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#7C3AED] text-white flex items-center justify-center flex-shrink-0 font-bold shadow-xs">
+            <Crown className="w-5 h-5" />
           </div>
-          <div className="mt-2.5 flex items-baseline gap-2">
-            <span className="text-xl sm:text-2xl font-black text-[#172033] dark:text-white tracking-tight truncate">
+          <div className="min-w-0">
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight truncate">
               {mostPopular?.name || 'Growth Pro'}
-            </span>
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight truncate">
+              Top Subscribed Tier
+            </p>
           </div>
-          <p className="text-[11px] text-amber-600 dark:text-amber-400 mt-1 font-semibold">
-            {mostPopular?.companiesCount || 128} tenants (51.6% share)
-          </p>
         </div>
       </div>
 

@@ -85,24 +85,95 @@ export const ActivityLog = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* Title & Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#172033] tracking-tight">
-            System Activity & Audit Log
-          </h1>
-          <p className="text-xs md:text-sm text-[#8292AD] mt-1 font-medium">
-            SOC2 Type II compliance trail of administrative actions, webhooks, and security access
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h1 className="text-2xl font-bold text-[#172033] dark:text-white tracking-tight">
+              System Activity & Audit Log
+            </h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EFF6FF] text-[#2563EB] dark:bg-blue-950/60 dark:text-blue-400 border border-blue-100 dark:border-blue-900/40">
+              {activityLogs.length} Events Logged
+            </span>
+          </div>
+          <p className="text-xs text-[#8292AD] dark:text-slate-400 mt-1 font-normal">
+            SOC2 Type II compliance trail of administrative actions, webhooks, and security access.
           </p>
         </div>
 
-        <button
-          onClick={handleExport}
-          className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#E5EAF2] hover:bg-slate-50 rounded-xl shadow-xs self-start sm:self-auto"
-        >
-          <Download className="w-4 h-4 text-[#8292AD]" />
-          <span>Export Audit Log</span>
-        </button>
+        <div className="flex items-center gap-2.5 self-start sm:self-auto">
+          <button
+            type="button"
+            onClick={handleExport}
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] dark:text-white bg-white dark:bg-[#0D152D] hover:bg-slate-50 dark:hover:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl shadow-2xs transition-colors cursor-pointer"
+          >
+            <Download className="w-3.5 h-3.5 text-[#64748B] dark:text-slate-400" />
+            <span>Export CSV</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Metrics Row */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        {/* Card 1: Total Events */}
+        <div className="bg-[#F8FAFF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E2EDFF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <History className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {activityLogs.length}
+            </div>
+            <div className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Total Audit Events
+            </div>
+          </div>
+        </div>
+
+        {/* Card 2: Admin Actions */}
+        <div className="bg-[#FAF7FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#F3E8FF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#7C3AED] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Shield className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {adminCount}
+            </div>
+            <div className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Admin & Security Logs
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3: System Triggers */}
+        <div className="bg-[#F6FDF9] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#DCFCE7] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#10B981] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Server className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {sysCount}
+            </div>
+            <div className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              System & Webhooks
+            </div>
+          </div>
+        </div>
+
+        {/* Card 4: Tenant Activity */}
+        <div className="bg-[#F0F9FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#BAE6FD]/80 dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#0284C7] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Building className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {compCount + userCount}
+            </div>
+            <div className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Tenant & User Actions
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Filter and Search Bar */}

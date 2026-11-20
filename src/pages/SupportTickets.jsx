@@ -125,46 +125,99 @@ export const SupportTickets = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#172033] tracking-tight">
-            Support Desk
-          </h1>
-          <p className="text-xs md:text-sm text-[#8292AD] mt-1 font-medium">
-            Monitor client incidents, technical inquiries, SLAs, and resolution tickets
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h1 className="text-2xl font-bold text-[#172033] dark:text-white tracking-tight">
+              Support Desk
+            </h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EFF6FF] text-[#2563EB] dark:bg-blue-950/60 dark:text-blue-400 border border-blue-100 dark:border-blue-900/40">
+              {tickets.length} Total Incidents
+            </span>
+          </div>
+          <p className="text-xs text-[#8292AD] dark:text-slate-400 mt-1 font-normal">
+            Monitor client incidents, technical inquiries, SLAs, and resolution tickets.
           </p>
         </div>
 
-        <button
-          onClick={() => setIsNewTicketOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 transition-all self-start sm:self-auto"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Create Ticket</span>
-        </button>
+        <div className="flex items-center gap-2.5 self-start sm:self-auto">
+          <button
+            type="button"
+            onClick={exportTicketsCSV}
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] dark:text-white bg-white dark:bg-[#0D152D] hover:bg-slate-50 dark:hover:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl shadow-2xs transition-colors cursor-pointer"
+          >
+            <Download className="w-3.5 h-3.5 text-[#64748B] dark:text-slate-400" />
+            <span>Export CSV</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsNewTicketOpen(true)}
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Create Ticket</span>
+          </button>
+        </div>
       </div>
 
       {/* Metrics Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Open Inquiries</p>
-          <p className="text-2xl font-black text-amber-500 dark:text-amber-400 mt-1">
-            {tickets.filter(t => t.status === 'Open').length}
-          </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        {/* Card 1: Total Inquiries */}
+        <div className="bg-[#F8FAFF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E2EDFF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <LifeBuoy className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {tickets.length}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Total Inquiries
+            </p>
+          </div>
         </div>
-        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">In Progress</p>
-          <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">
-            {tickets.filter(t => t.status === 'In Progress').length}
-          </p>
+
+        {/* Card 2: Open Inquiries */}
+        <div className="bg-[#FFFDF5] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#FEF3C7] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#F59E0B] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <AlertCircle className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {openCount}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Open Inquiries
+            </p>
+          </div>
         </div>
-        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Resolved Today</p>
-          <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">
-            {tickets.filter(t => t.status === 'Resolved').length}
-          </p>
+
+        {/* Card 3: In Progress */}
+        <div className="bg-[#F0F9FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#BAE6FD]/80 dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#0284C7] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Clock className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {inProgCount}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              In Progress
+            </p>
+          </div>
         </div>
-        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Avg First Response</p>
-          <p className="text-2xl font-black text-purple-600 dark:text-purple-400 mt-1">14 min</p>
+
+        {/* Card 4: Resolved Incidents */}
+        <div className="bg-[#F6FDF9] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#DCFCE7] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#10B981] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <CheckCircle className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {resCount}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Resolved Incidents
+            </p>
+          </div>
         </div>
       </div>
 

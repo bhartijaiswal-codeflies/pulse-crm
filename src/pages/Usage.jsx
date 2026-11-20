@@ -22,152 +22,92 @@ export const Usage = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* Title & Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#172033] tracking-tight">
-            Usage & System Limits
-          </h1>
-          <p className="text-xs md:text-sm text-[#8292AD] mt-1 font-medium">
-            Infrastructure capacity, storage allocations, API quotas, and limit governance
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h1 className="text-2xl font-bold text-[#172033] dark:text-white tracking-tight">
+              Usage & System Limits
+            </h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EFF6FF] text-[#2563EB] dark:bg-blue-950/60 dark:text-blue-400 border border-blue-100 dark:border-blue-900/40">
+              Cluster Healthy
+            </span>
+          </div>
+          <p className="text-xs text-[#8292AD] dark:text-slate-400 mt-1 font-normal">
+            Infrastructure capacity, storage allocations, API quotas, and limit governance.
           </p>
         </div>
 
-        <button
-          onClick={() => showToast('Capacity audit refreshed', 'info')}
-          className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#E5EAF2] hover:bg-slate-50 rounded-xl shadow-xs self-start sm:self-auto"
-        >
-          <Server className="w-4 h-4 text-[#8292AD]" />
-          <span>Refresh Cluster Status</span>
-        </button>
+        <div className="flex items-center gap-2.5 self-start sm:self-auto">
+          <button
+            type="button"
+            onClick={() => showToast('Capacity audit refreshed', 'info')}
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] dark:text-white bg-white dark:bg-[#0D152D] hover:bg-slate-50 dark:hover:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl shadow-2xs transition-colors cursor-pointer"
+          >
+            <Server className="w-3.5 h-3.5 text-[#64748B] dark:text-slate-400" />
+            <span>Refresh Cluster</span>
+          </button>
+        </div>
       </div>
 
-      {/* Quota Progress Cards (4 Cards) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Storage */}
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#8292AD] uppercase">Storage Capacity</span>
-              <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-                <HardDrive className="w-4 h-4" />
-              </div>
-            </div>
-            <div className="flex items-baseline gap-2 mt-3">
-              <span className="text-2xl font-black text-[#172033]">
-                {USAGE_METRICS.storage.used} {USAGE_METRICS.storage.unit}
-              </span>
-              <span className="text-xs text-[#8292AD]">of {USAGE_METRICS.storage.total} {USAGE_METRICS.storage.unit}</span>
-            </div>
-            <p className="text-[11px] text-[#8292AD] mt-1">{USAGE_METRICS.storage.trend}</p>
+      {/* Metrics Row */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        {/* Card 1: Storage */}
+        <div className="bg-[#F8FAFF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E2EDFF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <HardDrive className="w-5 h-5" />
           </div>
-
-          <div className="mt-4">
-            <div className="flex justify-between text-xs font-semibold mb-1">
-              <span className="text-[#8292AD]">Utilization</span>
-              <span className="text-blue-600">{USAGE_METRICS.storage.percentage}%</span>
+          <div>
+            <div className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {USAGE_METRICS.storage.used} {USAGE_METRICS.storage.unit}
             </div>
-            <div className="w-full h-2 bg-[#F7F9FC] rounded-full overflow-hidden border border-[#E5EAF2]">
-              <div
-                className="h-full bg-blue-600 rounded-full transition-all"
-                style={{ width: `${USAGE_METRICS.storage.percentage}%` }}
-              />
+            <div className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Storage Capacity ({USAGE_METRICS.storage.percentage}% used)
             </div>
           </div>
         </div>
 
-        {/* API Requests */}
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#8292AD] uppercase">API Gateway Calls</span>
-              <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
-                <Cpu className="w-4 h-4" />
-              </div>
-            </div>
-            <div className="flex items-baseline gap-2 mt-3">
-              <span className="text-2xl font-black text-[#172033]">
-                {USAGE_METRICS.apiRequests.used}M
-              </span>
-              <span className="text-xs text-[#8292AD]">of {USAGE_METRICS.apiRequests.total}M</span>
-            </div>
-            <p className="text-[11px] text-[#8292AD] mt-1">{USAGE_METRICS.apiRequests.trend}</p>
+        {/* Card 2: Active Seats */}
+        <div className="bg-[#F6FDF9] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#DCFCE7] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#10B981] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Users className="w-5 h-5" />
           </div>
-
-          <div className="mt-4">
-            <div className="flex justify-between text-xs font-semibold mb-1">
-              <span className="text-[#8292AD]">Monthly Burn</span>
-              <span className="text-purple-600">{USAGE_METRICS.apiRequests.percentage}%</span>
+          <div>
+            <div className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {USAGE_METRICS.activeSeats.used}
             </div>
-            <div className="w-full h-2 bg-[#F7F9FC] rounded-full overflow-hidden border border-[#E5EAF2]">
-              <div
-                className="h-full bg-purple-600 rounded-full transition-all"
-                style={{ width: `${USAGE_METRICS.apiRequests.percentage}%` }}
-              />
+            <div className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Active Seats ({USAGE_METRICS.activeSeats.percentage}% of {USAGE_METRICS.activeSeats.total})
             </div>
           </div>
         </div>
 
-        {/* Active User Seats */}
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#8292AD] uppercase">Provisioned Seats</span>
-              <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                <Users className="w-4 h-4" />
-              </div>
-            </div>
-            <div className="flex items-baseline gap-2 mt-3">
-              <span className="text-2xl font-black text-[#172033]">
-                {USAGE_METRICS.activeSeats.used}
-              </span>
-              <span className="text-xs text-[#8292AD]">of {USAGE_METRICS.activeSeats.total}</span>
-            </div>
-            <p className="text-[11px] text-[#8292AD] mt-1">{USAGE_METRICS.activeSeats.trend}</p>
+        {/* Card 3: API Gateway */}
+        <div className="bg-[#F0F9FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#BAE6FD]/80 dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#0284C7] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Cpu className="w-5 h-5" />
           </div>
-
-          <div className="mt-4">
-            <div className="flex justify-between text-xs font-semibold mb-1">
-              <span className="text-[#8292AD]">License Pool</span>
-              <span className="text-emerald-600">{USAGE_METRICS.activeSeats.percentage}%</span>
+          <div>
+            <div className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {USAGE_METRICS.apiRequests.used}M
             </div>
-            <div className="w-full h-2 bg-[#F7F9FC] rounded-full overflow-hidden border border-[#E5EAF2]">
-              <div
-                className="h-full bg-emerald-600 rounded-full transition-all"
-                style={{ width: `${USAGE_METRICS.activeSeats.percentage}%` }}
-              />
+            <div className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              API Calls ({USAGE_METRICS.apiRequests.percentage}% of {USAGE_METRICS.apiRequests.total}M)
             </div>
           </div>
         </div>
 
-        {/* Email Credits */}
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#8292AD] uppercase">Email & SMS Relay</span>
-              <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
-                <Mail className="w-4 h-4" />
-              </div>
-            </div>
-            <div className="flex items-baseline gap-2 mt-3">
-              <span className="text-2xl font-black text-[#172033]">
-                {USAGE_METRICS.emailCredits.used}k
-              </span>
-              <span className="text-xs text-[#8292AD]">of {USAGE_METRICS.emailCredits.total}k</span>
-            </div>
-            <p className="text-[11px] text-[#8292AD] mt-1">{USAGE_METRICS.emailCredits.trend}</p>
+        {/* Card 4: Email / SMS Relay */}
+        <div className="bg-[#FFFDF5] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#FEF3C7] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#D97706] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Mail className="w-5 h-5" />
           </div>
-
-          <div className="mt-4">
-            <div className="flex justify-between text-xs font-semibold mb-1">
-              <span className="text-[#8292AD]">SendGrid Quota</span>
-              <span className="text-amber-600">{USAGE_METRICS.emailCredits.percentage}%</span>
+          <div>
+            <div className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {USAGE_METRICS.emailCredits.used}k
             </div>
-            <div className="w-full h-2 bg-[#F7F9FC] rounded-full overflow-hidden border border-[#E5EAF2]">
-              <div
-                className="h-full bg-amber-500 rounded-full transition-all"
-                style={{ width: `${USAGE_METRICS.emailCredits.percentage}%` }}
-              />
+            <div className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Email Relay ({USAGE_METRICS.emailCredits.percentage}% of {USAGE_METRICS.emailCredits.total}k)
             </div>
           </div>
         </div>

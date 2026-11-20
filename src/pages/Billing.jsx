@@ -148,27 +148,33 @@ Pulse CRM Platform • support@pulsecrm.io
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#172033] tracking-tight">
-            Billing & Payments
-          </h1>
-          <p className="text-xs md:text-sm text-[#8292AD] mt-1 font-medium">
-            Manage customer invoicing, collections, transaction receipts, and pending dues
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h1 className="text-2xl font-bold text-[#172033] dark:text-white tracking-tight">
+              Billing & Payments
+            </h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EFF6FF] text-[#2563EB] dark:bg-blue-950/60 dark:text-blue-400 border border-blue-100 dark:border-blue-900/40">
+              {invoices.length} Total Invoices
+            </span>
+          </div>
+          <p className="text-xs text-[#8292AD] dark:text-slate-400 mt-1 font-normal">
+            Manage customer invoicing, collections, transaction receipts, and pending dues.
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 self-start sm:self-auto">
+        <div className="flex items-center gap-2.5 self-start sm:self-auto">
           <button
             type="button"
             onClick={exportInvoices}
-            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#E5EAF2] hover:bg-slate-50 rounded-xl shadow-xs transition-colors whitespace-nowrap flex-shrink-0 cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] dark:text-white bg-white dark:bg-[#0D152D] hover:bg-slate-50 dark:hover:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl shadow-2xs transition-colors cursor-pointer"
             title="Export invoices as CSV"
           >
-            <Download className="w-4 h-4 text-blue-600 flex-shrink-0" />
-            <span className="whitespace-nowrap">Export CSV</span>
+            <Download className="w-3.5 h-3.5 text-[#64748B] dark:text-slate-400" />
+            <span>Export CSV</span>
           </button>
           <button
+            type="button"
             onClick={() => setIsCreateInvoiceOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 transition-all cursor-pointer whitespace-nowrap"
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Create Invoice</span>
@@ -177,29 +183,65 @@ Pulse CRM Platform • support@pulsecrm.io
       </div>
 
       {/* Metrics Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Total Collected (Nov)</p>
-          <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">₹17.6L</p>
-          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">94% auto-debited on schedule</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        {/* Card 1: Total Collected */}
+        <div className="bg-[#F8FAFF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E2EDFF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <CreditCard className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              ₹17.6L
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Total Collected (Nov)
+            </p>
+          </div>
         </div>
 
-        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Pending Receivables</p>
-          <p className="text-2xl font-black text-amber-500 dark:text-amber-400 mt-1">₹2.4L</p>
-          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">12 invoices pending review</p>
+        {/* Card 2: Paid Invoices */}
+        <div className="bg-[#F6FDF9] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#DCFCE7] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#10B981] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <CheckCircle2 className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {paidCount}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Paid Invoices
+            </p>
+          </div>
         </div>
 
-        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Overdue Collections</p>
-          <p className="text-2xl font-black text-red-500 dark:text-red-400 mt-1">₹23,997</p>
-          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">1 tenant in grace period</p>
+        {/* Card 3: Pending Receivables */}
+        <div className="bg-[#F0F9FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#BAE6FD]/80 dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#0284C7] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Clock className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {pendingCount}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Pending Receivables
+            </p>
+          </div>
         </div>
 
-        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Payment Success Rate</p>
-          <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">98.2%</p>
-          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">Stripe & Razorpay integrated</p>
+        {/* Card 4: Overdue Collections */}
+        <div className="bg-[#FEF2F2] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#FEE2E2] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#DC2626] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <AlertTriangle className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {overdueCount}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Overdue Collections
+            </p>
+          </div>
         </div>
       </div>
 

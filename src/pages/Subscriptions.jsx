@@ -126,22 +126,32 @@ export const Subscriptions = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#172033] tracking-tight">
-            Subscriptions
-          </h1>
-          <p className="text-xs md:text-sm text-[#8292AD] mt-1 font-medium">
-            Monitor client billing cycles, renewals, churn rates, and tier upgrades
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h1 className="text-2xl font-bold text-[#172033] dark:text-white tracking-tight">
+              Subscriptions
+            </h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EFF6FF] text-[#2563EB] dark:bg-blue-950/60 dark:text-blue-400 border border-blue-100 dark:border-blue-900/40">
+              {companies.length} Total Subscriptions
+            </span>
+          </div>
+          <p className="text-xs text-[#8292AD] dark:text-slate-400 mt-1 font-normal">
+            Monitor client billing cycles, renewals, churn rates, and tier upgrades.
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
-          <span className="hidden sm:inline-flex text-xs font-semibold px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200">
-            92.4% Net Revenue Retention
-          </span>
+        <div className="flex items-center gap-2.5 self-start sm:self-auto">
+          <button
+            type="button"
+            onClick={exportToCSV}
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] dark:text-white bg-white dark:bg-[#0D152D] hover:bg-slate-50 dark:hover:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl shadow-2xs transition-colors cursor-pointer"
+          >
+            <Download className="w-3.5 h-3.5 text-[#64748B] dark:text-slate-400" />
+            <span>Export CSV</span>
+          </button>
           <button
             type="button"
             onClick={() => setIsAddCompanyOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>New Subscription</span>
@@ -150,41 +160,65 @@ export const Subscriptions = () => {
       </div>
 
       {/* Metrics Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Active Subscriptions</p>
-          <div className="flex items-baseline justify-between mt-2">
-            <span className="text-2xl font-black text-[#172033] dark:text-white">225</span>
-            <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 dark:text-emerald-400 px-2 py-0.5 rounded-full">+8% MoM</span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        {/* Card 1: Total Subscriptions */}
+        <div className="bg-[#F8FAFF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E2EDFF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Repeat className="w-5 h-5" />
           </div>
-          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">90.7% of total tenant portfolio</p>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {companies.length}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Total Subscriptions
+            </p>
+          </div>
         </div>
 
-        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Trial Subscriptions</p>
-          <div className="flex items-baseline justify-between mt-2">
-            <span className="text-2xl font-black text-blue-600 dark:text-blue-400">8</span>
-            <span className="text-xs font-semibold text-blue-600 bg-blue-50 dark:bg-blue-950/60 dark:text-blue-400 px-2 py-0.5 rounded-full">62% Conversion</span>
+        {/* Card 2: Active Subscriptions */}
+        <div className="bg-[#F6FDF9] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#DCFCE7] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#10B981] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <CheckCircle className="w-5 h-5" />
           </div>
-          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">Avg 5 days remaining</p>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {activeCount}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Active Subscriptions
+            </p>
+          </div>
         </div>
 
-        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Cancelled / At Risk</p>
-          <div className="flex items-baseline justify-between mt-2">
-            <span className="text-2xl font-black text-red-500 dark:text-red-400">7</span>
-            <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 dark:text-emerald-400 px-2 py-0.5 rounded-full">-1.2% Churn</span>
+        {/* Card 3: Active Trials */}
+        <div className="bg-[#F0F9FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#BAE6FD]/80 dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#0284C7] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Clock className="w-5 h-5" />
           </div>
-          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">Industry low churn benchmark</p>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {trialCount}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Active Trials
+            </p>
+          </div>
         </div>
 
-        <div className="bg-white dark:bg-[#0D152D] p-5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] dark:text-slate-400 uppercase">Avg Revenue / Account (ARPU)</p>
-          <div className="flex items-baseline justify-between mt-2">
-            <span className="text-2xl font-black text-[#172033] dark:text-white">₹7,820</span>
-            <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 dark:text-emerald-400 px-2 py-0.5 rounded-full">+14% Growth</span>
+        {/* Card 4: Cancelled & Expired */}
+        <div className="bg-[#FEF2F2] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#FEE2E2] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#DC2626] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <XCircle className="w-5 h-5" />
           </div>
-          <p className="text-[11px] text-[#8292AD] dark:text-slate-400 mt-1">Boosted by Enterprise tier</p>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              {cancelledCount + pendingCount}
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Cancelled & Expired
+            </p>
+          </div>
         </div>
       </div>
 

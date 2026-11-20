@@ -8,7 +8,8 @@ import {
   DollarSign,
   Users,
   Repeat,
-  ArrowUpRight
+  ArrowUpRight,
+  CheckCircle
 } from 'lucide-react';
 import {
   AreaChart,
@@ -66,54 +67,88 @@ export const Analytics = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#172033] tracking-tight">
-            Advanced Analytics
-          </h1>
-          <p className="text-xs md:text-sm text-[#8292AD] mt-1 font-medium">
-            Deep financial forecasting, net revenue retention, cohort churn, and ARR run-rates
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h1 className="text-2xl font-bold text-[#172033] dark:text-white tracking-tight">
+              Advanced Analytics
+            </h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EFF6FF] text-[#2563EB] dark:bg-blue-950/60 dark:text-blue-400 border border-blue-100 dark:border-blue-900/40">
+              FY 2026 Live
+            </span>
+          </div>
+          <p className="text-xs text-[#8292AD] dark:text-slate-400 mt-1 font-normal">
+            Deep financial forecasting, net revenue retention, cohort churn, and ARR run-rates.
           </p>
         </div>
 
         <button
+          type="button"
           onClick={handleExport}
-          className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#E5EAF2] hover:bg-slate-50 rounded-xl shadow-xs self-start sm:self-auto"
+          className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] dark:text-white bg-white dark:bg-[#0D152D] hover:bg-slate-50 dark:hover:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl shadow-2xs transition-colors cursor-pointer self-start sm:self-auto"
         >
-          <Download className="w-4 h-4 text-[#8292AD]" />
-          <span>Export Analytics</span>
+          <Download className="w-3.5 h-3.5 text-[#64748B] dark:text-slate-400" />
+          <span>Export CSV</span>
         </button>
       </div>
 
       {/* KPI Highlights */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Annual Run Rate (ARR)</p>
-          <p className="text-2xl font-black text-[#172033] mt-1">₹2.11 Cr</p>
-          <div className="flex items-center gap-1 text-emerald-600 text-xs font-semibold mt-1">
-            <ArrowUpRight className="w-3.5 h-3.5" /> +26.4% Projected FY26
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        {/* Card 1: Annual Run Rate */}
+        <div className="bg-[#F8FAFF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E2EDFF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <TrendingUp className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              ₹2.11 Cr
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Annual Run Rate (ARR)
+            </p>
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Net Revenue Retention (NRR)</p>
-          <p className="text-2xl font-black text-emerald-600 mt-1">118%</p>
-          <div className="flex items-center gap-1 text-emerald-600 text-xs font-semibold mt-1">
-            <ArrowUpRight className="w-3.5 h-3.5" /> High tier expansions
+        {/* Card 2: Net Revenue Retention */}
+        <div className="bg-[#F6FDF9] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#DCFCE7] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#10B981] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <CheckCircle className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              118%
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Net Revenue Retention
+            </p>
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Gross Logo Churn</p>
-          <p className="text-2xl font-black text-blue-600 mt-1">1.8%</p>
-          <div className="flex items-center gap-1 text-[#8292AD] text-xs font-medium mt-1">
-            Industry benchmark &lt; 3%
+        {/* Card 3: Gross Logo Churn */}
+        <div className="bg-[#F0F9FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#BAE6FD]/80 dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#0284C7] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <BarChart3 className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              1.8%
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Gross Logo Churn
+            </p>
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-[#E5EAF2] shadow-xs">
-          <p className="text-xs font-bold text-[#8292AD] uppercase">Customer Acquisition Cost</p>
-          <p className="text-2xl font-black text-purple-600 mt-1">₹6,400</p>
-          <div className="flex items-center gap-1 text-emerald-600 text-xs font-semibold mt-1">
-            Payback period 1.2 months
+        {/* Card 4: Customer Acquisition Cost */}
+        <div className="bg-[#FAF7FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#F3E8FF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#7C3AED] text-white flex items-center justify-center flex-shrink-0 font-bold shadow-xs">
+            <DollarSign className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
+              ₹6,400
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
+              Customer Acquisition Cost
+            </p>
           </div>
         </div>
       </div>
