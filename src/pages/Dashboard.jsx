@@ -49,10 +49,10 @@ export const Dashboard = () => {
       {/* Top Header: Title + Subtitle on Left, Date Filter on Right */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#172033] tracking-tight">
+          <h1 className="text-2xl font-bold text-[#172033] dark:text-white tracking-tight">
             Dashboard
           </h1>
-          <p className="text-xs text-[#8292AD] mt-1 font-normal">
+          <p className="text-xs text-[#8292AD] dark:text-slate-400 mt-1 font-normal">
             Overview of your SaaS business
           </p>
         </div>
@@ -62,15 +62,15 @@ export const Dashboard = () => {
           <button
             type="button"
             onClick={() => setIsDateOpen(!isDateOpen)}
-            className="flex items-center gap-2 bg-white border border-[#E5EAF2] hover:bg-slate-50 text-xs font-medium text-[#172033] px-3.5 py-2 rounded-xl shadow-xs transition-colors cursor-pointer"
+            className="flex items-center gap-2 bg-white dark:bg-[#0D152D] border border-[#E5EAF2] dark:border-[#1E2D54] hover:bg-slate-50 dark:hover:bg-[#121D3D] text-xs font-medium text-[#172033] dark:text-white px-3.5 py-2 rounded-xl shadow-xs transition-colors cursor-pointer"
           >
-            <Calendar className="w-4 h-4 text-[#64748B]" />
+            <Calendar className="w-4 h-4 text-[#64748B] dark:text-slate-400" />
             <span>{selectedRange}</span>
-            <ChevronDown className="w-3.5 h-3.5 text-[#64748B] ml-0.5" />
+            <ChevronDown className="w-3.5 h-3.5 text-[#64748B] dark:text-slate-400 ml-0.5" />
           </button>
 
           {isDateOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white border border-[#E5EAF2] rounded-xl shadow-xl py-1.5 z-30 animate-in fade-in duration-100">
+            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#0D152D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl shadow-xl py-1.5 z-30 animate-in fade-in duration-100">
               {DATE_OPTIONS.map((opt) => (
                 <button
                   key={opt}
@@ -79,8 +79,8 @@ export const Dashboard = () => {
                     setSelectedRange(opt);
                     setIsDateOpen(false);
                   }}
-                  className={`w-full text-left px-3.5 py-2 text-xs flex items-center justify-between hover:bg-[#F8FAFC] transition-colors cursor-pointer ${
-                    selectedRange === opt ? 'text-[#2563EB] font-bold bg-blue-50/50' : 'text-[#334155]'
+                  className={`w-full text-left px-3.5 py-2 text-xs flex items-center justify-between hover:bg-[#F8FAFC] dark:hover:bg-[#121D3D] transition-colors cursor-pointer ${
+                    selectedRange === opt ? 'text-[#2563EB] dark:text-blue-400 font-bold bg-blue-50/50 dark:bg-blue-950/40' : 'text-[#334155] dark:text-slate-300'
                   }`}
                 >
                   <span>{opt}</span>

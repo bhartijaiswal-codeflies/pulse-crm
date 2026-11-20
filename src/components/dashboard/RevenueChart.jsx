@@ -93,24 +93,24 @@ export const RevenueChart = ({ externalFilter, onFilterChange }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-5 border border-[#E5EAF2] shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex flex-col justify-between h-full">
+    <div className="bg-white dark:bg-[#0D152D] rounded-2xl p-5 border border-[#E5EAF2] dark:border-[#1E2D54] shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex flex-col justify-between h-full">
       {/* Header: Title on Left, Filter pills on Right */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <div className="flex items-center gap-2">
           <BarChart2 className="w-5 h-5 text-[#2563EB]" />
-          <h3 className="text-base font-bold text-[#172033]">Revenue Overview</h3>
+          <h3 className="text-base font-bold text-[#172033] dark:text-white">Revenue Overview</h3>
         </div>
 
-        <div className="flex items-center gap-1 self-start sm:self-auto bg-white">
+        <div className="flex items-center gap-1 self-start sm:self-auto">
           {['7D', '30D', '90D', '1Y'].map((tab) => (
             <button
               key={tab}
               type="button"
               onClick={() => handleSelect(tab)}
-              className={`px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-full transition-colors cursor-pointer ${
+              className={`px-3 py-1 text-xs font-semibold rounded-full transition-colors cursor-pointer ${
                 activeFilter === tab
-                  ? 'bg-[#EBF3FF] text-[#2563EB]'
-                  : 'text-[#8292AD] hover:text-[#172033] hover:bg-slate-50'
+                  ? 'bg-[#2563EB] text-white shadow-xs'
+                  : 'text-[#64748B] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
               {tab}
@@ -121,11 +121,11 @@ export const RevenueChart = ({ externalFilter, onFilterChange }) => {
 
       {/* Metric Display */}
       <div className="flex items-center gap-3 mt-3 mb-2">
-        <span className="text-3xl font-extrabold text-[#172033] tracking-tight">
+        <span className="text-3xl font-extrabold text-[#172033] dark:text-white tracking-tight">
           {currentConfig.value}
         </span>
-        <span className="inline-flex items-center text-xs font-semibold text-emerald-600 bg-[#ECFDF5] border border-[#A7F3D0]/60 px-2.5 py-0.5 rounded-full">
-          {currentConfig.growth}
+        <span className="inline-flex items-center text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-[#ECFDF5] dark:bg-emerald-950/60 border border-[#A7F3D0]/60 dark:border-emerald-800 px-2.5 py-0.5 rounded-full">
+          +15%
         </span>
       </div>
 
@@ -140,7 +140,7 @@ export const RevenueChart = ({ externalFilter, onFilterChange }) => {
               </linearGradient>
             </defs>
             <CartesianGrid
-              strokeDasharray="0"
+              strokeDasharray="3 3"
               vertical={false}
               stroke={isDarkMode ? '#1E2D54' : '#F1F5F9'}
             />
@@ -163,8 +163,8 @@ export const RevenueChart = ({ externalFilter, onFilterChange }) => {
               content={({ active, payload, label }) => {
                 if (active && payload && payload.length) {
                   return (
-                    <div className="bg-white border border-[#E5EAF2] p-2.5 rounded-xl shadow-md text-xs">
-                      <p className="font-semibold text-[#172033]">{label}</p>
+                    <div className="bg-white dark:bg-[#0D152D] border border-[#E5EAF2] dark:border-[#1E2D54] p-2.5 rounded-xl shadow-md text-xs">
+                      <p className="font-semibold text-[#172033] dark:text-white">{label}</p>
                       <p className="text-[#2563EB] font-bold mt-0.5">₹{payload[0].value}L</p>
                     </div>
                   );

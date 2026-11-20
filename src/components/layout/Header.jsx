@@ -12,7 +12,8 @@ import {
   Shield,
   CreditCard,
   LogOut,
-  ExternalLink
+  ExternalLink,
+  RotateCw
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { useNavigate } from 'react-router-dom';
@@ -42,6 +43,7 @@ export const Header = () => {
   const navigate = useNavigate();
 
   // Dropdown states
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isDateOpen, setIsDateOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -49,6 +51,12 @@ export const Header = () => {
   const dateRef = useRef(null);
   const notifRef = useRef(null);
   const profileRef = useRef(null);
+
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    showToast('Dashboard data refreshed', 'success');
+    setTimeout(() => setIsRefreshing(false), 800);
+  };
 
   // Close dropdowns on outside click
   useEffect(() => {
@@ -101,7 +109,7 @@ export const Header = () => {
             <input
               type="text"
               readOnly
-              placeholder="Search companies, subscriptions, invoices..."
+              placeholder="Search companies, users, or invoices..."
               className="w-full bg-transparent dark:!bg-transparent text-xs sm:text-sm text-[#172033] dark:text-white placeholder-[#8292AD] dark:placeholder-slate-400 border-none outline-none focus:outline-none focus:ring-0 cursor-pointer select-none p-0 truncate"
             />
             <kbd className="hidden sm:inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-semibold text-[#8292AD] dark:text-slate-400 bg-white dark:bg-[#141E3C] border border-[#E5EAF2] dark:border-[#22325C] rounded-md shadow-2xs ml-2 flex-shrink-0">
@@ -110,45 +118,22 @@ export const Header = () => {
           </div>
         </div>
 
-        {/* Right: Date selector, Theme toggle, Notification, Profile */}
-        <div className="flex items-center gap-2 md:gap-3">
-          {/* Date Selector Dropdown (matches screenshot pill) */}
-          <div className="relative" ref={dateRef}>
-            <button
-              onClick={() => setIsDateOpen(!isDateOpen)}
-              className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-[#F7F9FC] dark:bg-[#0D152D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-xs font-semibold text-[#172033] dark:text-white hover:bg-slate-100 dark:hover:bg-[#14234b] transition-colors"
-            >
-              <Calendar className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-              <span>{selectedDateRange}</span>
-              <ChevronDown className="w-3.5 h-3.5 text-[#8292AD]" />
-            </button>
-
-            {isDateOpen && (
-              <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-[#0D152D] border border-[#E5EAF2] dark:border-[#1A2548] rounded-2xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                {DATE_OPTIONS.map((opt) => (
-                  <button
-                    key={opt}
-                    onClick={() => {
-                      setSelectedDateRange(opt);
-                      setIsDateOpen(false);
-                      showToast(`Filtered by ${opt}`, 'info');
-                    }}
-                    className={`w-full px-4 py-2 text-xs text-left flex items-center justify-between hover:bg-[#F7F9FC] dark:hover:bg-[#121D3D] ${
-                      selectedDateRange === opt ? 'font-bold text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-950/40' : 'text-[#172033] dark:text-white'
-                    }`}
-                  >
-                    <span>{opt}</span>
-                    {selectedDateRange === opt && <Check className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+        {/* Right: Refresh button, Theme toggle, Notification, Profile */}
+        <div className="flex items-center gap-1.5 sm:gap-2 md:gap-2.5">
+          {/* Refresh Dashboard Button */}
+          <button
+            type="button"
+            onClick={handleRefresh}
+            className="p-2 text-[#64748B] hover:text-[#172033] dark:text-slate-400 dark:hover:text-white hover:bg-[#F7F9FC] dark:hover:bg-[#0D152D] rounded-xl border border-transparent hover:border-[#E5EAF2] dark:hover:border-[#1E2D54] transition-colors cursor-pointer"
+            title="Refresh Dashboard"
+          >
+            <RotateCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-blue-600' : ''}`} />
+          </button>
 
           {/* Quick Theme Toggle */}
           <button
             onClick={handleToggleTheme}
-            className="p-2 text-[#8292AD] hover:text-[#172033] dark:hover:text-white hover:bg-[#F7F9FC] dark:hover:bg-[#0D152D] rounded-xl border border-transparent hover:border-[#E5EAF2] dark:hover:border-[#1E2D54] transition-colors cursor-pointer"
+            className="p-2 text-[#64748B] hover:text-[#172033] dark:text-slate-400 dark:hover:text-white hover:bg-[#F7F9FC] dark:hover:bg-[#0D152D] rounded-xl border border-transparent hover:border-[#E5EAF2] dark:hover:border-[#1E2D54] transition-colors cursor-pointer"
             title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
           >
             {isDarkMode ? (
@@ -162,13 +147,13 @@ export const Header = () => {
           <div className="relative" ref={notifRef}>
             <button
               onClick={() => setIsNotifOpen(!isNotifOpen)}
-              className="relative p-2 text-[#8292AD] hover:text-[#172033] dark:hover:text-white hover:bg-[#F7F9FC] dark:hover:bg-[#0D152D] rounded-xl border border-transparent hover:border-[#E5EAF2] dark:hover:border-[#1E2D54] transition-colors"
+              className="relative p-2 text-[#64748B] hover:text-[#172033] dark:text-slate-400 dark:hover:text-white hover:bg-[#F7F9FC] dark:hover:bg-[#0D152D] rounded-xl border border-transparent hover:border-[#E5EAF2] dark:hover:border-[#1E2D54] transition-colors cursor-pointer"
               title="Notifications"
             >
               <Bell className="w-4 h-4" />
-              {unreadCount > 0 && (
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-[#080D20]"></span>
-              )}
+              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
+                3
+              </span>
             </button>
 
             {isNotifOpen && (
@@ -227,19 +212,18 @@ export const Header = () => {
           <div className="relative" ref={profileRef}>
             <button
               onClick={() => setIsProfileOpen(!isProfileOpen)}
-              className="flex items-center gap-2.5 p-1 sm:pl-2 sm:pr-3 sm:py-1 rounded-xl hover:bg-[#F7F9FC] dark:hover:bg-[#0D152D] border border-transparent hover:border-[#E5EAF2] dark:hover:border-[#1E2D54] transition-colors group"
+              className="flex items-center gap-2 p-1 sm:pl-1.5 sm:pr-2.5 sm:py-1 rounded-xl hover:bg-[#F7F9FC] dark:hover:bg-[#0D152D] border border-transparent hover:border-[#E5EAF2] dark:hover:border-[#1E2D54] transition-colors group cursor-pointer"
             >
               <div className="relative">
                 <img
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces"
-                  alt="Bobby Singh"
-                  className="w-8 h-8 rounded-full object-cover ring-2 ring-blue-500/20 group-hover:ring-blue-500/50 transition-all"
+                  alt="Codeflies Technologies"
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover ring-1 ring-slate-200 dark:ring-slate-700 group-hover:ring-blue-500/50 transition-all"
                 />
                 <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#080D20]"></span>
               </div>
               <div className="text-left hidden sm:block">
-                <p className="text-xs font-bold text-[#172033] dark:text-white leading-tight">Bobby Singh</p>
-                <p className="text-[10px] text-[#8292AD] dark:text-slate-400 leading-tight font-medium">Super Admin</p>
+                <p className="text-xs font-semibold text-[#172033] dark:text-white leading-tight">Codeflies Technologies</p>
               </div>
               <ChevronDown className="w-3.5 h-3.5 text-[#8292AD] group-hover:text-[#172033] dark:group-hover:text-white transition-colors hidden sm:block" />
             </button>

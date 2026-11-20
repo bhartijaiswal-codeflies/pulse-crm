@@ -8,7 +8,7 @@ const ACTIVITIES = [
     title: 'Payment received from Acme Corp',
     subtext: '₹1,50,000 • 2 hours ago',
     badge: 'Success',
-    badgeClass: 'bg-[#DCFCE7] text-[#15803D]',
+    badgeClass: 'bg-[#DCFCE7] text-[#15803D] dark:bg-emerald-950/60 dark:text-emerald-400',
     path: '/billing'
   },
   {
@@ -16,7 +16,7 @@ const ACTIVITIES = [
     title: 'New company registered: GlobalTech Ltd',
     subtext: '3 hours ago',
     badge: 'New',
-    badgeClass: 'bg-[#DBEAFE] text-[#1D4ED8]',
+    badgeClass: 'bg-[#DBEAFE] text-[#1D4ED8] dark:bg-blue-950/60 dark:text-blue-400',
     path: '/companies'
   },
   {
@@ -24,16 +24,8 @@ const ACTIVITIES = [
     title: 'Subscription cancelled: Bright Media',
     subtext: '5 hours ago',
     badge: 'Cancelled',
-    badgeClass: 'bg-[#FEE2E2] text-[#B91C1C]',
+    badgeClass: 'bg-[#FEE2E2] text-[#B91C1C] dark:bg-red-950/60 dark:text-red-400',
     path: '/subscriptions'
-  },
-  {
-    dotColor: 'bg-[#8B5CF6]',
-    title: 'Plan upgraded: NextGen Solutions',
-    subtext: '1 day ago',
-    badge: 'Upgrade',
-    badgeClass: 'bg-[#F3E8FF] text-[#7E22CE]',
-    path: '/plans'
   }
 ];
 
@@ -41,12 +33,12 @@ export const RecentActivity = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-white rounded-2xl p-5 border border-[#E5EAF2] shadow-[0_1px_3px_rgba(0,0,0,0.03)] h-full flex flex-col justify-between">
+    <div className="bg-white dark:bg-[#0D152D] rounded-2xl p-5 border border-[#E5EAF2] dark:border-[#1E2D54] shadow-[0_1px_3px_rgba(0,0,0,0.03)] h-full flex flex-col justify-between">
       {/* Header */}
       <div className="flex items-center justify-between pb-3">
         <div className="flex items-center gap-2">
           <Zap className="w-5 h-5 text-[#2563EB] fill-[#2563EB]" />
-          <h3 className="text-base font-bold text-[#172033]">Recent Activity</h3>
+          <h3 className="text-base font-bold text-[#172033] dark:text-white">Recent Activity</h3>
         </div>
 
         <NavLink
@@ -64,17 +56,17 @@ export const RecentActivity = () => {
           <div
             key={idx}
             onClick={() => navigate(act.path)}
-            className="flex items-center justify-between gap-3 p-1.5 -mx-1.5 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer group"
+            className="flex items-center justify-between gap-3 p-1.5 -mx-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-[#121D3D] transition-colors cursor-pointer group"
           >
             <div className="flex items-start gap-3 min-w-0">
               <span
                 className={`w-2.5 h-2.5 rounded-full flex-shrink-0 mt-1.5 ${act.dotColor}`}
               />
               <div className="min-w-0 truncate">
-                <p className="text-xs font-semibold text-[#172033] group-hover:text-blue-600 transition-colors truncate">
+                <p className="text-xs font-semibold text-[#172033] dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">
                   {act.title}
                 </p>
-                <p className="text-[11px] text-[#64748B] mt-0.5">
+                <p className="text-[11px] text-[#64748B] dark:text-slate-400 mt-0.5">
                   {act.subtext}
                 </p>
               </div>

@@ -18,18 +18,18 @@ export const SubscriptionChart = () => {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-5 border border-[#E5EAF2] shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex flex-col justify-between h-full">
+    <div className="bg-white dark:bg-[#0D152D] rounded-2xl p-5 border border-[#E5EAF2] dark:border-[#1E2D54] shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex flex-col justify-between h-full">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <PieIcon className="w-5 h-5 text-[#2563EB] fill-[#2563EB]" />
-          <h3 className="text-base font-bold text-[#172033]">Subscription Status</h3>
+          <h3 className="text-base font-bold text-[#172033] dark:text-white">Subscription Status</h3>
         </div>
         <button
           onClick={() => navigate('/subscriptions')}
-          className="text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+          className="text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline cursor-pointer"
         >
-          View All
+          Details
         </button>
       </div>
 
@@ -44,9 +44,9 @@ export const SubscriptionChart = () => {
                   if (active && payload && payload.length) {
                     const data = payload[0].payload;
                     return (
-                      <div className="bg-white border border-[#E5EAF2] px-2.5 py-1.5 rounded-xl shadow-md text-xs">
-                        <p className="font-semibold text-[#172033]">{data.name}</p>
-                        <p className="text-[#64748B]">{data.value} ({data.percentage})</p>
+                      <div className="bg-white dark:bg-[#0D152D] border border-[#E5EAF2] dark:border-[#1E2D54] px-2.5 py-1.5 rounded-xl shadow-md text-xs">
+                        <p className="font-semibold text-[#172033] dark:text-white">{data.name}</p>
+                        <p className="text-[#64748B] dark:text-slate-400">{data.value} ({data.percentage})</p>
                       </div>
                     );
                   }
@@ -80,8 +80,8 @@ export const SubscriptionChart = () => {
 
           {/* Center text: 248 Total */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span className="text-xl sm:text-2xl font-bold text-[#172033] leading-none">248</span>
-            <span className="text-[10px] sm:text-xs text-[#8292AD] mt-1 font-medium">Total</span>
+            <span className="text-2xl font-bold text-[#172033] dark:text-white leading-none">248</span>
+            <span className="text-[10px] text-[#8292AD] dark:text-slate-400 mt-1 font-bold uppercase tracking-wider">TOTAL</span>
           </div>
         </div>
 
@@ -91,7 +91,7 @@ export const SubscriptionChart = () => {
             <div
               key={item.name}
               onClick={() => handleSelectStatus(item.name)}
-              className="flex items-center justify-between gap-2 text-xs font-medium p-1 sm:p-1.5 -mx-1 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer group"
+              className="flex items-center justify-between gap-2 text-xs font-medium p-1 sm:p-1.5 -mx-1 rounded-xl hover:bg-slate-50 dark:hover:bg-[#121D3D] transition-colors cursor-pointer group"
               title={`View ${item.name} subscriptions`}
             >
               <div className="flex items-center gap-2">
@@ -99,13 +99,13 @@ export const SubscriptionChart = () => {
                   className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                   style={{ backgroundColor: item.color }}
                 />
-                <span className="text-[#334155] group-hover:text-blue-600 transition-colors font-medium whitespace-nowrap">
+                <span className="text-[#334155] dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors font-medium whitespace-nowrap">
                   {item.name}
                 </span>
               </div>
               <div className="flex items-center gap-2.5 sm:gap-3 text-right flex-shrink-0">
-                <span className="font-bold text-[#172033] min-w-[20px] text-right">{item.value}</span>
-                <span className="text-[#64748B] min-w-[36px] text-right text-[11px] font-normal">{item.percentage}</span>
+                <span className="font-bold text-[#172033] dark:text-white min-w-[24px] text-right">{item.value}</span>
+                <span className="text-[#64748B] dark:text-slate-400 min-w-[38px] text-right text-[11px] font-normal">{item.percentage}</span>
               </div>
             </div>
           ))}

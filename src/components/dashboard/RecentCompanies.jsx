@@ -28,7 +28,6 @@ const RECENT_COMPANIES = [
     name: 'Acme Corp',
     letter: 'A',
     avatarBg: 'bg-[#2563EB]',
-    logo: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop&crop=faces',
     plan: 'Pro Plan',
     status: 'Active',
     users: 24,
@@ -44,8 +43,7 @@ const RECENT_COMPANIES = [
     id: 'CMP-1002',
     name: 'GlobalTech Ltd',
     letter: 'G',
-    avatarBg: 'bg-[#2563EB]',
-    logo: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=100&h=100&fit=crop&crop=faces',
+    avatarBg: 'bg-[#1E3A8A]',
     plan: 'Business Plan',
     status: 'Active',
     users: 48,
@@ -62,7 +60,6 @@ const RECENT_COMPANIES = [
     name: 'Bright Media',
     letter: 'B',
     avatarBg: 'bg-[#2563EB]',
-    logo: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=100&h=100&fit=crop&crop=faces',
     plan: 'Pro Plan',
     status: 'Trial',
     users: 12,
@@ -73,40 +70,6 @@ const RECENT_COMPANIES = [
     phone: '+91 99887 76655',
     location: 'Hyderabad, India',
     nextBilling: 'Nov 25, 2026'
-  },
-  {
-    id: 'CMP-1004',
-    name: 'NextGen Solutions',
-    letter: 'N',
-    avatarBg: 'bg-[#F97316]',
-    logo: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=100&h=100&fit=crop&crop=faces',
-    plan: 'Business Plan',
-    status: 'Active',
-    users: 36,
-    mrr: '₹29,999',
-    industry: 'AI & Data Platforms',
-    contactPerson: 'David Chen',
-    email: 'admin@nextgensol.io',
-    phone: '+91 97234 11223',
-    location: 'Pune, India',
-    nextBilling: 'Dec 10, 2026'
-  },
-  {
-    id: 'CMP-1005',
-    name: 'DreamWorks Co',
-    letter: 'D',
-    avatarBg: 'bg-[#3B82F6]',
-    logo: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=100&h=100&fit=crop&crop=faces',
-    plan: 'Starter Plan',
-    status: 'Cancelled',
-    users: 8,
-    mrr: '₹7,999',
-    industry: 'Creative & Animation',
-    contactPerson: 'Alexei Ivanov',
-    email: 'ops@dreamworks.co',
-    phone: '+91 99001 55443',
-    location: 'Delhi NCR, India',
-    nextBilling: '—'
   }
 ];
 
@@ -142,25 +105,25 @@ export const RecentCompanies = () => {
     switch (status) {
       case 'Active':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#DCFCE7] text-[#15803D]">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#DCFCE7] text-[#15803D] dark:bg-emerald-950/60 dark:text-emerald-400">
             Active
           </span>
         );
       case 'Trial':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#DBEAFE] text-[#1D4ED8]">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#DBEAFE] text-[#1D4ED8] dark:bg-blue-950/60 dark:text-blue-400">
             Trial
           </span>
         );
       case 'Cancelled':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FEE2E2] text-[#B91C1C]">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FEE2E2] text-[#B91C1C] dark:bg-red-950/60 dark:text-red-400">
             Cancelled
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-700">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
             {status}
           </span>
         );
@@ -168,12 +131,12 @@ export const RecentCompanies = () => {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-5 border border-[#E5EAF2] shadow-[0_1px_3px_rgba(0,0,0,0.03)] h-full flex flex-col justify-between">
+    <div className="bg-white dark:bg-[#0D152D] rounded-2xl p-5 border border-[#E5EAF2] dark:border-[#1E2D54] shadow-[0_1px_3px_rgba(0,0,0,0.03)] h-full flex flex-col justify-between">
       {/* Header */}
       <div className="flex items-center justify-between pb-3">
         <div className="flex items-center gap-2">
           <Building2 className="w-5 h-5 text-[#2563EB]" />
-          <h3 className="text-base font-bold text-[#172033]">Recent Companies</h3>
+          <h3 className="text-base font-bold text-[#172033] dark:text-white">Recent Companies</h3>
         </div>
 
         <NavLink
@@ -189,45 +152,92 @@ export const RecentCompanies = () => {
       <div className="overflow-x-auto no-scrollbar">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-[#F1F5F9] dark:border-[#17203F] text-xs font-semibold text-[#64748B] dark:text-slate-400">
-              <th className="py-2.5 px-3 font-medium">Company</th>
-              <th className="py-2.5 px-3 font-medium">Plan</th>
-              <th className="py-2.5 px-3 font-medium">Status</th>
-              <th className="py-2.5 px-2 text-center font-medium">Users</th>
-              <th className="py-2.5 px-3 font-medium whitespace-nowrap text-right">Next Billing</th>
+            <tr className="border-b border-[#F1F5F9] dark:border-[#17203F] text-xs font-semibold text-[#8292AD] dark:text-slate-400 uppercase tracking-wider">
+              <th className="py-2.5 px-3 font-semibold text-[11px]">COMPANY</th>
+              <th className="py-2.5 px-3 font-semibold text-[11px]">PLAN</th>
+              <th className="py-2.5 px-3 font-semibold text-[11px]">STATUS</th>
+              <th className="py-2.5 px-2 text-center font-semibold text-[11px]">USERS</th>
+              <th className="py-2.5 px-3 font-semibold text-[11px] whitespace-nowrap text-right">NEXT BILLING</th>
+              <th className="py-2.5 px-2 w-8"></th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[#F1F5F9] dark:divide-[#17203F] text-xs">
-            {companiesList.map((c, idx) => (
+            {companiesList.slice(0, 3).map((c, idx) => (
               <tr
                 key={c.id || idx}
                 className="hover:bg-[#F8FAFC] dark:hover:bg-[#121D3D] transition-colors group cursor-pointer"
                 onClick={() => setSelectedCompany(c)}
               >
-                <td className="py-2.5 px-3">
-                  <div className="flex items-center gap-2.5 min-w-0 max-w-[140px] sm:max-w-[180px]">
-                    {c.logo ? (
-                      <img
-                        src={c.logo}
-                        alt={c.name}
-                        className="w-7 h-7 rounded-lg object-cover border border-[#E5EAF2] dark:border-[#1E2D54] flex-shrink-0"
-                      />
-                    ) : (
-                      <div
-                        className={`w-7 h-7 rounded-lg ${c.avatarBg} text-white font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-xs`}
-                      >
-                        {c.letter}
-                      </div>
-                    )}
+                <td className="py-3 px-3">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div
+                      className={`w-7 h-7 rounded-full ${c.avatarBg} text-white font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-xs`}
+                    >
+                      {c.letter}
+                    </div>
                     <span className="font-semibold text-[#172033] dark:text-white group-hover:text-blue-600 transition-colors truncate">
                       {c.name}
                     </span>
                   </div>
                 </td>
-                <td className="py-2.5 px-3 text-[#475569] dark:text-slate-400 whitespace-nowrap">{c.plan}</td>
-                <td className="py-2.5 px-3 whitespace-nowrap">{renderStatus(c.status)}</td>
-                <td className="py-2.5 px-2 text-center font-medium text-[#172033] dark:text-white">{c.users}</td>
-                <td className="py-2.5 px-3 text-right text-[#475569] dark:text-slate-400 whitespace-nowrap">{c.nextBilling}</td>
+                <td className="py-3 px-3 text-[#475569] dark:text-slate-400 whitespace-nowrap">{c.plan}</td>
+                <td className="py-3 px-3 whitespace-nowrap">{renderStatus(c.status)}</td>
+                <td className="py-3 px-2 text-center font-medium text-[#172033] dark:text-white">{c.users}</td>
+                <td className="py-3 px-3 text-right text-[#475569] dark:text-slate-400 whitespace-nowrap">{c.nextBilling}</td>
+                <td className="py-3 px-2 text-right relative" onClick={(e) => e.stopPropagation()}>
+                  <button
+                    type="button"
+                    onClick={() => setActiveMenu(activeMenu === c.id ? null : c.id)}
+                    className="p-1 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                  >
+                    <MoreVertical className="w-4 h-4" />
+                  </button>
+
+                  {activeMenu === c.id && (
+                    <div className="absolute right-2 top-8 w-40 bg-white dark:bg-[#0D152D] rounded-xl shadow-xl border border-[#E5EAF2] dark:border-[#1E2D54] py-1.5 z-20 text-xs">
+                      <button
+                        onClick={() => {
+                          setSelectedCompany(c);
+                          setActiveMenu(null);
+                        }}
+                        className="w-full text-left px-3 py-1.5 hover:bg-slate-50 dark:hover:bg-[#121D3D] text-[#334155] dark:text-slate-300 flex items-center gap-2"
+                      >
+                        <Eye className="w-3.5 h-3.5 text-blue-600" />
+                        <span>View Details</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setEditingCompany(c);
+                          setActiveMenu(null);
+                        }}
+                        className="w-full text-left px-3 py-1.5 hover:bg-slate-50 dark:hover:bg-[#121D3D] text-[#334155] dark:text-slate-300 flex items-center gap-2"
+                      >
+                        <Edit2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Edit Company</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleStartVideoCall(c);
+                          setActiveMenu(null);
+                        }}
+                        className="w-full text-left px-3 py-1.5 hover:bg-slate-50 dark:hover:bg-[#121D3D] text-[#334155] dark:text-slate-300 flex items-center gap-2"
+                      >
+                        <Video className="w-3.5 h-3.5 text-indigo-600" />
+                        <span>Instant Call</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleDelete(c.id);
+                          setActiveMenu(null);
+                        }}
+                        className="w-full text-left px-3 py-1.5 hover:bg-red-50 dark:hover:bg-red-950/40 text-red-600 flex items-center gap-2"
+                      >
+                        <Trash2 className="w-3.5 h-3.5 text-red-500" />
+                        <span>Remove</span>
+                      </button>
+                    </div>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

@@ -27,7 +27,6 @@ export const StatCards = () => {
           />
         </svg>
       ),
-      bgClass: 'bg-gradient-to-br from-[#F5F8FF]/80 via-white to-white border-[#E0EDFD] dark:from-[#131D3F]/80 dark:via-[#0D152D] dark:to-[#0D152D] dark:border-[#1A2548]',
       onClick: () => navigate('/companies')
     },
     {
@@ -51,7 +50,6 @@ export const StatCards = () => {
           />
         </svg>
       ),
-      bgClass: 'bg-gradient-to-br from-[#F2FDF6]/80 via-white to-white border-[#DCFCE7] dark:from-[#0E2A1E]/80 dark:via-[#0D152D] dark:to-[#0D152D] dark:border-[#1A2548]',
       onClick: () => navigate('/subscriptions')
     },
     {
@@ -75,7 +73,6 @@ export const StatCards = () => {
           />
         </svg>
       ),
-      bgClass: 'bg-gradient-to-br from-[#FAF5FF]/80 via-white to-white border-[#F3E8FF] dark:from-[#21163F]/80 dark:via-[#0D152D] dark:to-[#0D152D] dark:border-[#1A2548]',
       onClick: () => navigate('/billing')
     },
     {
@@ -98,7 +95,6 @@ export const StatCards = () => {
           />
         </svg>
       ),
-      bgClass: 'bg-gradient-to-br from-[#FFFDF5]/80 via-white to-white border-[#FEF3C7] dark:from-[#2B1F0A]/80 dark:via-[#0D152D] dark:to-[#0D152D] dark:border-[#1A2548]',
       onClick: () => navigate('/billing')
     }
   ];
@@ -109,28 +105,28 @@ export const StatCards = () => {
         <div
           key={idx}
           onClick={card.onClick}
-          className={`rounded-2xl p-4 sm:p-5 border ${card.bgClass} shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden relative min-h-[160px]`}
+          className="bg-white dark:bg-[#0D152D] rounded-2xl p-4 sm:p-5 border border-[#E5EAF2] dark:border-[#1E2D54] shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between"
         >
-          {/* Top Row: Icon on left, Sparkline on right */}
+          {/* Top Row: Icon + Title/Value on Left, Sparkline on Right */}
           <div className="flex items-center justify-between">
-            {card.icon}
+            <div className="flex items-center gap-3">
+              {card.icon}
+              <div>
+                <p className="text-xs font-medium text-[#64748B] dark:text-slate-400 leading-tight">
+                  {card.title}
+                </p>
+                <h3 className="text-2xl font-bold text-[#172033] dark:text-white mt-1 tracking-tight">
+                  {card.value}
+                </h3>
+              </div>
+            </div>
             <div className="flex-shrink-0">
               {card.sparkline}
             </div>
           </div>
 
-          {/* Middle: Title & Value - Uniform height so metric numbers align perfectly across all 4 cards */}
-          <div className="mt-3 flex-1 flex flex-col justify-between">
-            <p className="text-xs font-medium text-[#475569] dark:text-slate-400 leading-snug min-h-[2.5rem] flex items-start">
-              {card.title}
-            </p>
-            <h3 className="text-2xl font-bold text-[#172033] dark:text-white mt-1 tracking-tight">
-              {card.value}
-            </h3>
-          </div>
-
           {/* Bottom Row: Percentage & Subtitle */}
-          <div className="mt-3 pt-1 flex items-center text-xs min-h-[1.5rem]">
+          <div className="mt-4 pt-0.5 flex items-center text-xs">
             {card.growth ? (
               <>
                 <span className={`${card.trendColor} font-semibold flex items-center gap-0.5 flex-shrink-0`}>
