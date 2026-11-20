@@ -221,9 +221,9 @@ export const Sidebar = () => {
 
           {/* Profile Item with pulsating coral dot */}
           <NavLink
-            to="/settings"
+            to="/profile"
             className={`group relative w-[60px] h-[43px] 2xl:h-[48px] flex-shrink-0 flex flex-col items-center justify-center rounded-xl transition-all duration-150 ${
-              location.pathname === '/settings'
+              location.pathname === '/settings' || location.pathname === '/profile'
                 ? 'bg-[#0D1938] border border-blue-500/50 text-white shadow-[0_0_14px_rgba(37,99,235,0.28)]'
                 : 'text-[#76849D] hover:text-white hover:bg-[#0D152D]/80 border border-transparent'
             }`}
@@ -231,14 +231,14 @@ export const Sidebar = () => {
             <span className="absolute top-1 right-2.5 w-2 h-2 rounded-full bg-[#FF3B5B] ring-2 ring-[#060A18] animate-pulse" />
             <UserIcon
               className={`w-[17px] h-[17px] mb-0.5 transition-transform group-hover:scale-105 stroke-[1.8] ${
-                location.pathname === '/settings'
+                location.pathname === '/settings' || location.pathname === '/profile'
                   ? 'text-[#3B82F6]'
                   : 'text-[#e8eaed] group-hover:text-white'
               }`}
             />
             <span
               className={`text-[10px] tracking-tight leading-none text-center truncate max-w-[56px] ${
-                location.pathname === '/settings'
+                location.pathname === '/settings' || location.pathname === '/profile'
                   ? 'font-semibold text-[#93C5FD]'
                   : 'font-medium text-[#e8eaed] group-hover:text-[#E2E8F0]'
               }`}
