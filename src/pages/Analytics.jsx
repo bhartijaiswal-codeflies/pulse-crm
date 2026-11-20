@@ -1,105 +1,176 @@
 import React, { useState } from 'react';
 import {
-  BarChart3,
   TrendingUp,
   Download,
-  Calendar,
-  Filter,
-  DollarSign,
-  Users,
-  Repeat,
-  ArrowUpRight,
-  CheckCircle
+  Award,
+  RotateCw
 } from 'lucide-react';
-import {
-  AreaChart,
-  Area,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend
-} from 'recharts';
-import { REVENUE_DATA } from '../data/mockData';
 import { useApp } from '../context/AppContext';
 
-const COHORT_DATA = [
-  { cohort: 'Jan', m1: 100, m2: 96, m3: 94, m4: 92, m5: 91, m6: 90 },
-  { cohort: 'Feb', m1: 100, m2: 97, m3: 95, m4: 93, m5: 92, m6: null },
-  { cohort: 'Mar', m1: 100, m2: 98, m3: 96, m4: 94, m5: null, m6: null },
-  { cohort: 'Apr', m1: 100, m2: 97, m3: 95, m4: null, m5: null, m6: null },
-  { cohort: 'May', m1: 100, m2: 98, m3: null, m4: null, m5: null, m6: null },
-  { cohort: 'Jun', m1: 100, m2: null, m3: null, m4: null, m5: null, m6: null },
+// 6 Months MRR Trajectory Data (matches design image)
+const MRR_DATA_6M = [
+  { month: 'Jun', value: '₹11.4L', percentage: 50 },
+  { month: 'Jul', value: '₹12.6L', percentage: 58 },
+  { month: 'Aug', value: '₹13.8L', percentage: 67 },
+  { month: 'Sep', value: '₹14.9L', percentage: 76 },
+  { month: 'Oct', value: '₹16.2L', percentage: 86 },
+  { month: 'Nov', value: '₹17.6L', percentage: 95 }
 ];
 
-const PLAN_DISTRIBUTION_DATA = [
-  { name: 'Starter', companies: 42, mrr: 3.35, color: '#10B981' },
-  { name: 'Growth', companies: 128, mrr: 25.59, color: '#3B82F6' },
-  { name: 'Enterprise', companies: 68, mrr: 33.99, color: '#8B5CF6' },
-  { name: 'Custom Scale', companies: 10, mrr: 8.99, color: '#F59E0B' },
+// 1 Year MRR Trajectory Data (for 1Y toggle)
+const MRR_DATA_1Y = [
+  { month: 'Dec', value: '₹7.8L', percentage: 35 },
+  { month: 'Jan', value: '₹8.6L', percentage: 38 },
+  { month: 'Feb', value: '₹9.4L', percentage: 42 },
+  { month: 'Mar', value: '₹10.1L', percentage: 46 },
+  { month: 'Apr', value: '₹10.8L', percentage: 48 },
+  { month: 'May', value: '₹11.0L', percentage: 49 },
+  { month: 'Jun', value: '₹11.4L', percentage: 50 },
+  { month: 'Jul', value: '₹12.6L', percentage: 58 },
+  { month: 'Aug', value: '₹13.8L', percentage: 67 },
+  { month: 'Sep', value: '₹14.9L', percentage: 76 },
+  { month: 'Oct', value: '₹16.2L', percentage: 86 },
+  { month: 'Nov', value: '₹17.6L', percentage: 95 }
+];
+
+// Revenue Contribution by Plan Data (matches design image)
+const PLAN_CONTRIBUTIONS = [
+  {
+    name: 'Pro Plan',
+    companies: 102,
+    revenue: '₹6.34L',
+    percentage: 36,
+    barWidth: '85%'
+  },
+  {
+    name: 'Business Plan',
+    companies: 51,
+    revenue: '₹5.98L',
+    percentage: 34,
+    barWidth: '80%'
+  },
+  {
+    name: 'Enterprise Plan',
+    companies: 18,
+    revenue: '₹3.34L',
+    percentage: 19,
+    barWidth: '44%'
+  },
+  {
+    name: 'Starter Plan',
+    companies: 54,
+    revenue: '₹1.94L',
+    percentage: 11,
+    barWidth: '26%'
+  }
+];
+
+// Monthly Customer Retention Cohorts Data (matches design image)
+const COHORT_ROWS = [
+  { cohort: 'Jun 2026', newCos: 38, m1: '100%', m2: '94%', m3: '92%', m4: '89%', m5: '89%' },
+  { cohort: 'Jul 2026', newCos: 41, m1: '100%', m2: '95%', m3: '93%', m4: '90%', m5: null },
+  { cohort: 'Aug 2026', newCos: 46, m1: '100%', m2: '96%', m3: '93%', m4: null, m5: null },
+  { cohort: 'Sep 2026', newCos: 52, m1: '100%', m2: '96%', m3: null, m4: null, m5: null },
+  { cohort: 'Oct 2026', newCos: 49, m1: '100%', m2: null, m3: null, m4: null, m5: null }
 ];
 
 export const Analytics = () => {
   const { showToast } = useApp();
-  const [timeframe, setTimeframe] = useState('monthly');
+  const [range, setRange] = useState('6M');
+
+  const activeMrrData = range === '6M' ? MRR_DATA_6M : MRR_DATA_1Y;
 
   const handleExport = () => {
-    const headers = 'Month,Revenue (Lakhs),Subscriptions,Expenses (Lakhs)\n';
-    const rows = REVENUE_DATA.monthly.map(m =>
-      `"${m.name}",${m.revenue},${m.subscriptions},${m.expenses}`
-    ).join('\n');
-    const blob = new Blob([headers + rows], { type: 'text/csv;charset=utf-8;' });
+    const csvContent =
+      'Cohort,New Companies,Month 1,Month 2,Month 3,Month 4,Month 5\n' +
+      COHORT_ROWS.map(
+        (r) =>
+          `"${r.cohort}",${r.newCos},${r.m1},${r.m2 || '—'},${r.m3 || '—'},${r.m4 || '—'},${r.m5 || '—'}`
+      ).join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', 'Pulse_Revenue_Analytics.csv');
+    link.setAttribute('download', 'Pulse_Analytics_BI.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    showToast('Analytics dataset exported to CSV successfully!', 'success');
+    showToast('Analytics BI report exported to CSV successfully!', 'success');
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <div className="space-y-6 max-w-[1600px] mx-auto pb-12">
+      {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5 flex-wrap">
             <h1 className="text-2xl font-bold text-[#172033] dark:text-white tracking-tight">
-              Advanced Analytics
+              Analytics
             </h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EFF6FF] text-[#2563EB] dark:bg-blue-950/60 dark:text-blue-400 border border-blue-100 dark:border-blue-900/40">
-              FY 2026 Live
+              NRR 108.4%
             </span>
           </div>
           <p className="text-xs text-[#8292AD] dark:text-slate-400 mt-1 font-normal">
-            Deep financial forecasting, net revenue retention, cohort churn, and ARR run-rates.
+            Deep SaaS revenue intelligence, net retention cohorts, ARPU, and churn trends.
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={handleExport}
-          className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] dark:text-white bg-white dark:bg-[#0D152D] hover:bg-slate-50 dark:hover:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl shadow-2xs transition-colors cursor-pointer self-start sm:self-auto"
-        >
-          <Download className="w-3.5 h-3.5 text-[#64748B] dark:text-slate-400" />
-          <span>Export CSV</span>
-        </button>
+        {/* Right Controls: Range Toggle + Export BI */}
+        <div className="flex items-center gap-2.5 self-start sm:self-auto">
+          <div className="flex items-center bg-[#F1F5F9] dark:bg-[#121D3D] p-1 rounded-xl border border-[#E5EAF2] dark:border-[#1E2D54]">
+            <button
+              type="button"
+              onClick={() => {
+                setRange('6M');
+                showToast('Displaying 6-Month MRR trajectory', 'info');
+              }}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                range === '6M'
+                  ? 'bg-[#2563EB] text-white shadow-xs'
+                  : 'text-[#64748B] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white'
+              }`}
+            >
+              6M
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setRange('1Y');
+                showToast('Displaying 1-Year MRR trajectory', 'info');
+              }}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                range === '1Y'
+                  ? 'bg-[#2563EB] text-white shadow-xs'
+                  : 'text-[#64748B] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white'
+              }`}
+            >
+              1Y
+            </button>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleExport}
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Export BI</span>
+          </button>
+        </div>
       </div>
 
-      {/* KPI Highlights */}
+      {/* Top 4 KPI Stat Cards Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-        {/* Card 1: Annual Run Rate */}
-        <div className="bg-[#F8FAFF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E2EDFF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
-          <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
-            <TrendingUp className="w-5 h-5" />
+        {/* Card 1: Annual Run Rate (ARR) */}
+        <div className="bg-[#FAF7FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#F3E8FF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#7C3AED] text-white flex items-center justify-center flex-shrink-0 font-bold text-lg shadow-xs">
+            <span>₹</span>
           </div>
           <div>
             <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
-              ₹2.11 Cr
+              ₹2.11Cr
             </h3>
             <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
               Annual Run Rate (ARR)
@@ -110,11 +181,11 @@ export const Analytics = () => {
         {/* Card 2: Net Revenue Retention */}
         <div className="bg-[#F6FDF9] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#DCFCE7] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
           <div className="w-10 h-10 rounded-xl bg-[#10B981] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
-            <CheckCircle className="w-5 h-5" />
+            <TrendingUp className="w-5 h-5" />
           </div>
           <div>
             <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
-              118%
+              108.4%
             </h3>
             <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
               Net Revenue Retention
@@ -122,162 +193,200 @@ export const Analytics = () => {
           </div>
         </div>
 
-        {/* Card 3: Gross Logo Churn */}
+        {/* Card 3: Avg Revenue Per Account */}
         <div className="bg-[#F0F9FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#BAE6FD]/80 dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
           <div className="w-10 h-10 rounded-xl bg-[#0284C7] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
-            <BarChart3 className="w-5 h-5" />
+            <Award className="w-5 h-5" />
           </div>
           <div>
             <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
-              1.8%
+              ₹7,822
             </h3>
             <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
-              Gross Logo Churn
+              Avg Revenue Per Account
             </p>
           </div>
         </div>
 
-        {/* Card 4: Customer Acquisition Cost */}
-        <div className="bg-[#FAF7FF] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#F3E8FF] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
-          <div className="w-10 h-10 rounded-xl bg-[#7C3AED] text-white flex items-center justify-center flex-shrink-0 font-bold shadow-xs">
-            <DollarSign className="w-5 h-5" />
+        {/* Card 4: Monthly Logo Churn */}
+        <div className="bg-[#FFFDF5] dark:bg-[#0D152D] p-4 rounded-2xl border border-[#FEF3C7] dark:border-[#1E2D54] shadow-xs flex items-center gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#D97706] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <RotateCw className="w-5 h-5" />
           </div>
           <div>
             <h3 className="text-xl sm:text-2xl font-bold text-[#172033] dark:text-white leading-tight">
-              ₹6,400
+              2.8%
             </h3>
             <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal mt-0.5 leading-tight">
-              Customer Acquisition Cost
+              Monthly Logo Churn
             </p>
           </div>
         </div>
       </div>
 
-      {/* Primary Chart: Monthly Revenue vs Operating Costs */}
-      <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5EAF2] shadow-xs">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#E5EAF2]">
-          <div>
-            <h3 className="text-base font-bold text-[#172033]">
-              Revenue Growth & Operating Margin
+      {/* Middle Section: MRR Growth Trajectory & Revenue Contribution by Plan */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+        {/* Left: MRR Growth Trajectory */}
+        <div className="bg-white dark:bg-[#0D152D] rounded-2xl border border-[#E5EAF2] dark:border-[#1E2D54] p-6 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between pb-4 border-b border-[#E5EAF2] dark:border-[#1E2D54]">
+            <h3 className="text-sm font-bold text-[#172033] dark:text-white">
+              MRR Growth Trajectory (₹ Lakhs)
             </h3>
-            <p className="text-xs text-[#8292AD]">Cash inflow vs cloud infrastructure & support costs</p>
+            <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+              +54.3% vs period start
+            </span>
           </div>
 
-          <div className="flex items-center bg-[#F7F9FC] border border-[#E5EAF2] rounded-xl p-1">
-            {['monthly', 'weekly', 'yearly'].map((period) => (
-              <button
-                key={period}
-                onClick={() => setTimeframe(period)}
-                className={`px-3 py-1 text-xs font-semibold rounded-lg capitalize transition-all ${
-                  timeframe === period ? 'bg-white text-blue-600 shadow-xs' : 'text-[#8292AD]'
-                }`}
-              >
-                {period}
-              </button>
+          {/* Capsule Chart Columns */}
+          <div className="flex items-end justify-between px-2 sm:px-6 pt-6 pb-2 min-h-[260px] overflow-x-auto gap-3">
+            {activeMrrData.map((item, idx) => (
+              <div key={idx} className="flex flex-col items-center flex-1 min-w-[44px]">
+                {/* Value on Top */}
+                <span className="text-xs font-bold text-[#172033] dark:text-white mb-3 whitespace-nowrap">
+                  {item.value}
+                </span>
+
+                {/* Capsule Column Track */}
+                <div className="w-11 sm:w-13 h-48 bg-[#EEF4FF] dark:bg-[#121D3D] rounded-2xl relative flex flex-col justify-end p-0 overflow-hidden shadow-2xs">
+                  {/* Filled Portion */}
+                  <div
+                    className="w-full rounded-2xl bg-gradient-to-t from-[#2563EB] to-[#3B82F6] transition-all duration-500 shadow-sm"
+                    style={{ height: `${item.percentage}%` }}
+                  />
+                </div>
+
+                {/* Month Label */}
+                <span className="text-xs font-medium text-[#8292AD] dark:text-slate-400 mt-3 whitespace-nowrap">
+                  {item.month}
+                </span>
+              </div>
             ))}
           </div>
         </div>
 
-        <div className="h-72 w-full mt-4">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={REVENUE_DATA[timeframe]} margin={{ top: 10, right: 10, left: -15, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
-              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#8292AD', fontSize: 11 }} />
-              <YAxis axisLine={false} tickLine={false} tick={{ fill: '#8292AD', fontSize: 11 }} tickFormatter={(v) => `₹${v}L`} />
-              <Tooltip
-                content={({ active, payload, label }) => {
-                  if (active && payload && payload.length) {
-                    return (
-                      <div className="bg-white border border-[#E5EAF2] p-3 rounded-xl shadow-lg text-xs">
-                        <p className="font-bold text-[#172033] mb-1.5">{label}</p>
-                        <p className="text-blue-600 font-semibold">Revenue: ₹{payload[0].value}L</p>
-                        {payload[1] && (
-                          <p className="text-slate-500 font-medium">Expenses: ₹{payload[1].value}L</p>
-                        )}
-                      </div>
-                    );
-                  }
-                  return null;
-                }}
-              />
-              <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }} />
-              <Bar dataKey="revenue" name="Total Revenue (₹L)" fill="#3B82F6" radius={[6, 6, 0, 0]} isAnimationActive={false} />
-              <Bar dataKey="expenses" name="Infrastructure OpEx (₹L)" fill="#94A3B8" radius={[6, 6, 0, 0]} isAnimationActive={false} />
-            </BarChart>
-          </ResponsiveContainer>
+        {/* Right: Revenue Contribution by Plan */}
+        <div className="bg-white dark:bg-[#0D152D] rounded-2xl border border-[#E5EAF2] dark:border-[#1E2D54] p-6 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between pb-4 border-b border-[#E5EAF2] dark:border-[#1E2D54]">
+            <h3 className="text-sm font-bold text-[#172033] dark:text-white">
+              Revenue Contribution by Plan
+            </h3>
+            <span className="text-xs text-[#8292AD] dark:text-slate-400 font-medium">
+              ₹17.6L Total MRR
+            </span>
+          </div>
+
+          <div className="space-y-6 my-auto py-4">
+            {PLAN_CONTRIBUTIONS.map((plan, idx) => (
+              <div key={idx} className="space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-medium text-[#172033] dark:text-white">
+                    {plan.name} ({plan.companies} cos)
+                  </span>
+                  <div>
+                    <span className="font-bold text-[#172033] dark:text-white">
+                      {plan.revenue}
+                    </span>
+                    <span className="text-[#8292AD] dark:text-slate-400 ml-1 font-normal">
+                      ({plan.percentage}%)
+                    </span>
+                  </div>
+                </div>
+
+                {/* Horizontal Gradient Pill Bar */}
+                <div className="w-full h-3 bg-transparent rounded-full flex items-center">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-[#2563EB] via-[#4338CA] to-[#6366F1] shadow-2xs transition-all duration-500"
+                    style={{ width: plan.barWidth }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Secondary Row: Plan Distribution & Cohort Retention */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Plan Revenue Distribution */}
-        <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5EAF2] shadow-xs flex flex-col justify-between">
-          <div>
-            <h3 className="text-base font-bold text-[#172033]">Revenue Contribution by Plan Tier</h3>
-            <p className="text-xs text-[#8292AD] mb-4">Enterprise tier contributes 47% of recurring ARR</p>
-
-            <div className="space-y-3.5">
-              {PLAN_DISTRIBUTION_DATA.map((plan) => (
-                <div key={plan.name} className="space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-[#172033]">{plan.name} ({plan.companies} accounts)</span>
-                    <span className="font-bold text-[#172033]">₹{plan.mrr} Lakhs/mo</span>
-                  </div>
-                  <div className="w-full h-2 bg-[#F7F9FC] rounded-full overflow-hidden border border-[#E5EAF2]">
-                    <div
-                      className="h-full rounded-full transition-all"
-                      style={{
-                        width: `${(plan.mrr / 71.92) * 100}%`,
-                        backgroundColor: plan.color
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="pt-4 mt-4 border-t border-[#E5EAF2] text-xs text-[#8292AD] flex flex-col sm:flex-row justify-between gap-1">
-            <span>Total Tracked Plans: 4</span>
-            <span className="font-bold text-blue-600">Enterprise Upsell Pipeline: 14</span>
-          </div>
+      {/* Bottom Section: Monthly Customer Retention Cohorts */}
+      <div className="bg-white dark:bg-[#0D152D] rounded-2xl border border-[#E5EAF2] dark:border-[#1E2D54] p-6 shadow-xs overflow-hidden">
+        <div className="flex items-center justify-between pb-4 border-b border-[#E5EAF2] dark:border-[#1E2D54]">
+          <h3 className="text-sm font-bold text-[#172033] dark:text-white">
+            Monthly Customer Retention Cohorts
+          </h3>
+          <span className="text-xs text-[#8292AD] dark:text-slate-400 font-medium">
+            Logo retention % over 5 months
+          </span>
         </div>
 
-        {/* Cohort Retention Heatmap */}
-        <div className="bg-white rounded-2xl p-4 sm:p-6 border border-[#E5EAF2] shadow-xs">
-          <h3 className="text-base font-bold text-[#172033]">Customer Retention Cohort (%)</h3>
-          <p className="text-xs text-[#8292AD] mb-4">Monthly subscription retention curve</p>
-
-          <div className="overflow-x-auto">
-            <table className="w-full text-center border-collapse text-xs">
-              <thead>
-                <tr className="text-[11px] font-bold text-[#8292AD] uppercase border-b border-[#E5EAF2]">
-                  <th className="py-2 text-left">Cohort</th>
-                  <th className="py-2">M1</th>
-                  <th className="py-2">M2</th>
-                  <th className="py-2">M3</th>
-                  <th className="py-2">M4</th>
-                  <th className="py-2">M5</th>
-                  <th className="py-2">M6</th>
+        <div className="overflow-x-auto mt-2">
+          <table className="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr className="text-[11px] font-bold text-[#8292AD] dark:text-slate-400 uppercase tracking-wider border-b border-[#E5EAF2] dark:border-[#1E2D54]">
+                <th className="py-3 px-3">COHORT</th>
+                <th className="py-3 px-3">NEW COS</th>
+                <th className="py-3 px-3 text-center">MONTH 1</th>
+                <th className="py-3 px-3 text-center">MONTH 2</th>
+                <th className="py-3 px-3 text-center">MONTH 3</th>
+                <th className="py-3 px-3 text-center">MONTH 4</th>
+                <th className="py-3 px-3 text-center">MONTH 5</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#E5EAF2] dark:divide-[#1E2D54]">
+              {COHORT_ROWS.map((row, idx) => (
+                <tr key={idx} className="hover:bg-[#F8FAFF] dark:hover:bg-[#121D3D] transition-colors">
+                  <td className="py-3.5 px-3 font-bold text-[#172033] dark:text-white">
+                    {row.cohort}
+                  </td>
+                  <td className="py-3.5 px-3 font-semibold text-[#172033] dark:text-white">
+                    {row.newCos}
+                  </td>
+                  <td className="py-3.5 px-3 text-center">
+                    <span className="inline-block px-3 py-1 rounded-md text-xs font-bold bg-[#EFF6FF] text-[#2563EB] dark:bg-blue-950/60 dark:text-blue-400">
+                      {row.m1}
+                    </span>
+                  </td>
+                  <td className="py-3.5 px-3 text-center">
+                    {row.m2 ? (
+                      <span className="inline-block px-3 py-1 rounded-md text-xs font-semibold bg-[#F0FDF4] text-[#16A34A] dark:bg-emerald-950/60 dark:text-emerald-400">
+                        {row.m2}
+                      </span>
+                    ) : (
+                      <span className="text-slate-400 dark:text-slate-600 font-bold">—</span>
+                    )}
+                  </td>
+                  <td className="py-3.5 px-3 text-center">
+                    {row.m3 ? (
+                      <span className="inline-block px-3 py-1 rounded-md text-xs font-semibold bg-[#F0FDF4] text-[#16A34A] dark:bg-emerald-950/60 dark:text-emerald-400">
+                        {row.m3}
+                      </span>
+                    ) : (
+                      <span className="text-slate-400 dark:text-slate-600 font-bold">—</span>
+                    )}
+                  </td>
+                  <td className="py-3.5 px-3 text-center">
+                    {row.m4 ? (
+                      <span className="inline-block px-3 py-1 rounded-md text-xs font-semibold bg-[#F0FDF4] text-[#16A34A] dark:bg-emerald-950/60 dark:text-emerald-400">
+                        {row.m4}
+                      </span>
+                    ) : (
+                      <span className="text-slate-400 dark:text-slate-600 font-bold">—</span>
+                    )}
+                  </td>
+                  <td className="py-3.5 px-3 text-center">
+                    {row.m5 ? (
+                      <span className="inline-block px-3 py-1 rounded-md text-xs font-semibold bg-[#F0FDF4] text-[#16A34A] dark:bg-emerald-950/60 dark:text-emerald-400">
+                        {row.m5}
+                      </span>
+                    ) : (
+                      <span className="text-slate-400 dark:text-slate-600 font-bold">—</span>
+                    )}
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-[#E5EAF2]">
-                {COHORT_DATA.map((row) => (
-                  <tr key={row.cohort} className="hover:bg-slate-50 transition-colors">
-                    <td className="py-2.5 font-bold text-left text-[#172033]">{row.cohort} 2026</td>
-                    <td className="py-2.5"><span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold">{row.m1}%</span></td>
-                    <td className="py-2.5">{row.m2 ? <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-medium">{row.m2}%</span> : '-'}</td>
-                    <td className="py-2.5">{row.m3 ? <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-medium">{row.m3}%</span> : '-'}</td>
-                    <td className="py-2.5">{row.m4 ? <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-medium">{row.m4}%</span> : '-'}</td>
-                    <td className="py-2.5">{row.m5 ? <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-medium">{row.m5}%</span> : '-'}</td>
-                    <td className="py-2.5">{row.m6 ? <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-medium">{row.m6}%</span> : '-'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   );
 };
+
+export default Analytics;
