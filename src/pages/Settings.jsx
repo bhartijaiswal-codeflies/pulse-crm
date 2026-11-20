@@ -159,7 +159,7 @@ export const Settings = () => {
   ];
 
   return (
-    <div className="space-y-6 max-w-[1600px] mx-auto pb-12">
+    <div className="space-y-6">
       {/* Hidden File Input for Avatar Upload */}
       <input
         ref={fileInputRef}
@@ -221,9 +221,9 @@ export const Settings = () => {
 
       {/* TAB 1: General & Profile (Matches exact mockup design) */}
       {activeTab === 'general' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div className="flex flex-col lg:flex-row gap-6 items-start">
           {/* ================= LEFT COLUMN: Overview Sidebar ================= */}
-          <div className="lg:col-span-4 xl:col-span-4 space-y-5">
+          <div className="w-full lg:w-[320px] xl:w-[340px] flex-shrink-0 space-y-5">
             {/* Main Profile Summary Card */}
             <div className="bg-white dark:bg-[#0D152D] rounded-2xl border border-[#E5EAF2] dark:border-[#1E2D54] p-6 shadow-xs text-center flex flex-col items-center">
               {/* Circular Avatar with Gradient Ring and Camera Button */}
@@ -388,7 +388,7 @@ export const Settings = () => {
           </div>
 
           {/* ================= RIGHT COLUMN: Forms Area ================= */}
-          <div className="lg:col-span-8 xl:col-span-8 space-y-6">
+          <div className="flex-1 min-w-0 space-y-6">
             {/* Card 1: Super Admin Personal Profile */}
             <div className="bg-white dark:bg-[#0D152D] rounded-2xl border border-[#E5EAF2] dark:border-[#1E2D54] p-5 sm:p-6 shadow-xs">
               {/* Header */}
