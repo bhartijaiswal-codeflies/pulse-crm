@@ -96,9 +96,11 @@ export const RevenueChart = ({ externalFilter, onFilterChange }) => {
     <div className="bg-white dark:bg-[#0D152D] rounded-2xl p-5 border border-[#E5EAF2] dark:border-[#1E2D54] shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex flex-col justify-between h-full">
       {/* Header: Title on Left, Filter pills on Right */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-        <div className="flex items-center gap-2">
-          <BarChart2 className="w-5 h-5 text-[#2563EB]" />
-          <h3 className="text-base font-bold text-[#172033] dark:text-white">Revenue Overview</h3>
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-[#EBF3FF] dark:bg-blue-950/60 text-[#2563EB] dark:text-blue-400 flex items-center justify-center flex-shrink-0">
+            <BarChart2 className="w-4 h-4" />
+          </div>
+          <h3 className="text-sm font-bold text-[#172033] dark:text-white">Revenue Overview</h3>
         </div>
 
         <div className="flex items-center gap-1 self-start sm:self-auto">
@@ -110,7 +112,7 @@ export const RevenueChart = ({ externalFilter, onFilterChange }) => {
               className={`px-3 py-1 text-xs font-semibold rounded-full transition-colors cursor-pointer ${
                 activeFilter === tab
                   ? 'bg-[#2563EB] text-white shadow-xs'
-                  : 'text-[#64748B] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+                  : 'text-[#8292AD] dark:text-slate-400 hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
               {tab}
@@ -120,11 +122,11 @@ export const RevenueChart = ({ externalFilter, onFilterChange }) => {
       </div>
 
       {/* Metric Display */}
-      <div className="flex items-center gap-3 mt-3 mb-2">
-        <span className="text-3xl font-extrabold text-[#172033] dark:text-white tracking-tight">
+      <div className="flex items-center gap-2.5 mt-2.5 mb-1.5">
+        <span className="text-2xl font-bold text-[#172033] dark:text-white tracking-tight">
           {currentConfig.value}
         </span>
-        <span className="inline-flex items-center text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-[#ECFDF5] dark:bg-emerald-950/60 border border-[#A7F3D0]/60 dark:border-emerald-800 px-2.5 py-0.5 rounded-full">
+        <span className="inline-flex items-center text-xs font-medium text-[#137333] dark:text-emerald-400 bg-[#E6F4EA] dark:bg-emerald-950/60 px-2 py-0.5 rounded-full">
           +15%
         </span>
       </div>
@@ -142,21 +144,21 @@ export const RevenueChart = ({ externalFilter, onFilterChange }) => {
             <CartesianGrid
               strokeDasharray="3 3"
               vertical={false}
-              stroke={isDarkMode ? '#1E2D54' : '#F1F5F9'}
+              stroke={isDarkMode ? '#1E2D54' : '#EDF2F7'}
             />
             <XAxis
               dataKey="date"
               axisLine={false}
               tickLine={false}
               ticks={visibleTicks}
-              tick={{ fill: isDarkMode ? '#94A3B8' : '#8292AD', fontSize: 11 }}
+              tick={{ fill: isDarkMode ? '#94A3B8' : '#8292AD', fontSize: 10 }}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
               domain={[0, 20]}
               ticks={[0, 5, 10, 15, 20]}
-              tick={{ fill: isDarkMode ? '#94A3B8' : '#8292AD', fontSize: 11 }}
+              tick={{ fill: isDarkMode ? '#94A3B8' : '#8292AD', fontSize: 10 }}
               tickFormatter={(v) => `${v}L`}
             />
             <Tooltip
@@ -176,11 +178,11 @@ export const RevenueChart = ({ externalFilter, onFilterChange }) => {
               type="monotone"
               dataKey="revenue"
               stroke="#2563EB"
-              strokeWidth={2.5}
+              strokeWidth={2}
               isAnimationActive={false}
               fill="url(#blueGradient)"
-              dot={{ r: 3.5, fill: '#FFFFFF', stroke: '#2563EB', strokeWidth: 2 }}
-              activeDot={{ r: 5, fill: '#2563EB', stroke: '#FFFFFF', strokeWidth: 2 }}
+              dot={{ r: 3, fill: '#FFFFFF', stroke: '#2563EB', strokeWidth: 2 }}
+              activeDot={{ r: 4.5, fill: '#2563EB', stroke: '#FFFFFF', strokeWidth: 2 }}
             />
           </AreaChart>
         </ResponsiveContainer>
