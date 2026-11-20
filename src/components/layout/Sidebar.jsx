@@ -37,9 +37,11 @@ export const MAIN_NAV_ITEMS = [
 export const NAV_ITEMS = MAIN_NAV_ITEMS;
 
 export const Sidebar = () => {
-  const { setIsAddCompanyOpen, showToast } = useApp();
+  const { setIsAddCompanyOpen, showToast, themeMode } = useApp();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const isLightSidebar = themeMode === 'light';
 
   const [isQuickOpen, setIsQuickOpen] = useState(false);
   const quickRef = useRef(null);
@@ -75,14 +77,18 @@ export const Sidebar = () => {
   };
 
   return (
-    <aside className="hidden md:flex flex-col items-center w-[76px] h-screen sticky top-0 py-2 select-none z-50 flex-shrink-0 justify-between bg-[#060A18] border-r border-[#131B33]">
+    <aside className={`hidden md:flex flex-col items-center w-[76px] h-screen sticky top-0 py-2 select-none z-50 flex-shrink-0 justify-between transition-colors duration-150 ${
+      isLightSidebar
+        ? 'bg-white border-r border-[#E5EAF2] shadow-xs'
+        : 'bg-[#060A18] border-r border-[#131B33]'
+    }`}>
       <div className="flex flex-col items-center w-full flex-1 min-h-0">
         {/* Top Logo Container */}
         <div className="relative group cursor-pointer pt-0.5 mb-1.5 flex-shrink-0">
           <div
             onClick={() => navigate('/')}
             className="w-[42px] h-[42px] rounded-full bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] flex items-center justify-center p-2 ring-2 ring-[#3B82F6]/70 shadow-[0_0_16px_rgba(37,99,235,0.45)] transition-transform duration-200 group-hover:scale-105"
-            style={{ outline: 'rgb(255, 255, 255) solid 1px', outlineOffset: '-2px' }}
+            style={{ outline: isLightSidebar ? '#2563EB solid 1px' : 'rgb(255, 255, 255) solid 1px', outlineOffset: '-2px' }}
           >
             <img
               src="/pulse-logo.png"
@@ -108,20 +114,34 @@ export const Sidebar = () => {
                   to={item.path}
                   className={`group relative w-[60px] h-[43px] 2xl:h-[48px] flex-shrink-0 flex flex-col items-center justify-center rounded-xl transition-all duration-150 ${
                     isActive
-                      ? 'bg-[#0D1938] border border-blue-500/50 text-white shadow-[0_0_14px_rgba(37,99,235,0.28)]'
-                      : 'text-[#76849D] hover:text-white hover:bg-[#0D152D]/80 border border-transparent'
+                      ? isLightSidebar
+                        ? 'bg-blue-50 border border-blue-200 text-[#2563EB] shadow-xs'
+                        : 'bg-[#0D1938] border border-blue-500/50 text-white shadow-[0_0_14px_rgba(37,99,235,0.28)]'
+                      : isLightSidebar
+                        ? 'text-[#64748B] hover:text-[#172033] hover:bg-slate-100/80 border border-transparent'
+                        : 'text-[#76849D] hover:text-white hover:bg-[#0D152D]/80 border border-transparent'
                   }`}
                 >
                   <Icon
                     className={`w-[17px] h-[17px] mb-0.5 transition-transform group-hover:scale-105 stroke-[1.8] ${
-                      isActive ? 'text-[#3B82F6]' : 'text-[#e8eaed] group-hover:text-white'
+                      isActive
+                        ? isLightSidebar
+                          ? 'text-[#2563EB]'
+                          : 'text-[#3B82F6]'
+                        : isLightSidebar
+                          ? 'text-[#64748B] group-hover:text-[#172033]'
+                          : 'text-[#e8eaed] group-hover:text-white'
                     }`}
                   />
                   <span
                     className={`text-[10px] tracking-tight leading-none text-center truncate max-w-[56px] ${
                       isActive
-                        ? 'font-semibold text-[#93C5FD]'
-                        : 'font-medium text-[#e8eaed] group-hover:text-[#E2E8F0]'
+                        ? isLightSidebar
+                          ? 'font-bold text-[#2563EB]'
+                          : 'font-semibold text-[#93C5FD]'
+                        : isLightSidebar
+                          ? 'font-medium text-[#64748B] group-hover:text-[#172033]'
+                          : 'font-medium text-[#e8eaed] group-hover:text-[#E2E8F0]'
                     }`}
                   >
                     {item.short}
@@ -134,7 +154,9 @@ export const Sidebar = () => {
                 </NavLink>
 
                 {/* 1px divider between items */}
-                <div className="w-[46px] h-[1px] my-[0.5px] flex-shrink-0 transition-colors bg-[#141E38]" />
+                <div className={`w-[46px] h-[1px] my-[0.5px] flex-shrink-0 transition-colors ${
+                  isLightSidebar ? 'bg-[#E5EAF2]' : 'bg-[#141E38]'
+                }`} />
               </React.Fragment>
             );
           })}
@@ -149,16 +171,22 @@ export const Sidebar = () => {
               title="Quick Actions (Click to open)"
               className={`group relative w-[60px] h-[43px] 2xl:h-[48px] flex-shrink-0 flex flex-col items-center justify-center rounded-xl transition-all duration-150 cursor-pointer ${
                 isQuickOpen
-                  ? 'bg-[#0D1938] border border-amber-500/60 text-white shadow-[0_0_14px_rgba(245,158,11,0.35)]'
-                  : 'text-[#76849D] hover:text-white hover:bg-[#0D152D]/80 border border-transparent'
+                  ? isLightSidebar
+                    ? 'bg-amber-50 border border-amber-300 text-amber-800 shadow-xs'
+                    : 'bg-[#0D1938] border border-amber-500/60 text-white shadow-[0_0_14px_rgba(245,158,11,0.35)]'
+                  : isLightSidebar
+                    ? 'text-[#64748B] hover:text-[#172033] hover:bg-slate-100/80 border border-transparent'
+                    : 'text-[#76849D] hover:text-white hover:bg-[#0D152D]/80 border border-transparent'
               }`}
             >
               <Zap
                 className={`w-[17px] h-[17px] mb-0.5 transition-transform group-hover:scale-105 stroke-[1.8] ${
-                  isQuickOpen ? 'text-amber-400 fill-amber-400 scale-105' : 'text-amber-400 fill-amber-400'
+                  isQuickOpen ? 'text-amber-500 fill-amber-500 scale-105' : 'text-amber-500 fill-amber-500'
                 }`}
               />
-              <span className="text-[10px] tracking-tight leading-none text-center truncate max-w-[56px] font-medium text-amber-300">
+              <span className={`text-[10px] tracking-tight leading-none text-center truncate max-w-[56px] font-medium ${
+                isLightSidebar ? 'text-amber-700' : 'text-amber-300'
+              }`}>
                 Quick ⚡
               </span>
 
@@ -172,10 +200,16 @@ export const Sidebar = () => {
 
             {/* Quick Actions Flyout Popover (Opens on click and stays open) */}
             {isQuickOpen && (
-              <div className="absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 w-56 bg-[#0D152D] border border-[#1A2544] rounded-2xl shadow-2xl p-2 z-[60] animate-in fade-in zoom-in-95 duration-150">
-                <div className="flex items-center justify-between px-2.5 py-1.5 text-xs font-bold text-white border-b border-[#1A2544] mb-1">
+              <div className={`absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 w-56 rounded-2xl shadow-2xl p-2 z-[60] animate-in fade-in zoom-in-95 duration-150 ${
+                isLightSidebar
+                  ? 'bg-white border border-[#E5EAF2] text-[#172033]'
+                  : 'bg-[#0D152D] border border-[#1A2544] text-white'
+              }`}>
+                <div className={`flex items-center justify-between px-2.5 py-1.5 text-xs font-bold border-b mb-1 ${
+                  isLightSidebar ? 'border-[#E5EAF2] text-[#172033]' : 'border-[#1A2544] text-white'
+                }`}>
                   <div className="flex items-center gap-2">
-                    <Zap className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                    <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
                     <span>Quick Actions ⚡</span>
                   </div>
                   <span className="text-[10px] text-slate-400 font-normal">Esc</span>
@@ -186,7 +220,11 @@ export const Sidebar = () => {
                     setIsAddCompanyOpen(true);
                     setIsQuickOpen(false);
                   }}
-                  className="w-full flex items-center gap-2.5 px-2.5 py-2 text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-xl transition-colors text-left cursor-pointer"
+                  className={`w-full flex items-center gap-2.5 px-2.5 py-2 text-xs font-medium rounded-xl transition-colors text-left cursor-pointer ${
+                    isLightSidebar
+                      ? 'text-slate-700 hover:text-[#172033] hover:bg-slate-100'
+                      : 'text-slate-300 hover:text-white hover:bg-white/[0.08]'
+                  }`}
                 >
                   <PlusCircle className="w-4 h-4 text-[#3B82F6]" />
                   <span>Add Company</span>
@@ -197,9 +235,13 @@ export const Sidebar = () => {
                     navigate('/billing');
                     setIsQuickOpen(false);
                   }}
-                  className="w-full flex items-center gap-2.5 px-2.5 py-2 text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-xl transition-colors text-left cursor-pointer"
+                  className={`w-full flex items-center gap-2.5 px-2.5 py-2 text-xs font-medium rounded-xl transition-colors text-left cursor-pointer ${
+                    isLightSidebar
+                      ? 'text-slate-700 hover:text-[#172033] hover:bg-slate-100'
+                      : 'text-slate-300 hover:text-white hover:bg-white/[0.08]'
+                  }`}
                 >
-                  <CreditCard className="w-4 h-4 text-amber-400" />
+                  <CreditCard className="w-4 h-4 text-amber-500" />
                   <span>View Pending Payments</span>
                 </button>
                 <button
@@ -208,39 +250,59 @@ export const Sidebar = () => {
                     navigate('/plans');
                     setIsQuickOpen(false);
                   }}
-                  className="w-full flex items-center gap-2.5 px-2.5 py-2 text-xs font-medium text-slate-300 hover:text-white hover:bg-white/[0.08] rounded-xl transition-colors text-left cursor-pointer"
+                  className={`w-full flex items-center gap-2.5 px-2.5 py-2 text-xs font-medium rounded-xl transition-colors text-left cursor-pointer ${
+                    isLightSidebar
+                      ? 'text-slate-700 hover:text-[#172033] hover:bg-slate-100'
+                      : 'text-slate-300 hover:text-white hover:bg-white/[0.08]'
+                  }`}
                 >
-                  <Sparkles className="w-4 h-4 text-purple-400" />
+                  <Sparkles className="w-4 h-4 text-purple-500" />
                   <span>Upgrade Plan</span>
                 </button>
               </div>
             )}
           </div>
 
-          <div className="w-[46px] h-[1px] my-[0.5px] flex-shrink-0 transition-colors bg-[#141E38]" />
+          <div className={`w-[46px] h-[1px] my-[0.5px] flex-shrink-0 transition-colors ${
+            isLightSidebar ? 'bg-[#E5EAF2]' : 'bg-[#141E38]'
+          }`} />
 
           {/* Profile Item with pulsating coral dot */}
           <NavLink
             to="/profile"
             className={`group relative w-[60px] h-[43px] 2xl:h-[48px] flex-shrink-0 flex flex-col items-center justify-center rounded-xl transition-all duration-150 ${
               location.pathname === '/settings' || location.pathname === '/profile'
-                ? 'bg-[#0D1938] border border-blue-500/50 text-white shadow-[0_0_14px_rgba(37,99,235,0.28)]'
-                : 'text-[#76849D] hover:text-white hover:bg-[#0D152D]/80 border border-transparent'
+                ? isLightSidebar
+                  ? 'bg-blue-50 border border-blue-200 text-[#2563EB] shadow-xs'
+                  : 'bg-[#0D1938] border border-blue-500/50 text-white shadow-[0_0_14px_rgba(37,99,235,0.28)]'
+                : isLightSidebar
+                  ? 'text-[#64748B] hover:text-[#172033] hover:bg-slate-100/80 border border-transparent'
+                  : 'text-[#76849D] hover:text-white hover:bg-[#0D152D]/80 border border-transparent'
             }`}
           >
-            <span className="absolute top-1 right-2.5 w-2 h-2 rounded-full bg-[#FF3B5B] ring-2 ring-[#060A18] animate-pulse" />
+            <span className={`absolute top-1 right-2.5 w-2 h-2 rounded-full bg-[#FF3B5B] ring-2 animate-pulse ${
+              isLightSidebar ? 'ring-white' : 'ring-[#060A18]'
+            }`} />
             <UserIcon
               className={`w-[17px] h-[17px] mb-0.5 transition-transform group-hover:scale-105 stroke-[1.8] ${
                 location.pathname === '/settings' || location.pathname === '/profile'
-                  ? 'text-[#3B82F6]'
-                  : 'text-[#e8eaed] group-hover:text-white'
+                  ? isLightSidebar
+                    ? 'text-[#2563EB]'
+                    : 'text-[#3B82F6]'
+                  : isLightSidebar
+                    ? 'text-[#64748B] group-hover:text-[#172033]'
+                    : 'text-[#e8eaed] group-hover:text-white'
               }`}
             />
             <span
               className={`text-[10px] tracking-tight leading-none text-center truncate max-w-[56px] ${
                 location.pathname === '/settings' || location.pathname === '/profile'
-                  ? 'font-semibold text-[#93C5FD]'
-                  : 'font-medium text-[#e8eaed] group-hover:text-[#E2E8F0]'
+                  ? isLightSidebar
+                    ? 'font-bold text-[#2563EB]'
+                    : 'font-semibold text-[#93C5FD]'
+                  : isLightSidebar
+                    ? 'font-medium text-[#64748B] group-hover:text-[#172033]'
+                    : 'font-medium text-[#e8eaed] group-hover:text-[#E2E8F0]'
               }`}
             >
               Profile
@@ -253,10 +315,16 @@ export const Sidebar = () => {
       </div>
 
       {/* Logout button at bottom */}
-      <div className="w-full px-1 pt-1.5 flex-shrink-0 transition-colors border-t border-[#141E38]">
+      <div className={`w-full px-1 pt-1.5 flex-shrink-0 transition-colors border-t ${
+        isLightSidebar ? 'border-[#E5EAF2]' : 'border-[#141E38]'
+      }`}>
         <button
           onClick={handleLogout}
-          className="group relative w-[60px] h-[42px] 2xl:h-[46px] mx-auto flex flex-col items-center justify-center rounded-xl transition-all duration-150 text-[#76849D] hover:text-rose-400 hover:bg-[#1A1222]"
+          className={`group relative w-[60px] h-[42px] 2xl:h-[46px] mx-auto flex flex-col items-center justify-center rounded-xl transition-all duration-150 ${
+            isLightSidebar
+              ? 'text-[#64748B] hover:text-rose-600 hover:bg-rose-50'
+              : 'text-[#76849D] hover:text-rose-400 hover:bg-[#1A1222]'
+          }`}
           title="Sign out"
         >
           <LogOut className="w-[17px] h-[17px] mb-0.5 group-hover:scale-105 transition-transform stroke-[1.8] text-current" />

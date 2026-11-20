@@ -25,23 +25,43 @@ export const AppProvider = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedDateRange, setSelectedDateRange] = useState('Today: Nov 12, 2026');
 
-  // Theme state with localStorage persistence (Default is Light Mode)
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.getItem('pulse_theme_preference') === 'dark';
+  // Theme state with localStorage persistence
+  // Modes: 'mix' (Dark Sidebar + Light Dashboard) | 'light' (Light Sidebar + Light Dashboard) | 'dark' (Dark Sidebar + Dark Dashboard)
+  const [themeMode, setThemeModeState] = useState(() => {
+    const savedMode = localStorage.getItem('pulse_theme_mode');
+    if (savedMode === 'mix' || savedMode === 'light' || savedMode === 'dark') {
+      return savedMode;
+    }
+    if (localStorage.getItem('pulse_theme_preference') === 'dark') {
+      return 'dark';
+    }
+    return 'mix';
   });
 
+  const isDarkMode = themeMode === 'dark';
+
   useEffect(() => {
-    if (isDarkMode) {
+    if (themeMode === 'dark') {
       document.documentElement.classList.add('dark');
       localStorage.setItem('pulse_theme_preference', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
       localStorage.setItem('pulse_theme_preference', 'light');
     }
-  }, [isDarkMode]);
+    localStorage.setItem('pulse_theme_mode', themeMode);
+  }, [themeMode]);
+
+  const setThemeMode = (mode) => {
+    setThemeModeState(mode);
+  };
+
+  const setIsDarkMode = (val) => {
+    const nextBool = typeof val === 'function' ? val(themeMode === 'dark') : val;
+    setThemeModeState(nextBool ? 'dark' : 'mix');
+  };
 
   const toggleTheme = () => {
-    setIsDarkMode((prev) => !prev);
+    setThemeModeState((prev) => (prev === 'dark' ? 'mix' : 'dark'));
   };
 
   // Modals & Palettes
@@ -194,6 +214,8 @@ export const AppProvider = ({ children }) => {
         setMobileMenuOpen,
         selectedDateRange,
         setSelectedDateRange,
+        themeMode,
+        setThemeMode,
         isDarkMode,
         setIsDarkMode,
         toggleTheme,
