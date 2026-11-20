@@ -14,6 +14,7 @@ import {
   Edit2,
   Trash2,
   CheckCircle,
+  CheckCircle2,
   Clock,
   AlertTriangle,
   XCircle,
@@ -55,8 +56,8 @@ export const Companies = () => {
 
   const activeCount = companies.filter(c => c.status === 'Active').length;
   const trialCount = companies.filter(c => c.status === 'Trial').length;
-  const pendingCount = companies.filter(c => c.status === 'Pending Payment').length;
   const cancelledCount = companies.filter(c => c.status === 'Cancelled').length;
+  const expiredCount = companies.filter(c => c.status === 'Expired').length;
 
   const handleClearFilters = () => {
     setSearchTerm('');
@@ -95,36 +96,35 @@ export const Companies = () => {
     switch (status) {
       case 'Active':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-            <CheckCircle className="w-3 h-3 text-emerald-600" />
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#E6F4EA] text-[#137333] dark:bg-emerald-950/60 dark:text-emerald-400">
+            <CheckCircle2 className="w-3 h-3 text-[#137333] dark:text-emerald-400" />
             Active
           </span>
         );
       case 'Trial':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-            <Clock className="w-3 h-3 text-blue-600" />
-            14-Day Trial
-          </span>
-        );
-      case 'Pending Payment':
-        return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
-            <AlertTriangle className="w-3 h-3 text-amber-600" />
-            Pending Payment
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#E8F0FE] text-[#1A73E8] dark:bg-blue-950/60 dark:text-blue-400">
+            <Clock className="w-3 h-3 text-[#1A73E8] dark:text-blue-400" />
+            Trial
           </span>
         );
       case 'Cancelled':
+        return (
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#FCE8E6] text-[#C5221F] dark:bg-red-950/60 dark:text-red-400">
+            <XCircle className="w-3 h-3 text-[#C5221F] dark:text-red-400" />
+            Cancelled
+          </span>
+        );
       case 'Expired':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-red-50 text-red-700 border border-red-200">
-            <XCircle className="w-3 h-3 text-red-600" />
-            {status}
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+            <Clock className="w-3 h-3 text-slate-500" />
+            Expired
           </span>
         );
       default:
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-700">
+          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
             {status}
           </span>
         );
@@ -155,146 +155,237 @@ export const Companies = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Title & Actions */}
+    <div className="space-y-5 animate-in fade-in duration-150">
+      {/* Title & Actions Row matching screenshot */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#172033] tracking-tight">
-            Companies
-          </h1>
-          <p className="text-xs md:text-sm text-[#8292AD] mt-1 font-medium">
-            Manage client tenant organizations, subscriptions, and access
-          </p>
-        </div>
-
-        <button
-          onClick={() => setIsAddCompanyOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 transition-all self-start sm:self-auto"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add Company</span>
-        </button>
-      </div>
-
-      {/* Metrics Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-semibold text-[#8292AD] dark:text-slate-400">Total Tenants</p>
-          <p className="text-2xl font-black text-[#172033] dark:text-white mt-1">{companies.length}</p>
-        </div>
-        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-semibold text-[#8292AD] dark:text-slate-400">Active Accounts</p>
-          <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">
-            {companies.filter(c => c.status === 'Active').length}
-          </p>
-        </div>
-        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-semibold text-[#8292AD] dark:text-slate-400">On Trial</p>
-          <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">
-            {companies.filter(c => c.status === 'Trial').length}
-          </p>
-        </div>
-        <div className="bg-white dark:bg-[#0D152D] p-4 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs">
-          <p className="text-xs font-semibold text-[#8292AD] dark:text-slate-400">Total User Seats</p>
-          <p className="text-2xl font-black text-purple-600 dark:text-purple-400 mt-1">
-            {companies.reduce((sum, c) => sum + (c.users || 0), 0)}
-          </p>
-        </div>
-      </div>
-
-      {/* Filter and Search Bar */}
-      <div className="bg-white dark:bg-[#0D152D] p-3 sm:p-3.5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
-        {/* Left: Filters group */}
-        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 flex-1 min-w-0">
-          {/* 1. Primary Dropdown Pill: Status with count */}
-          <div className="relative inline-flex items-center">
-            <Building2 className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="select-primary-blue pl-9 pr-8 py-2 text-xs font-semibold bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 rounded-xl text-blue-600 dark:text-blue-400 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
-            >
-              <option value="All">All Companies ({companies.length})</option>
-              <option value="Active">Active ({activeCount})</option>
-              <option value="Trial">Trial ({trialCount})</option>
-              <option value="Pending Payment">Pending ({pendingCount})</option>
-              <option value="Cancelled">Cancelled ({cancelledCount})</option>
-            </select>
+          <div className="flex items-center gap-2.5">
+            <h1 className="text-2xl font-bold text-[#172033] dark:text-white tracking-tight">
+              Companies
+            </h1>
+            <span className="bg-[#EBF3FF] dark:bg-blue-950/60 text-[#2563EB] dark:text-blue-400 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-[#DBEAFE] dark:border-blue-900/60">
+              248 Total Tenants
+            </span>
           </div>
+          <p className="text-xs text-[#8292AD] dark:text-slate-400 mt-1 font-normal">
+            Manage customer organizations, seat allocations, subscription tiers, and billing states.
+          </p>
+        </div>
 
-          {/* 2. Search Input */}
-          <div className="relative flex-1 min-w-[180px] sm:min-w-[220px] max-w-xs">
-            <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+        <div className="flex items-center gap-2.5 self-start sm:self-auto">
+          <button
+            type="button"
+            onClick={exportToCSV}
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-white dark:bg-[#0D152D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-xs font-medium text-[#172033] dark:text-white hover:bg-slate-50 dark:hover:bg-[#121D3D] transition-colors shadow-2xs cursor-pointer"
+          >
+            <Download className="w-3.5 h-3.5 text-[#64748B] dark:text-slate-400" />
+            <span>Export CSV</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsAddCompanyOpen(true)}
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add Company</span>
+          </button>
+        </div>
+      </div>
+
+      {/* 4 KPI Stat Cards Row matching screenshot */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        {/* Card 1: Total Registered */}
+        <div className="bg-[#F8FAFF] dark:bg-[#0D152D] border border-[#E2EDFF] dark:border-[#1E2D54] rounded-2xl p-4 flex items-center gap-3.5 shadow-xs">
+          <div className="w-11 h-11 rounded-xl bg-[#2563EB] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Building2 className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-[#172033] dark:text-white leading-tight">248</h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal leading-tight mt-0.5">Total Registered</p>
+          </div>
+        </div>
+
+        {/* Card 2: Active Paying Tenants */}
+        <div className="bg-[#F6FDF9] dark:bg-[#0D152D] border border-[#DCFCE7] dark:border-[#1E2D54] rounded-2xl p-4 flex items-center gap-3.5 shadow-xs">
+          <div className="w-11 h-11 rounded-xl bg-[#00B074] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <CheckCircle2 className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-[#172033] dark:text-white leading-tight">225</h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal leading-tight mt-0.5">Active Paying Tenants</p>
+          </div>
+        </div>
+
+        {/* Card 3: Active Trials */}
+        <div className="bg-[#F0F9FF] dark:bg-[#0D152D] border border-[#E0F2FE] dark:border-[#1E2D54] rounded-2xl p-4 flex items-center gap-3.5 shadow-xs">
+          <div className="w-11 h-11 rounded-xl bg-[#0284C7] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <Clock className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-[#172033] dark:text-white leading-tight">8</h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal leading-tight mt-0.5">Active Trials</p>
+          </div>
+        </div>
+
+        {/* Card 4: Cancelled & Expired */}
+        <div className="bg-[#FEF2F2] dark:bg-[#0D152D] border border-[#FEE2E2] dark:border-[#1E2D54] rounded-2xl p-4 flex items-center gap-3.5 shadow-xs">
+          <div className="w-11 h-11 rounded-xl bg-[#DC2626] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+            <XCircle className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-[#172033] dark:text-white leading-tight">15</h3>
+            <p className="text-xs text-[#64748B] dark:text-slate-400 font-normal leading-tight mt-0.5">Cancelled & Expired</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Filter and Search Bar matching screenshot */}
+      <div className="bg-white dark:bg-[#0D152D] p-2.5 sm:p-3 rounded-2xl border border-[#E5EAF2] dark:border-[#1E2D54] shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+        {/* Left: Status Filter Pills */}
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          {/* All Companies */}
+          <button
+            type="button"
+            onClick={() => setStatusFilter('All')}
+            className={`px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer ${
+              statusFilter === 'All'
+                ? 'bg-[#2563EB] text-white shadow-xs'
+                : 'text-[#475569] dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+            }`}
+          >
+            <span>All Companies</span>
+            <span
+              className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
+                statusFilter === 'All'
+                  ? 'bg-[#1D4ED8] text-white'
+                  : 'bg-slate-100 dark:bg-slate-800 text-[#64748B] dark:text-slate-400'
+              }`}
+            >
+              {companies.length}
+            </span>
+          </button>
+
+          {/* Active */}
+          <button
+            type="button"
+            onClick={() => setStatusFilter('Active')}
+            className={`px-2.5 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer ${
+              statusFilter === 'Active'
+                ? 'bg-[#2563EB] text-white shadow-xs font-semibold'
+                : 'text-[#475569] dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+            }`}
+          >
+            <span className="w-2 h-2 rounded-full bg-[#10B981] flex-shrink-0" />
+            <span>Active</span>
+            <span
+              className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+                statusFilter === 'Active'
+                  ? 'bg-[#1D4ED8] text-white font-bold'
+                  : 'bg-slate-100 dark:bg-slate-800 text-[#64748B] dark:text-slate-400 font-semibold'
+              }`}
+            >
+              {activeCount}
+            </span>
+          </button>
+
+          {/* Trial */}
+          <button
+            type="button"
+            onClick={() => setStatusFilter('Trial')}
+            className={`px-2.5 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer ${
+              statusFilter === 'Trial'
+                ? 'bg-[#2563EB] text-white shadow-xs font-semibold'
+                : 'text-[#475569] dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+            }`}
+          >
+            <span className="w-2 h-2 rounded-full bg-[#2563EB] flex-shrink-0" />
+            <span>Trial</span>
+            <span
+              className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+                statusFilter === 'Trial'
+                  ? 'bg-[#1D4ED8] text-white font-bold'
+                  : 'bg-slate-100 dark:bg-slate-800 text-[#64748B] dark:text-slate-400 font-semibold'
+              }`}
+            >
+              {trialCount}
+            </span>
+          </button>
+
+          {/* Cancelled */}
+          <button
+            type="button"
+            onClick={() => setStatusFilter('Cancelled')}
+            className={`px-2.5 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer ${
+              statusFilter === 'Cancelled'
+                ? 'bg-[#2563EB] text-white shadow-xs font-semibold'
+                : 'text-[#475569] dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+            }`}
+          >
+            <span className="w-2 h-2 rounded-full bg-[#EF4444] flex-shrink-0" />
+            <span>Cancelled</span>
+            <span
+              className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+                statusFilter === 'Cancelled'
+                  ? 'bg-[#1D4ED8] text-white font-bold'
+                  : 'bg-slate-100 dark:bg-slate-800 text-[#64748B] dark:text-slate-400 font-semibold'
+              }`}
+            >
+              {cancelledCount}
+            </span>
+          </button>
+
+          {/* Expired */}
+          <button
+            type="button"
+            onClick={() => setStatusFilter('Expired')}
+            className={`px-2.5 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer ${
+              statusFilter === 'Expired'
+                ? 'bg-[#2563EB] text-white shadow-xs font-semibold'
+                : 'text-[#475569] dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+            }`}
+          >
+            <span className="w-2 h-2 rounded-full bg-[#94A3B8] flex-shrink-0" />
+            <span>Expired</span>
+            <span
+              className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+                statusFilter === 'Expired'
+                  ? 'bg-[#1D4ED8] text-white font-bold'
+                  : 'bg-slate-100 dark:bg-slate-800 text-[#64748B] dark:text-slate-400 font-semibold'
+              }`}
+            >
+              {expiredCount}
+            </span>
+          </button>
+        </div>
+
+        {/* Right: Search and Plan Filter */}
+        <div className="flex items-center gap-2.5 self-stretch lg:self-auto">
+          {/* Search Input */}
+          <div className="relative flex-1 lg:w-56">
+            <Search className="w-3.5 h-3.5 text-[#8292AD] dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search companies, industry, contact..."
-              className="w-full pl-9 pr-3 py-2 text-xs bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500 transition-colors"
+              placeholder="Filter companies..."
+              className="w-full pl-8 pr-3 py-1.5 text-xs bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500 transition-colors"
             />
           </div>
 
-          {/* 3. Second Dropdown: Plan Tier */}
+          {/* Plan Dropdown */}
           <div className="relative inline-flex items-center">
-            <Layers className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
             <select
               value={planFilter}
               onChange={(e) => setPlanFilter(e.target.value)}
-              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
+              className="select-primary-blue pl-3 pr-8 py-1.5 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
             >
-              <option value="All">All Plans</option>
-              <option value="Starter">Starter</option>
-              <option value="Growth">Growth</option>
-              <option value="Enterprise">Enterprise</option>
+              <option value="All">Plan: All Plans</option>
+              <option value="Starter">Plan: Starter</option>
+              <option value="Growth">Plan: Growth</option>
+              <option value="Enterprise">Plan: Enterprise</option>
             </select>
           </div>
-
-          {/* 4. Third Dropdown: Industry */}
-          <div className="relative inline-flex items-center">
-            <Briefcase className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
-            <select
-              value={industryFilter}
-              onChange={(e) => setIndustryFilter(e.target.value)}
-              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
-            >
-              <option value="All">All Industries</option>
-              <option value="Enterprise Software">Enterprise Software</option>
-              <option value="Fintech">Fintech</option>
-              <option value="Healthcare">Healthcare</option>
-              <option value="Cybersecurity">Cybersecurity</option>
-              <option value="Cloud Infrastructure">Cloud Infrastructure</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Right: Count, Refresh, and Export */}
-        <div className="flex items-center justify-between sm:justify-end gap-2.5 sm:gap-3 flex-shrink-0 pt-2 xl:pt-0 border-t xl:border-t-0 border-[#E5EAF2] dark:border-[#1A2548]">
-          {/* Filter count text */}
-          <span className="text-xs text-[#8292AD] dark:text-slate-400 whitespace-nowrap">
-            Filtered: {filtered.length} Shown of {companies.length}
-          </span>
-
-          {/* Refresh icon */}
-          <button
-            type="button"
-            onClick={handleRefresh}
-            className="p-1.5 rounded-lg text-[#8292AD] hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#1E2D54] transition-colors cursor-pointer"
-            title="Refresh list"
-            aria-label="Refresh"
-          >
-            <RotateCw className="w-3.5 h-3.5" />
-          </button>
-
-          {/* Export CSV */}
-          <button
-            type="button"
-            onClick={exportToCSV}
-            className="px-3 py-1.5 text-xs bg-white dark:bg-[#121D3D] hover:bg-slate-50 dark:hover:bg-[#1A2548] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white font-semibold flex items-center gap-1.5 transition-colors shadow-2xs cursor-pointer whitespace-nowrap"
-            title="Export filtered companies as CSV"
-          >
-            <Download className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
-            <span className="hidden sm:inline">Export CSV</span>
-          </button>
         </div>
       </div>
 
