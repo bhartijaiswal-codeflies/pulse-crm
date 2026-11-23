@@ -4,6 +4,7 @@ import { AppProvider } from './context/AppContext';
 import { MainLayout } from './components/layout/MainLayout';
 
 // Pages
+import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 import { Companies } from './pages/Companies';
 import { Subscriptions } from './pages/Subscriptions';
@@ -21,6 +22,7 @@ export function App() {
     <AppProvider>
       <BrowserRouter>
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Dashboard />} />
             {/* Core CRM Routes */}

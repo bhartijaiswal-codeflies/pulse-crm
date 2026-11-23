@@ -135,6 +135,7 @@ export const MobileDrawer = () => {
             onClick={() => {
               setMobileMenuOpen(false);
               showToast('Signed out of session', 'info');
+              navigate('/login');
             }}
             className="p-2 text-[#8292AD] hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#1E2D54] rounded-xl transition-colors cursor-pointer flex-shrink-0"
             title="Sign out"

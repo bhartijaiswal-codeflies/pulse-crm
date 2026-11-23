@@ -74,6 +74,7 @@ export const Sidebar = () => {
 
   const handleLogout = () => {
     showToast('Signed out of Pulse CRM session', 'info');
+    navigate('/login');
   };
 
   return (
