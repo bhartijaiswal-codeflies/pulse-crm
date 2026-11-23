@@ -121,7 +121,7 @@ export const SupportTickets = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full max-w-full min-w-0">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -224,14 +224,14 @@ export const SupportTickets = () => {
       {/* Filter and Search Bar */}
       <div className="bg-white dark:bg-[#0D152D] p-3 sm:p-3.5 rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-xs flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
         {/* Left: Filters group */}
-        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 flex-1 min-w-0">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2 sm:gap-2.5 flex-1 min-w-0">
           {/* 1. Primary Dropdown Pill: Status with count */}
-          <div className="relative inline-flex items-center">
-            <LifeBuoy className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
+          <div className="relative w-full sm:w-auto">
+            <LifeBuoy className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="select-primary-blue pl-9 pr-8 py-2 text-xs font-semibold bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 rounded-xl text-blue-600 dark:text-blue-400 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
+              className="select-primary-blue w-full sm:w-auto pl-9 pr-9 py-2 text-xs font-semibold bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 rounded-xl text-blue-600 dark:text-blue-400 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all truncate"
             >
               <option value="All">All Incidents ({tickets.length})</option>
               <option value="Open">Open ({openCount})</option>
@@ -241,84 +241,108 @@ export const SupportTickets = () => {
           </div>
 
           {/* 2. Search Input */}
-          <div className="relative flex-1 min-w-[180px] sm:min-w-[220px] max-w-xs">
+          <div className="relative w-full sm:w-auto sm:flex-1 sm:min-w-[180px] sm:max-w-xs">
             <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search ticket, ID, company..."
-              className="w-full pl-9 pr-3 py-2 text-xs bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500 transition-colors"
+              className="w-full pl-9 pr-8 py-2 text-xs bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl focus:outline-none focus:border-blue-500 text-[#172033] dark:text-white placeholder:text-[#8292AD] dark:placeholder:text-slate-500 transition-colors"
             />
+            {searchTerm && (
+              <button
+                type="button"
+                onClick={() => setSearchTerm('')}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                title="Clear search"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
 
-          {/* 3. Second Dropdown: Priority */}
-          <div className="relative inline-flex items-center">
-            <AlertCircle className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
-            <select
-              value={priorityFilter}
-              onChange={(e) => setPriorityFilter(e.target.value)}
-              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
-            >
-              <option value="All">All Priorities</option>
-              <option value="Urgent">Urgent</option>
-              <option value="High">High Priority</option>
-              <option value="Medium">Medium Priority</option>
-              <option value="Low">Low Priority</option>
-            </select>
-          </div>
+          {/* 3 & 4. Secondary Dropdowns in a 2-column grid on mobile, inline on tablet/desktop */}
+          <div className="grid grid-cols-2 gap-2 w-full min-w-0 sm:contents">
+            {/* Second Dropdown: Priority */}
+            <div className="relative w-full min-w-0 sm:w-auto">
+              <AlertCircle className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <select
+                value={priorityFilter}
+                onChange={(e) => setPriorityFilter(e.target.value)}
+                className="w-full min-w-0 sm:w-auto pl-8 sm:pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white cursor-pointer focus:outline-none focus:border-blue-500 transition-colors truncate"
+              >
+                <option value="All">All Priorities</option>
+                <option value="Urgent">Urgent</option>
+                <option value="High">High Priority</option>
+                <option value="Medium">Medium Priority</option>
+                <option value="Low">Low Priority</option>
+              </select>
+            </div>
 
-          {/* 4. Third Dropdown: Category */}
-          <div className="relative inline-flex items-center">
-            <Calendar className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-3 pointer-events-none" />
-            <select
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              className="pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white cursor-pointer focus:outline-none focus:border-blue-500 transition-colors"
-            >
-              <option value="All">All Categories</option>
-              <option value="API">API & Integrations</option>
-              <option value="Billing">Billing & Plans</option>
-              <option value="Security">Security & Auth</option>
-            </select>
+            {/* Third Dropdown: Category */}
+            <div className="relative w-full min-w-0 sm:w-auto">
+              <Calendar className="w-4 h-4 text-blue-600 dark:text-blue-400 absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <select
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value)}
+                className="w-full min-w-0 sm:w-auto pl-8 sm:pl-9 pr-8 py-2 text-xs font-medium bg-white dark:bg-[#0A1128] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white cursor-pointer focus:outline-none focus:border-blue-500 transition-colors truncate"
+              >
+                <option value="All">All Categories</option>
+                <option value="API">API & Integrations</option>
+                <option value="Billing">Billing & Plans</option>
+                <option value="Security">Security & Auth</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        {/* Right: Count, Refresh, and Export */}
+        {/* Right: Count, Reset, Refresh, and Export */}
         <div className="flex items-center justify-between sm:justify-end gap-2.5 sm:gap-3 flex-shrink-0 pt-2 xl:pt-0 border-t xl:border-t-0 border-[#E5EAF2] dark:border-[#1A2548]">
-          {/* Filter count text */}
-          <span className="text-xs text-[#8292AD] dark:text-slate-400 whitespace-nowrap">
-            Filtered: {filteredTickets.length} Shown of {tickets.length}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-[#8292AD] dark:text-slate-400 whitespace-nowrap">
+              Filtered: {filteredTickets.length} Shown of {tickets.length}
+            </span>
+            {(searchTerm || statusFilter !== 'All' || priorityFilter !== 'All' || categoryFilter !== 'All') && (
+              <button
+                type="button"
+                onClick={handleClearFilters}
+                className="text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+              >
+                Reset
+              </button>
+            )}
+          </div>
 
-          {/* Refresh icon */}
-          <button
-            type="button"
-            onClick={handleRefresh}
-            className="p-1.5 rounded-lg text-[#8292AD] hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#1E2D54] transition-colors cursor-pointer"
-            title="Refresh incidents"
-            aria-label="Refresh"
-          >
-            <RotateCw className="w-3.5 h-3.5" />
-          </button>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <button
+              type="button"
+              onClick={handleRefresh}
+              className="p-1.5 rounded-lg text-[#8292AD] hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#1E2D54] transition-colors cursor-pointer"
+              title="Refresh incidents"
+              aria-label="Refresh"
+            >
+              <RotateCw className="w-3.5 h-3.5" />
+            </button>
 
-          {/* Export CSV */}
-          <button
-            type="button"
-            onClick={exportTicketsCSV}
-            className="px-3 py-1.5 text-xs bg-white dark:bg-[#121D3D] hover:bg-slate-50 dark:hover:bg-[#1A2548] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white font-semibold flex items-center gap-1.5 transition-colors shadow-2xs cursor-pointer whitespace-nowrap"
-            title="Export filtered tickets as CSV"
-          >
-            <Download className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
-            <span className="hidden sm:inline">Export CSV</span>
-          </button>
+            {/* Export CSV */}
+            <button
+              type="button"
+              onClick={exportTicketsCSV}
+              className="px-3 py-1.5 text-xs bg-white dark:bg-[#121D3D] hover:bg-slate-50 dark:hover:bg-[#1A2548] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl text-[#172033] dark:text-white font-semibold flex items-center gap-1.5 transition-colors shadow-2xs cursor-pointer whitespace-nowrap"
+              title="Export filtered tickets as CSV"
+            >
+              <Download className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+              <span className="hidden sm:inline">Export CSV</span>
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Tickets Table */}
-      <div className="bg-white dark:bg-[#0D152D] rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+      <div className="bg-white dark:bg-[#0D152D] rounded-2xl border border-[#E5EAF2] dark:border-[#1A2548] shadow-[0_1px_3px_rgba(0,0,0,0.04)] overflow-hidden w-full max-w-full">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full min-w-[500px] text-left border-collapse">
             <thead>
               <tr className="bg-[#F7F9FC] dark:bg-[#0A1128] border-b border-[#E5EAF2] dark:border-[#1A2548] text-[11px] font-bold text-[#8292AD] dark:text-slate-400 uppercase tracking-wider">
                 <th className="py-3.5 px-3 lg:px-4">Ticket ID</th>

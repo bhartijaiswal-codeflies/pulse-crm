@@ -91,10 +91,10 @@ export const Header = () => {
     <header className="sticky top-0 z-50 h-16 bg-white dark:bg-[#080D20] border-b border-[#E5EAF2] dark:border-[#131B38] shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
       <div className="w-full max-w-[1720px] mx-auto h-full px-4 md:px-6 lg:px-8 flex py-3 items-center justify-between">
         {/* Left: Mobile hamburger & Search bar */}
-        <div className="flex items-center gap-3 flex-1 max-w-xl">
+        <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0 max-w-xl">
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="md:hidden p-2 rounded-xl text-[#8292AD] hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#131B38] transition-colors"
+            className="md:hidden p-2 rounded-xl text-[#8292AD] hover:text-[#172033] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#131B38] transition-colors flex-shrink-0"
             aria-label="Open mobile menu"
           >
             <Menu className="w-5 h-5" />
@@ -103,14 +103,14 @@ export const Header = () => {
           {/* Global Search Input */}
           <div
             onClick={() => setIsCommandPaletteOpen(true)}
-            className="relative flex items-center w-full max-w-md lg:max-w-lg h-10 bg-[#F8FAFC] dark:bg-[#0D152D] hover:bg-slate-100/80 dark:hover:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl px-3 sm:px-3.5 cursor-pointer transition-all duration-200 group focus-within:border-blue-500 dark:focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100 dark:focus-within:ring-blue-900/30"
+            className="relative flex items-center w-full min-w-0 max-w-md lg:max-w-lg h-10 bg-[#F8FAFC] dark:bg-[#0D152D] hover:bg-slate-100/80 dark:hover:bg-[#121D3D] border border-[#E5EAF2] dark:border-[#1E2D54] rounded-xl px-2.5 sm:px-3.5 cursor-pointer transition-all duration-200 group focus-within:border-blue-500 dark:focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100 dark:focus-within:ring-blue-900/30"
           >
-            <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors mr-2.5 flex-shrink-0" />
+            <Search className="w-4 h-4 text-[#8292AD] dark:text-slate-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors mr-2 flex-shrink-0" />
             <input
               type="text"
               readOnly
               placeholder="Search companies, users, or invoices..."
-              className="w-full bg-transparent dark:!bg-transparent text-xs sm:text-sm text-[#172033] dark:text-white placeholder-[#8292AD] dark:placeholder-slate-400 border-none outline-none focus:outline-none focus:ring-0 cursor-pointer select-none p-0 truncate"
+              className="w-full min-w-0 bg-transparent dark:!bg-transparent text-xs sm:text-sm text-[#172033] dark:text-white placeholder-[#8292AD] dark:placeholder-slate-400 border-none outline-none focus:outline-none focus:ring-0 cursor-pointer select-none p-0 truncate"
             />
             <kbd className="hidden sm:inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-semibold text-[#8292AD] dark:text-slate-400 bg-white dark:bg-[#141E3C] border border-[#E5EAF2] dark:border-[#22325C] rounded-md shadow-2xs ml-2 flex-shrink-0">
               ⌘K
@@ -119,7 +119,7 @@ export const Header = () => {
         </div>
 
         {/* Right: Refresh button, Theme toggle, Notification, Profile */}
-        <div className="flex items-center gap-1.5 sm:gap-2 md:gap-2.5">
+        <div className="flex items-center gap-1 sm:gap-2 md:gap-2.5 flex-shrink-0">
           {/* Refresh Dashboard Button */}
           <button
             type="button"
